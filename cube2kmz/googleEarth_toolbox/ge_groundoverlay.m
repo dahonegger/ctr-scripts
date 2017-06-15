@@ -1,12 +1,11 @@
 function output = ge_groundoverlay(y_max,x_max,y_min,x_min,varargin)
-% 
-% ==> This script is API FRIENDLY <==
-% 
 % Reference page in help browser: 
 % 
 % <a href="matlab:web(fullfile(ge_root,'html','ge_groundoverlay.html'),'-helpbrowser')">link</a> to html documentation
 % <a href="matlab:web(fullfile(ge_root,'html','license.html'),'-helpbrowser')">show license statement</a> 
 %
+% ==> This script is API FRIENDLY <== patched by David Honegger
+% ==> This script is super-overlay friendly <== patched by Dan Plotnick
 
 
 AuthorizedOptions = authoptions( mfilename );
@@ -25,6 +24,7 @@ timeSpanStart = ' ';
      altitude = 1.0;
       extrude = 0;
  altitudeMode = 'clampToGround';
+ drawOrder = 0;
   tmpFileStr = mfilename('fullpath');
   imgURL = [tmpFileStr(1:max(findstr(tmpFileStr,filesep))),'data',filesep,'image_file_unavailable.bmp'];
   clear tmpFileStr
@@ -58,13 +58,13 @@ description_chars = [ '<description>',10,'<![CDATA[' description ']]>',10,'</des
 visibility_chars = [ '<visibility>',10, int2str(visibility) ,10,'</visibility>',10 ];
 %color_chars = [ '<color>',10, color,10, '</color>',10 ];
 altitudeMode_chars = ['<altitudeMode>',altitudeMode,'</altitudeMode>'];
+drawOrder_chars = ['<drawOrder>',int2str(drawOrder),'</drawOrder>'];
 finalColor_chars = [ '<color>',10,finalColor,10,'</color>',10,];
 if snippet == ' '
     snippet_chars = '';
 else
     snippet_chars = [ '<Snippet>' snippet '</Snippet>',10 ];    
 end
-% imgURL_chars =  ['<href>',10, imgURL,10, '</href>',10];
 imgURL_chars =  ['<href>',imgURL,'</href>',10];
 viewBoundScale_chars = ['<viewBoundScale>',10, num2str(viewBoundScale),10, '</viewBoundScale>',10];
 extrude_chars = [ '<extrude>' int2str(extrude) '</extrude>',10 ];
@@ -121,6 +121,7 @@ header=['<GroundOverlay ',id_chars,'>',10,...
         finalColor_chars,...
         visibility_chars,...
         extrude_chars,...
+        drawOrder_chars,...
         altitude_chars,...
         altitudeMode_chars,...
         '<Icon>',10,...

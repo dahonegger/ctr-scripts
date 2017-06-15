@@ -36,7 +36,7 @@ colorAxisLimits    = [0 225];    % caxis
 if nargin < 3
     doBilateralFilter  = false;       % Choose to apply bilateral filter
 end
-bfLimits           = [40 200];    % caxis limits if bilateral filter is applied
+bfLimits           = [50 250];    % caxis limits if bilateral filter is applied
 
 %% Brief prepwork %%
 % Add GE Toolbox to path if it isn't there
@@ -66,6 +66,11 @@ end
 fprintf('Loading %s:\n',namestr)
 % load(cubeName, 'Rg', 'Azi', 'timex', 'results', 'headingOffset', 'timeInt')
 load(cubeName, 'Rg', 'Azi', 'timex', 'results', 'timeInt')
+if isempty(timex)
+    load(cubeName,'data')
+    timex = double(mean(data,3));
+end
+
 
 % Read user heading if entered
 if isempty(heading)
@@ -81,7 +86,7 @@ maxTime  = epoch2Matlab(max(timeInt(:)));
 % Only use non-zero ground ranges
 iMinRg = find(Rg>0,1,'first');
 Rg = Rg(iMinRg:end);
-timex = timex(iMinRg:end, :, :);
+timex = double(timex(iMinRg:end, :, :));
 
 % Convert radar coords to geographic coords
 [AZI,RG] = meshgrid(90-Azi-(heading),Rg);
@@ -179,6 +184,7 @@ kmlStr{1} = ge_imagesc(...
             lons,lats,flipud(kmzData),...
                 'altitude',5,...
                 'altitudeMode','relativeToGround',...
+		'drawOrder',10,...
                 'cLimHigh',colorAxisLimits(2),...
                 'cLimLow',colorAxisLimits(1),...
                 'colorMap','hot',...
@@ -198,13 +204,13 @@ ge_output([kmzNameStr,'.kml'],cell2mat(kmlStr))
 % Zip to kmz
 fprintf('Zipping to kmz. ')
 zip(kmzNameStr,{[kmzNameStr,'.kml'],'files'})
-% Rename extension (and move file) using OS commands
+% Move the file with operating system commands
 src = sprintf('%s.zip',kmzNameStr);
 dest = sprintf('%s.kmz',fullfile(outputDirectory,kmzNameStr));
 if isunix
-	eval(['! mv ',src,' ',dest])
-elseif ispc
-	eval(['! move ',src,' ',dest])
+    eval(['! mv ',src,' ',dest])
+else
+    eval(['! move ',src,' ',dest])
 end
 % movefile([kmzNameStr,'.zip'],fullfile(outputDirectory,[kmzNameStr,'.kmz']))
 
