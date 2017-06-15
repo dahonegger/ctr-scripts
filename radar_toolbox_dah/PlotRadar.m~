@@ -1,0 +1,22 @@
+function h = PlotRadar(Cube,frame)
+
+
+Heading=Cube.results.heading;
+% Convert to polar and cartesian
+r=Cube.Rg;
+% Subtract heading and convert Azimuth (degrees) to theta (radians)
+tht = (Cube.Azi-Heading) * pi/180;
+
+[R,T]=meshgrid(r,tht(:,1));
+% rot=3*pi/4;%David tweak: rotates image
+% [R,T]=meshgrid(r,tht(:,1)+rot);
+[X,Y]=pol2cart(T',R');
+
+a = double(Cube.data(:,:,frame));
+h = pcolor(Y+Cube.results.YOrigin,X+Cube.results.XOrigin,a);
+shading interp;
+% set(gca,'XDir','reverse');
+caxis([0 255]);
+
+
+end

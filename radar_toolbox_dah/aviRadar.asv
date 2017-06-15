@@ -1,0 +1,58 @@
+function [h, domain] = aviRadar(Cube,frames,domain,framerate)
+
+if ~exist('frames','var')
+    disp('frames not included')
+    frames = 1:Cube.header.rotations;
+elseif isempty(frames)
+    disp('frames left empty')
+    frames = 1:Cube.header.rotations;
+end
+if ~exist('framerate','var')
+    disp('framerate not included')
+    framerate = 0;
+elseif isempty(framerate)
+    disp('framerate left empty')
+    framerate = 0;
+end
+   
+if isfield(Cube,'Azi')
+    Heading = Cube.results.heading;
+    r = Cube.Rg;
+%   Subtract heading and convert Azimuth (degrees) to theta (radians). The 90
+%   degree shift is because pol2cart wants to define North along +x-axis
+    tht = (90-Heading-Cube.Azi) * pi/180;
+    [R,T]=meshgrid(r,tht(:,1));
+    [X,Y]=pol2cart(T',R');
+    Xdata = X+Cube.results.XOrigin;
+    Ydata = Y+Cube.results.YOrigin;
+else
+    Xdata = Cube.xdom;
+    Ydata = Cube.ydom;
+end
+
+if ~exist('domain','var')
+    disp('domain not included')
+    domain = [min(min(Xdata)) max(max(Xdata)) min(min(Ydata)) max(max(Ydata))];
+elseif isempty(domain)
+    disp('domain left empty')
+    domain = [min(min(Xdata)) max(max(Xdata)) min(min(Ydata)) max(max(Ydata))];
+end
+
+
+for i = frames
+    signal = double(squeeze(Cube.data(:,:,i)));
+    h = pcolor(Xdata/1000,Ydata/1000,signal);
+    shading interp;axis equal;
+    set(gca,'xminortick','on','yminortick','on')
+    axis image
+    title(sprintf('Return Intensity [AIU], Time: %i s',i*Cube.results.TrueRPM/60))
+    xlabel('UTM Zone 10 T [km]')
+    ylabel('[km]')
+    drawnow
+    
+    M(:,i) = getframe;
+        
+end
+
+map = flipud(jet);
+mpgwrite(M,map,'test')
