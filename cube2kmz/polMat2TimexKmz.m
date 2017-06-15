@@ -66,9 +66,11 @@ end
 fprintf('Loading %s:\n',namestr)
 % load(cubeName, 'Rg', 'Azi', 'timex', 'results', 'headingOffset', 'timeInt')
 load(cubeName, 'Rg', 'Azi', 'timex', 'results', 'timeInt')
-if isempty(timex)
+if ~exist(timex) || isempty(timex)
     load(cubeName,'data')
     timex = double(mean(data,3));
+else
+	timex = double(timex);
 end
 
 

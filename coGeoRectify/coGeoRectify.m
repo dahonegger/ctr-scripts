@@ -58,9 +58,9 @@ rangeIdxToAnalyze = minRangeToAnalyze:dRange:length(Cube.Rg);
 % Create control frame
 refCube = load(controlCube);
 if isfield(refCube,'timex')
-    refFrame = refCube.timex;
+    refFrame = double(refCube.timex);
 else
-    refFrame = mean(refCube.data,3);
+    refFrame = double(mean(refCube.data,3));
 end
 interpFuncXcorr = griddedInterpolant(...
     RG(rangeIdxToAnalyze,:),...
@@ -127,6 +127,8 @@ Cube.results.heading = refCube.results.heading;
 Cube.headingOffset = headingOffset;
 if doOverwrite
     Cube.data = dataOut;
+	Cube.timex = uint8(mean(dataOut,3));
 else
     Cube.dataCoGeoRect = dataOut;
+	Cube.timexCoGeoRect = uint8(mean(dataOut,3));
 end

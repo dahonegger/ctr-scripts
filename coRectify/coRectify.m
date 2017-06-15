@@ -122,6 +122,8 @@ end
 Cube.headingOffset = headingOffset;
 if doOverwrite
     Cube.data = dataOut;
+	Cube.timex = uint8(mean(dataOut,3));
 else
     Cube.dataCoRect = dataOut;
+	Cube.timexCoRect = uint8(mean(dataOut,3));
 end
