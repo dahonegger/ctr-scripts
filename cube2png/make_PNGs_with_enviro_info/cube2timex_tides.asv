@@ -101,7 +101,7 @@ moorY = moorN - radN;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
-fig = figure('visible','off');
+fig = figure('visible','on');
 fig.PaperUnits = 'inches';
 fig.PaperPosition = [0 0 12.8 7.2];
 fig.Units = 'pixels';
@@ -182,9 +182,9 @@ plot([arX.RB arX.RB],[arY.RB-arRef1 arY.RB+arRef1],'-k','linewidth',1)
 
 % direction current in sound (Cornfield Point "CP") - GREEN
 arLength.CP = yCurrent.CP(nowIndex.CP).*arScale;
-ar1w = arrow([arX.CP arY.CP],[arX.CP-arLength.CP arY.CP],'width',10,...
+ar1w = arrow([arX.CP arY.CP],[arX.CP+arLength.CP arY.CP],'width',10,...
     'baseangle',90,'tipangle',35,'facecolor','white','edgecolor','black');
-ar1 = arrow([arX.CP arY.CP],[arX.CP-arLength.CP arY.CP],'width',12,...
+ar1 = arrow([arX.CP arY.CP],[arX.CP+arLength.CP arY.CP],'width',12,...
     'baseangle',90,'tipangle',32,'facecolor','green','edgecolor','black');
 alpha(ar1,0.25)
 
@@ -208,7 +208,7 @@ datetick('x','mmm-dd','keeplimits','keepticks')
 hy1 = ylabel('Current [m/s]','fontsize',11,'interpreter','latex');
 tmp1 = get(hy1,'position');
 set(hy1,'position',[tmp1(1)+1/50 tmp1(2:3)])
-ylim([-1.82 1.82])
+ylim([-2.1 2.1])
 title([datestr(nowTime,'HH:MM:SS'),' UTC'],'fontsize',14,'interpreter','latex')
 axTide.TickLabelInterpreter = 'latex';
     

@@ -5,11 +5,11 @@ addpath(genpath('E:\SupportData')) %CTR HUB
 addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 
 % add path to mat files and choose directory for png's   
-baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo\';
+baseDir = 'E:\Data\CTR\DAQ-data\processed\';
+saveDir = 'E:\Data\CTR\postprocessed\timex_tides';
 
 % rewrite existing files in save directory? true=yes
-doOverwrite = false;
+doOverwrite = true;
 
 %% 
 if ~exist(saveDir);mkdir(saveDir);end
@@ -19,8 +19,9 @@ imgId = 1;
 for iDay = 1:length(dayFolder)
         
     dayFolder(iDay).polRun = dir(fullfile(baseDir,dayFolder(iDay).name,'*_pol.mat'));
-    saveDirSub = [saveDir,dayFolder(iDay).name];
-    if ~exist(saveDirSub);mkdir(saveDirSub);end
+    saveDir_sub = 'E:\Data\CTR\postprocessed\timex_tides'dayFolder(iDay).name;
+    
+    if ~exist(saveDir);mkdir(saveDir);end
     
         for iRun = 1:length(dayFolder(iDay).polRun)
             
@@ -33,7 +34,7 @@ for iDay = 1:length(dayFolder)
             [~,cubeBaseName,~] = fileparts(cubeName);
             
             pngBaseName = sprintf('%s_timex.png',cubeBaseName);
-            pngName = fullfile(saveDirSub,pngBaseName);
+            pngName = fullfile(saveDir,pngBaseName);
             
             fileExists = exist(pngName,'file');
             if fileExists && ~doOverwrite
