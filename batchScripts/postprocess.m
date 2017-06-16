@@ -1,7 +1,10 @@
 %% What to do?
-doProcessCube           = true;
-doWriteKmz              = false;
+doProcessCube           = false;
+doWriteKmz              = true;
 doWriteBfKmz            = false;
+
+%% Test if kmz is patched?
+doEnsureKmzPatched      = true;
 
 %% What to redo?
 doReprocessCube         = false;
@@ -9,8 +12,8 @@ doOverwriteKmz          = false;
 doOverwriteBfKmz        = false;
 
 %% Process only these folders
-folderList = [];%...
-%               {'2017-06-07',...
+folderList = [];
+%               '2017-06-07',...
 %               '2017-06-08',...
 %               '2017-06-09',...
 %               '2017-06-10',...
@@ -110,9 +113,20 @@ for iDay = dayVec
                 % Kmz:
                 if doWriteKmz
                     kmzName = fullfile(kmzSaveDir, [cubeBaseName,'.kmz']);
-                    if exist(kmzName, 'file') && ~doOverwriteKmz
-                        fprintf('Kmz Exists. Not overwriting. ')
-                        doWriteThisKmz = false;
+                    if exist(kmzName, 'file')
+                        if ~doOverwriteKmz && ~doEnsureKmzPatched
+                            fprintf('Kmz exists and not overwriting. ')
+                            doWriteThisKmz = false;
+                        elseif ~doOverwriteKmz && doEnsureKmzPatched
+                            % Now ensure that kmz is patched
+                            isPatched = isKmzPatched(kmzName);
+                            if isPatched
+                                fprintf('Kmz exists and is patched. ')
+                                doWriteThisKmz = false;
+                            else
+                                fprintf('Kmz not patched. ')
+                            end
+                        end                       
                     end
                 end
                 % Bilateral filtered Kmz:

@@ -6,3 +6,7 @@ D:\Data\CTR\DAQ-data\processed\2017-06-11\LyndePt_20171620900_pol.mat: In an ass
 D:\Data\CTR\DAQ-data\processed\2017-06-12\LyndePt_20171631431_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
 C:\Data\CTR\DAQ-data\processed\2017-05-26\LyndePt_20171461700_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
 C:\Data\CTR\DAQ-data\processed\2017-05-26\LyndePt_20171461700_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\DAQ-data\processed\2017-05-26\LyndePt_20171461700_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\DAQ-data\processed\2017-05-28\LyndePt_20171481500_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\DAQ-data\processed\2017-06-11\LyndePt_20171620900_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\DAQ-data\processed\2017-06-12\LyndePt_20171631431_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
