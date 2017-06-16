@@ -1,6 +1,6 @@
 %% What to do?
 doProcessCube           = true;
-doWriteKmz              = true;
+doWriteKmz              = false;
 doWriteBfKmz            = false;
 
 %% What to redo?
@@ -31,8 +31,9 @@ addpath(genpath(fileparts(pwd)));
 % addpath(genpath(scrDir))
 
 %% Where to read and write data?
-
-baseDir = 'C:\Data\CTR\DAQ-data';
+% On Dell:
+baseDir = 'D:\DAQ-data';
+% baseDir = 'C:\Data\CTR\DAQ-data';
 % baseDir = '/data';
 
 % Data directory
@@ -40,7 +41,7 @@ baseDir = 'C:\Data\CTR\DAQ-data';
 cubeDir = fullfile(baseDir,'processed');
 
 % Save intensity kmz directory
-% kmzSaveDir = 'E:\Data\CTR\postprocessed\rectKmz\';
+% SAve to same folder as cube
 kmzSaveDir = fullfile(baseDir,'postprocessed','kmz');
 if ~exist(kmzSaveDir,'dir'); mkdir(kmzSaveDir); end
 
@@ -171,7 +172,9 @@ for iDay = dayVec
                     fprintf('Footprint too small. Skipping.\n')
                 end
 
-                fprintf('Run processed in %.0f seconds.\n',toc(ticTime))
+                if toc(ticTime)>2
+                    fprintf('Run processed in %.0f seconds.\n',toc(ticTime))
+                end
                 
             catch ME
                 fidFail = fopen('postprocessfails.txt','a+t');
