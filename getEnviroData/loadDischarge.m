@@ -8,8 +8,8 @@ function [ dnDischarge,rawDischarge,trDischarge ] = loadDischarge(fname)
         %      this function converts from EDT to UTC
     %   rawDischarge: raw discharge
     %   trDischarge: tidally referenced discharge reported by USGS
-addpath('C:\Data\CTR\supportData\Discharge')
-fname = 'CTdischarge_Site01193050.txt';
+
+	% Alex Simpson 6/14/17
 
 fid=fopen(fname);
 for i = 1:30

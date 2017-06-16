@@ -1,17 +1,23 @@
 function cube2timex(cubeFile,timexFile)
 
+% Originally 'cube2timex.m' by David Honegger 
+% Updated by Alex Simpson to show tide, wind, discharge data 
+
 % User options: leave empty [] for Matlab auto-sets
-colorAxLimits           = [0 220];
-axisLimits              = [-6 6 -6 6]; % Full In kilometers
-% axisLimits              = [-3 3 -3 1]; % Zoom In kilometers
-% radialFalloffHeading    = 90; % Heading to use for empirical range falloff
-% falloffSmoothingScale   = 100; % Smoothing scale for empirical falloff so that fronts, etc., get averaged out
+colorAxLimits           = [0 220]; %WILL WANT TO UPDATE FOR BAD DATA PERIODS (~May 28-30)
+axisLimits              = [-6 6 -6 6]; % Full, In kilometers
+% axisLimits              = [-3 3 -3 1]; % Zoom, In kilometers
 plottingDecimation      = [5 1]; % For faster plotting, make this [2 1] or higher
 
 % User overrides: leave empty [] otherwise
-userHeading             = 281;                      % Use this heading instead of results.heading
+userHeading             = [];                      % Use this heading instead of results.heading
 userOriginXY            = [0 0];                    % Use this origin for meter-unit scale
 userOriginLonLat        = [-72.343472 41.271747];   % Use these lat-lon origin coords
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LOAD DATA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Load radar data
+load(cubeFile,'Azi','Rg','results','data','timeInt')
 
 % Implement user overrides
 if ~isempty(userHeading)
@@ -33,9 +39,6 @@ else
     [lat0,lon0] = UTMtoll(results.YOrigin,results.XOrigin,str2double(results.UTMZone(1:2)));
 end
 
-
-% Load radar data
-load(cubeFile,'Azi','Rg','results','data','timeInt')
 % Convert to world coordinates
 [AZI,RG] = meshgrid(Azi,Rg);
 TH = pi/180*(90-AZI-heading);
@@ -48,20 +51,22 @@ timex = mean(data,3);
 nowTime = epoch2Matlab(mean(timeInt(:))); % UTC
 
 % Load tidal data
-% Times are UTC, currents are m/s 
 [yCurrent.RB dnCurrent.RB] = railroadBridgeCurrent; % Railroad Bridge 
+[nowIndex.RB nowIndex.RB] = min(abs(dnCurrent.RB - nowTime));
 dirEbb.RB = 198; %deg True
 dirFlood.RB = 0; %deg True
 latCurrent.RB = 41.3167; %N
 lonCurrent.RB = 72.3462; %W
 
 [yCurrent.SMR dnCurrent.SMR] = sixMileReefCurrent; % Six Mile Reef 
+[nowIndex.SMR nowIndex.SMR] = min(abs(dnCurrent.SMR - nowTime));
 dirEbb.SMR = 40; %deg True
 dirFlood.SMR = 235; %deg True
 latCurrent.SMR = 41.1805; %N
 lonCurrent.SMR = 72.4483; %W
 
 [yCurrent.CP dnCurrent.CP] = cornfieldPointCurrent; % Cornfield Point 
+[nowIndex.CP nowIndex.CP] = min(abs(dnCurrent.CP - nowTime));
 dirEbb.CP = 94; %deg True
 dirFlood.CP= 256; %deg True
 latCurrent.CP = 41.215; %N
@@ -69,7 +74,6 @@ lonCurrent.CP = 72.3733; %W
 
 % Elevation (no longer using...)
 % [yElev.SB dnElev.SB] = railroadBridgeElevation; % Saybrook Points (UTC)
-
 
 % Load mooring data
 moor = load('casts_deploy_lisbuoys_065781_20170519_1302.mat');
@@ -85,7 +89,7 @@ moorY = moorN - radN;
 % Load discharge data from USGS file
 [dnDischarge,rawDischarge,trDischarge] = loadDischarge('CTdischarge_Site01193050.txt');
 
-% Plot!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
 fig = figure('visible','on');
 fig.PaperUnits = 'inches';
@@ -97,11 +101,12 @@ axTide = axes('position',[0.5419    0.7269    0.4200    0.2053],'fontsize',8);
 axWind = axes('position',[0.6696    0.4000    0.1544    0.2547],'fontsize',8);
 axDischarge = axes('position',[0.5452    0.1358    0.4169    0.2011],'fontsize',8);
 
-% radar subplot 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% RADAR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set(fig,'currentaxes',axRad)
 di = plottingDecimation(1);
 dj = plottingDecimation(2);
-pcolor(xdom(1:di:end,1:dj:end)/1e3,ydom(1:di:end,1:dj:end)/1e3,timex(1:di:end,1:dj:end));
+pcolor(xdom(1:di:end,1:dj:end)/1e3,ydom(1:di:end,1:dj:end)/1e3,...
+    timex(1:di:end,1:dj:end));
 hold on
 shading interp
 axis image
@@ -127,8 +132,60 @@ title({titleLine1,titleLine2},...
 %add mooring plots
 plot(moorX/1000,moorY/1000,'^c','linewidth',1.5,'markersize',8.5,'MarkerFaceColor','none') 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIDE DIRECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+set(fig,'currentaxes',axRad); hold on;
+arScale = 1.6;
+arRef1 = 0.5.*arScale; %0.5 m/s reference length
+arRef2 = 0.15.*arScale; % side bar width on reference 
+arW = .5; arH = 2;
+% CP and RB base coordinates (km)
+arX.RB = 2.45; arY.RB = 3.4;
+arX.CP = arX.RB; arY.CP = arY.RB;
 
-% Tide plot
+% make background
+theta = linspace(0,2*pi,200); 
+[circle1X, circle1Y] = pol2cart(theta,arRef1); % .5 m/s
+[circle2X, circle2Y] = pol2cart(theta,arRef1.*2); % 1 m/s
+[circle3x, circle3Y] = pol2cart(theta,arRef1.*3); % 1.5 m/s
+circle1 = fill(circle1X+arX.RB,circle1Y+arY.RB,'white');
+alpha(circle1,0.85)
+circle2 = fill(circle2X+arX.RB,circle2Y+arY.RB,'white');
+alpha(circle2,0.75)
+circle3 = fill(circle3x+arX.RB,circle3Y+arY.RB,'white');
+alpha(circle3,0.5)
+refText1 = text(arX.RB+arRef1./2.5,arY.RB+arRef1./2.5,'0.5');
+set(refText1,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
+refText2 = text(arX.RB+arRef1,arY.RB+arRef1,'1 m/s');
+set(refText2,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
+refText3 = text(arX.RB+1.78.*arRef1,arY.RB+1.78.*arRef1,'1.5');
+set(refText3,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
+
+% make CP scale bars
+plot([arX.CP-arRef1 arX.CP+arRef1],[arY.CP arY.CP],'-k','linewidth',1)
+% plot([arX.CP-arRef1 arX.CP-arRef1],[arY.CP+arRef2 arY.CP-arRef2],'-k','linewidth',1)
+% plot([arX.CP+arRef1 arX.CP+arRef1],[arY.CP+arRef2 arY.CP-arRef2],'-k','linewidth',1)
+
+% make RB scale bar
+plot([arX.RB arX.RB],[arY.RB-arRef1 arY.RB+arRef1],'-k','linewidth',1)
+% plot([arX.RB-arRef2 arX.RB+arRef2],[arY.RB+arRef1 arY.RB+arRef1],'-k','linewidth',1)
+% plot([arX.RB-arRef2 arX.RB+arRef2],[arY.RB-arRef1 arY.RB-arRef1],'-k','linewidth',1)
+
+% direction current in sound (Cornfield Point "CP") - GREEN
+arLength.CP = yCurrent.CP(nowIndex.CP).*arScale;
+ar1w = arrow([arX.CP arY.CP],[arX.CP+arLength.CP arY.CP],'width',10,...
+    'baseangle',90,'tipangle',35,'facecolor','white','edgecolor','black');
+ar1 = arrow([arX.CP arY.CP],[arX.CP+arLength.CP arY.CP],'width',12,...
+    'baseangle',90,'tipangle',32,'facecolor','green','edgecolor','black');
+alpha(ar1,0.25)
+
+
+% direction current in river (railroad bridge "RB") - BLUE
+arLength.RB = arScale.*yCurrent.RB(nowIndex.RB);
+ar2 = arrow([arX.RB arY.RB],[arX.RB arY.RB+arLength.RB],'width',12,...
+    'baseangle',90,'tipangle',32,'facecolor','blue','edgecolor','black');
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIDE SIGNAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set(fig,'currentaxes',axTide)
 cla(axTide)
 hold(axTide,'on')
@@ -145,11 +202,11 @@ ylim([-2.1 2.1])
 title([datestr(nowTime,'HH:MM:SS'),' UTC'],'fontsize',14,'interpreter','latex')
 axTide.TickLabelInterpreter = 'latex';
     
-% current in sound (Cornfield Point "CP")
+% velocity current in sound (Cornfield Point "CP")
     h3=area(dnCurrent.CP,yCurrent.CP,'facecolor','green');
     alpha(0.25)
     
-% current in river (railroad bridge "RB")
+% velocity current in river (railroad bridge "RB")
     h4=area(dnCurrent.RB,yCurrent.RB,'facecolor','blue');
     
 legend([h3 h4],{'Sound','River'})
@@ -162,7 +219,7 @@ legend([h3 h4],{'Sound','River'})
 %     set(gca,'ycolor','black')
 
 
-% Wind plot
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% WIND %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set(fig,'currentaxes',axWind);
 cla(axWind)
 % Create Circle
@@ -174,12 +231,12 @@ plot(axWind,xcircle,ycircle,'-k','linewidth',1.25);hold on
 axis image;axis([-1.05 1.05 -1.05 1.05])
 [uWind vWind] = pol2cart((90-dirWind)*pi/180, 1); 
 arrow([uWind vWind],[0 0],'baseangle',45,'width',magWind,'tipangle',25,'facecolor','red','edgecolor','red');
-[uText vText] = pol2cart((90-180-dirWind)*pi/180,0.25); %position text off tip of arrow
+[uText vText] = pol2cart((90-180-dirWind)*pi/180,0.28); %position text off tip of arrow
 text(uText,vText,[num2str(magWind),' m/s'],'horizontalalignment','center','interpreter','latex')
 set(axWind,'xtick',[],'ytick',[],'xcolor','w','ycolor','w')
 title('Wind','fontsize',14,'interpreter','latex')
 
-% Discharge plot
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DISCHARGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set(fig,'currentaxes',axDischarge)
 cla(axDischarge)
 hold(axDischarge,'on')
@@ -197,7 +254,6 @@ box on
 title('Discharge','fontsize',14,'interpreter','latex')
  
 
-
-% save and close current figure
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SAVE & CLOSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 print(fig,'-dpng','-r100',timexFile)
 close(fig)

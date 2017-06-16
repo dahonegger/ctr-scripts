@@ -1,25 +1,26 @@
-tic
-addpath(genpath('C:\Data\CTR\scripts-master'))
-addpath(genpath('C:\Data\CTR\supportData'))
 
+%% USER INPUTS
+% add paths to CTR HUB Support Data and GitHub Repository
+addpath(genpath('E:\SupportData')) %CTR HUB 
+addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
+
+% add path to mat files and choose directory for png's   
 baseDir = 'D:\Data\CTR\DAQ-data\processed\';
 saveDir = 'D:\Data\CTR\postprocessed\timex_tides';
-% saveDir = 'C:\Data\CTR\postprocessed\timeZoom';
+
+% rewrite existing files in save directory? true=yes
 doOverwrite = true;
 
-
-
+%% 
 if ~exist(saveDir);mkdir(saveDir);end
 dayFolder = dir([baseDir,'2017*']);
 
 imgId = 1;
 for iDay = 1:length(dayFolder)
-% for iDay = 1:1
         
     dayFolder(iDay).polRun = dir(fullfile(baseDir,dayFolder(iDay).name,'*_pol.mat'));
     
         for iRun = 1:length(dayFolder(iDay).polRun)
-%           for iRun = 1:1
             
             fprintf('%3.f of %3.f in dir %3.f of %3.f: ',...
                 iRun,length(dayFolder(iDay).polRun),...
@@ -45,4 +46,4 @@ for iDay = 1:length(dayFolder)
           end
         
 end
-toc            
+      
