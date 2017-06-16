@@ -32,8 +32,6 @@ timeZone = A{6};
 zetaIn(1) = A{7};
 
 B = textscan(fid,'%04.f-%2d-%2d  %2d:%2d %3c %f');
-fclose(fid);
-
 
 dnIn = [dnIn;...
     datenum(double([B{1} B{2} B{3} B{4} B{5} 0*B{1}]))];
@@ -53,3 +51,4 @@ else
 end
 
 meta.timeZone = timeZone;
+fclose(fid);
