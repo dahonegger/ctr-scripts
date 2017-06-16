@@ -1,0 +1,8 @@
+D:\Data\CTR\DAQ-data\processed\2017-06-11\LyndePt_20171620900_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\Data\CTR\DAQ-data\processed\2017-06-12\LyndePt_20171630037_pol.mat: C:\Data\CTR\scripts-master\batchScripts\temp00547 could not be removed.
+
+D:\Data\CTR\DAQ-data\processed\2017-06-12\LyndePt_20171631431_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\Data\CTR\DAQ-data\processed\2017-06-11\LyndePt_20171620900_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+D:\Data\CTR\DAQ-data\processed\2017-06-12\LyndePt_20171631431_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+C:\Data\CTR\DAQ-data\processed\2017-05-26\LyndePt_20171461700_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
+C:\Data\CTR\DAQ-data\processed\2017-05-26\LyndePt_20171461700_pol.mat: In an assignment  A(:) = B, the number of elements in A and B must be the same.
