@@ -1,6 +1,0 @@
-function [ lat,lon ] = kmzToMatlab( fname )
-%kmzPtsToMatlab
-
-% Alex Simpson 
-end
-
