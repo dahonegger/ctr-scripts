@@ -17,8 +17,14 @@ userOriginLonLat        = [-72.343472 41.271747];   % Use these lat-lon origin c
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LOAD DATA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Load radar data
-load(cubeFile,'Azi','Rg','results','data','timeInt')
-
+% load(cubeFile,'Azi','Rg','results','data','timeInt')
+load(cubeFile,'Azi','Rg','results','timex','timeInt') % 6/16/17 with new process scheme, 'timex' available
+if ~exist('timex','var') || isempty(timex)
+    load(cubeFile,'data')
+    timex = double(mean(data,3));
+else
+end
+    
 % Implement user overrides
 if ~isempty(userHeading)
     heading = userHeading;
@@ -45,8 +51,9 @@ TH = pi/180*(90-AZI-heading);
 [xdom,ydom] = pol2cart(TH,RG);
 xdom = xdom + x0;
 ydom = ydom + y0;
+
 % Compute timex
-timex = mean(data,3);
+% timex = mean(data,3); %6/16/17 no longer need to do 
 
 nowTime = epoch2Matlab(mean(timeInt(:))); % UTC
 if nowTime < datenum(2017,05,26,20,0,0)
@@ -101,7 +108,7 @@ moorY = moorN - radN;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
-fig = figure('visible','on');
+fig = figure('visible','off');
 fig.PaperUnits = 'inches';
 fig.PaperPosition = [0 0 12.8 7.2];
 fig.Units = 'pixels';
@@ -171,7 +178,7 @@ refText3 = text(arX.RB+1.78.*arRef1,arY.RB+1.78.*arRef1,'1.5');
 set(refText3,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
 
 % make CP scale bars
-% plot([arX.CP-arRef1 arX.CP+arRef1],[arY.CP arY.CP],'-k','linewidth',1)
+plot([arX.CP-arRef1 arX.CP+arRef1],[arY.CP arY.CP],'-k','linewidth',1)
 % plot([arX.CP-arRef1 arX.CP-arRef1],[arY.CP+arRef2 arY.CP-arRef2],'-k','linewidth',1)
 % plot([arX.CP+arRef1 arX.CP+arRef1],[arY.CP+arRef2 arY.CP-arRef2],'-k','linewidth',1)
 
@@ -182,20 +189,22 @@ plot([arX.RB arX.RB],[arY.RB-arRef1 arY.RB+arRef1],'-k','linewidth',1)
 
 % direction current in sound (Cornfield Point "CP") - GREEN
 arLength.CP = yCurrent.CP(nowIndex.CP).*arScale;
+scaleFactor.CP = abs(yCurrent.CP(nowIndex.CP));
 ar1w = arrow([arX.CP arY.CP],[arX.CP-arLength.CP arY.CP],'width',...
-    yCurrent.CP(nowIndex.CP).*12,...
+    yCurrent.CP(nowIndex.CP).*12,'length',scaleFactor.CP.*40,...
     'baseangle',yCurrent.CP(nowIndex.CP).*90,'tipangle',yCurrent.CP(nowIndex.CP).*40,'facecolor','white','edgecolor','black');
 
 ar1 = arrow([arX.CP arY.CP],[arX.CP-arLength.CP arY.CP],'width',...
-    yCurrent.CP(nowIndex.CP).*12,...
+    yCurrent.CP(nowIndex.CP).*12,'length',scaleFactor.CP.*40,...
     'baseangle',yCurrent.CP(nowIndex.CP).*90,'tipangle',yCurrent.CP(nowIndex.CP).*40,'facecolor','green','edgecolor','black');
 alpha(ar1,0.25)
 
 
 % direction current in river (railroad bridge "RB") - BLUE
 arLength.RB = arScale.*yCurrent.RB(nowIndex.RB);
+scaleFactor.RB = abs(yCurrent.RB(nowIndex.RB));
 ar2 = arrow([arX.RB arY.RB],[arX.RB arY.RB+arLength.RB],'width',...
-    yCurrent.RB(nowIndex.RB).*12,...
+    yCurrent.RB(nowIndex.RB).*12,'length',scaleFactor.RB.*40,...
     'baseangle',yCurrent.RB(nowIndex.RB).*90,'tipangle',yCurrent.RB(nowIndex.RB).*40,'facecolor','blue','edgecolor','black');
 
 
@@ -269,7 +278,7 @@ hy1 = ylabel('Discharge [ft$^3$/s]','fontsize',11,'interpreter','latex');
 box on
 title('Discharge','fontsize',14,'interpreter','latex')
  
-
+warning('off','all')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SAVE & CLOSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 print(fig,'-dpng','-r100',timexFile)
 close(fig)
