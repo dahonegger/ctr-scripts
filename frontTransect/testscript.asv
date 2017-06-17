@@ -1,5 +1,6 @@
 addpath(genpath(fileparts(pwd)))
-cubeDir = 'D:\DAQ-data\';
+% cubeDir = 'E:\DAQ-data\';
+cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
 files = getFiles(cubeDir);
 
@@ -103,21 +104,17 @@ stackFig = figure;
         shading interp
         datetick('y','keeplimits')
     
-%% Compute gradient
+%% Convert to image
 
-[dIds,dIdn] = gradient(Itx);
-DI = hypot(dIds,dIdn);
-
-gradientFig = figure;
-    hp = pcolor(stx,dn,dIds.^2);
-        shading interp
-        datetick('y','keeplimits')
+[grd.stx,grd.dn] = ndgrid(stx,dn);
+gInt = griddedInterpolant(grd.stx,grd.dn,Itx');
+[reg.stx,reg.dn] = meshgrid(stx,dn(1):5
 
 %% Find front location
 
-for i = 1:length(dn)
-    % First point
-    if i==1
-        [minval,idx] = min
+% for i = 1:length(dn)
+%     % First point
+%     if i==1
+%         [minval,idx] = min
     
     

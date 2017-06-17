@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0065)http://www.peterkovesi.com/matlabfns/FingerPrints/Docs/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Example of fingerprint enhancement</title>
+<link href="./Example of fingerprint enhancement_files/pkstylesheet.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+<h2>Example of fingerprint enhancement</h2>
+
+<p> This code loosely follows the approach presented by <br>
+Hong, L., Wan, Y., and Jain, A. K. 'Fingerprint image enhancement:
+Algorithm and performance evaluation'. IEEE Transactions on Pattern
+Analysis and Machine Intelligence 20, 8 (1998), pp 777-789.
+
+</p><p>Ridge regions in the image are identified and normalised, ridge
+orientations are determined, local ridge frequencies calculated, and
+then contextual filters with the appropriate orientation and frequency
+are applied.
+
+
+</p><hr>
+
+<center>
+<a href="http://www.peterkovesi.com/matlabfns/FingerPrints/Docs/finger.png"><img src="./Example of fingerprint enhancement_files/fingersm.png"></a><p>finger.png
+</p></center>
+
+
+<pre>    im = imread('finger.png');
+
+    
+    % Identify ridge-like regions and normalise image
+    blksze = 16; thresh = 0.1;
+    [normim, mask] = ridgesegment(im, blksze, thresh);
+    show(normim,1);
+
+    % Determine ridge orientations
+    [orientim, reliability] = ridgeorient(normim, 1, 5, 5);
+    plotridgeorient(orientim, 20, im, 2)
+    show(reliability,6)
+</pre>
+<center>
+<table>
+<tbody><tr>
+<td align="center">
+<img src="./Example of fingerprint enhancement_files/orientsm.png"><p>Orientations overlaid
+</p></td><td align="center"><img src="./Example of fingerprint enhancement_files/reliasm.png"><p>'Reliability' of orientations
+</p></td></tr></tbody></table>
+<pre>    
+    % Determine ridge frequency values across the image
+    blksze = 36; 
+    [freq, medfreq] = ridgefreq(normim, mask, orientim, blksze, 5, 5, 15);
+    show(freq,3) 
+</pre>
+<center>
+<img src="./Example of fingerprint enhancement_files/freqsm.png"><p>Frequency data
+</p></center>
+<pre>    
+    % Actually I find the median frequency value used across the whole
+    % fingerprint gives a more satisfactory result...    
+    freq = medfreq.*mask;
+    
+    % Now apply filters to enhance the ridge pattern
+    newim = ridgefilter(normim, orientim, freq, 0.5, 0.5, 1);
+    show(newim,4);
+</pre>
+<center>
+<img src="./Example of fingerprint enhancement_files/newimsm.png"><p>Filtered image
+</p></center>
+<pre>        
+    % Binarise, ridge/valley threshold is 0
+    binim = newim &gt; 0;
+    show(binim,5);
+</pre>
+<center>
+<img src="./Example of fingerprint enhancement_files/binimsm.png"><p>Binary image
+</p></center>
+<pre>    
+    % Display binary image for where the mask values are one and where
+    % the orientation reliability is greater than 0.5
+    show(binim.*mask.*(reliability&gt;0.5), 7)
+</pre>
+
+<center>
+<table>
+<tbody><tr>
+<td align="center">
+<img src="./Example of fingerprint enhancement_files/finalsm.png"><p>Masked binary image
+</p></td><td align="center"><img src="./Example of fingerprint enhancement_files/fingersm.png"><p>Original image
+</p></td></tr></tbody></table>
+</center>
+
+
+<p>It would probably be sensible to apply a morphological closing to
+the (reliability &gt; 0.5) masking image so that small 'holes' in the
+reliability data (which often occur at minutiae points) are removed.
+
+</p><p>Download this <a href="http://www.peterkovesi.com/matlabfns/FingerPrints/Docs/testfin.m">code example</a>
+
+</p><p>I leave it to you to thin the binary image and then try to pick out the valid minutiae...
+
+
+
+
+
+</p></center></body></html>

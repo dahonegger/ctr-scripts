@@ -1,5 +1,6 @@
 addpath(genpath(fileparts(pwd)))
-cubeDir = 'D:\DAQ-data\';
+% cubeDir = 'E:\DAQ-data\';
+cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
 files = getFiles(cubeDir);
 
@@ -95,6 +96,8 @@ for i = 1:length(files)
     end
     fprintf('\n')
 end
+midNum = fix(length(files)/2);
+load([files(fix(length(files)/2))
 
 %% Plot stack
 
@@ -103,21 +106,68 @@ stackFig = figure;
         shading interp
         datetick('y','keeplimits')
     
-%% Compute gradient
+%% Convert to image
 
-[dIds,dIdn] = gradient(Itx);
-DI = hypot(dIds,dIdn);
+[grd.stx,grd.dn] = ndgrid(stx,dn);
+gInt = griddedInterpolant(grd.stx,grd.dn,Itx');
+[reg.stx,reg.dn] = meshgrid(stx,dn(1):3/60/24:dn(end));
+reg.Itx = gInt(reg.stx,reg.dn);
 
-gradientFig = figure;
-    hp = pcolor(stx,dn,log(abs(dIds)));
-        shading interp
-        datetick('y','keeplimits')
+imFig = figure;
+    imagesc(reg.stx(1,:),reg.dn(:,1),reg.Itx)
+    axis xy
 
-%% Find front location
+%% Image processing start:
 
-for i = 1:length(dn)
-    % First point
-    if i==1
-        [minval,idx] = min
+
+im = flipud(reg.Itx);
+im = uint8(bfWrapper(double(im)));
+
+% Ridge
+    blksze = 6; thresh = .2;
+    [normim, mask] = ridgesegment(im, blksze, thresh);
+    show(normim,1);
+
+    % Determine ridge orientations
+    [orientim, reliability, coherence] = ridgeorient(normim, 1, 3,3);
+    figure;imagesc(reliability)
+    
+    plotridgeorient(orientim, 5, im, 2)
+    show(reliability,6)
+    
+% Determine ridge frequency values across the image
+    blksze = 20; 
+    [freq, medfreq] = ridgefreq(normim, mask, orientim, blksze, 5, 5, 50);
+    show(freq,3) 
+% Actually I find the median frequency value used across the whole
+    % fingerprint gives a more satisfactory result...    
+    freq = medfreq.*mask;
+    
+    % Now apply filters to enhance the ridge pattern
+    newim = ridgefilter(normim, orientim, freq, 0.5, 0.5, 1);
+    show(newim,4);
+    
+    % Binarise, ridge/valley threshold is 0
+    binim = newim > 0;
+    show(binim,5);
     
     
+    % Display binary image for where the mask values are one and where
+    % the orientation reliability is greater than 0.5
+    show(binim.*mask.*(reliability>0.6), 7)
+%%
+im2edge = newim;
+% edgeim = edge(reg.Itx,'canny',[.05 .1],2);
+edgeim = edge(im2edge,'canny',[.05 .2],2);
+
+figure;imshow(im2edge)
+
+
+imFig1 = figure;
+    imshow(edgeim);
+
+% edgelink
+[edgelist,labelededgeim] = edgelink(edgeim,100);
+
+imFig2 = figure;
+    drawedgelist(edgelist,size(im),1,'rand',2);
