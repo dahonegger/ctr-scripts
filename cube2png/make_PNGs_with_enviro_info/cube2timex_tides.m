@@ -159,6 +159,7 @@ arW = .5; arH = 2;
 arX.RB = 2.45; arY.RB = 3.4;
 arX.CP = arX.RB; arY.CP = arY.RB;
 
+
 % make background
 theta = linspace(0,2*pi,200); 
 [circle1X, circle1Y] = pol2cart(theta,arRef1); % .5 m/s
@@ -189,23 +190,32 @@ plot([arX.RB arX.RB],[arY.RB-arRef1 arY.RB+arRef1],'-k','linewidth',1)
 
 % direction current in sound (Cornfield Point "CP") - GREEN
 arLength.CP = yCurrent.CP(nowIndex.CP).*arScale;
-scaleFactor.CP = abs(yCurrent.CP(nowIndex.CP));
+scaleWidth.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*15;
+scaleLength.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*40;
+scaleBaseangle.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*90;
+scaleTipangle.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*50;
+
 ar1w = arrow([arX.CP arY.CP],[arX.CP-arLength.CP arY.CP],'width',...
-    yCurrent.CP(nowIndex.CP).*12,'length',scaleFactor.CP.*40,...
-    'baseangle',yCurrent.CP(nowIndex.CP).*90,'tipangle',yCurrent.CP(nowIndex.CP).*40,'facecolor','white','edgecolor','black');
+    scaleWidth.CP,'length',scaleLength.CP,'baseangle',scaleBaseangle.CP,...
+    'tipangle',scaleTipangle.CP,'facecolor','white','edgecolor','black');
 
 ar1 = arrow([arX.CP arY.CP],[arX.CP-arLength.CP arY.CP],'width',...
-    yCurrent.CP(nowIndex.CP).*12,'length',scaleFactor.CP.*40,...
-    'baseangle',yCurrent.CP(nowIndex.CP).*90,'tipangle',yCurrent.CP(nowIndex.CP).*40,'facecolor','green','edgecolor','black');
-alpha(ar1,0.25)
+    scaleWidth.CP,'length',scaleLength.CP,'baseangle',scaleBaseangle.CP,...
+    'tipangle',scaleTipangle.CP,'facecolor','green','edgecolor','black');
+
+alpha(ar1,0.3)
 
 
 % direction current in river (railroad bridge "RB") - BLUE
 arLength.RB = arScale.*yCurrent.RB(nowIndex.RB);
-scaleFactor.RB = abs(yCurrent.RB(nowIndex.RB));
+scaleWidth.RB = min(abs(yCurrent.RB(nowIndex.RB)),0.5).*15;
+scaleLength.RB = min(abs(yCurrent.RB(nowIndex.RB)),0.5).*40;
+scaleBaseangle.RB = min(abs(yCurrent.RB(nowIndex.RB)),0.5).*90;
+scaleTipangle.RB = min(abs(yCurrent.RB(nowIndex.RB)),0.5).*50;
+
 ar2 = arrow([arX.RB arY.RB],[arX.RB arY.RB+arLength.RB],'width',...
-    yCurrent.RB(nowIndex.RB).*12,'length',scaleFactor.RB.*40,...
-    'baseangle',yCurrent.RB(nowIndex.RB).*90,'tipangle',yCurrent.RB(nowIndex.RB).*40,'facecolor','blue','edgecolor','black');
+    scaleWidth.RB,'length',scaleLength.RB,'baseangle',scaleBaseangle.RB,...
+    'tipangle',scaleTipangle.RB,'facecolor','blue','edgecolor','black');
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIDE SIGNAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

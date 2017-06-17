@@ -9,12 +9,8 @@ baseDir = 'E:\DAQ-data\processed\';
 saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo2\';
 
 % rewrite existing files in save directory? true=yes
-doOverwrite = true;
+doOverwrite = false;
 
-% OPTIONAL: User-Defined Processing Start Day and Time
-startMonth = 5;
-startDay = 28;
-startTime = 0200;
 
 %% 
 if ~exist(saveDir);mkdir(saveDir);end
