@@ -1,8 +1,10 @@
+%% Patched by D. Honegger to allow for nonsquare pixel sizes 2017-06-18
 %
 % output = bilateralFilter( data, edge, ...
 %                          edgeMin, edgeMax, ...
 %                          sigmaSpatial, sigmaRange, ...
-%                          samplingSpatial, samplingRange )
+%                          samplingSpatial, samplingRange ,...
+%                          asymmetryFactor)
 %
 % Bilateral and Cross-Bilateral Filter using the Bilateral Grid.
 %
@@ -43,9 +45,13 @@
 % samplingSpatial = sigmaSpatial
 % samplingRange = sigmaRange
 %
+%
+% asymmetryFactor allows for nonsquare pixel sizes:
+% If the asymmetryFactor > 1, this normalizes tall, narrow pixels ( | )
+% If the asymmetryFactor < 1, this normalizes short, wide pixels ( - )
 
 function output = bilateralFilter( data, edge, edgeMin, edgeMax, sigmaSpatial, sigmaRange, ...
-    samplingSpatial, samplingRange )
+    samplingSpatial, samplingRange)
 
 if( ndims( data ) > 2 ),
     error( 'data must be a greyscale image with size [ height, width ]' );
@@ -101,6 +107,10 @@ end
 if ~exist( 'samplingRange', 'var' ) || isempty(samplingRange),
     samplingRange = sigmaRange;
 end
+
+% if ~exist( 'asymmetryFactor', 'var' ) || isempty(asymmetryFactor),
+%     asymmetryFactor = 1;
+% end
 
 if size( data ) ~= size( edge ),
     error( 'data and edge must be of the same size' );

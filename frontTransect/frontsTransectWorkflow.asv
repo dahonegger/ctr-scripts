@@ -25,7 +25,7 @@ dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
 cubeDir = fullfile('E:','DAQ-data','processed');
 % cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
-thisEbbMax = dnMaxEbb(59);
+thisEbbMax = dnMaxEbb(52);
 disp(datestr(thisEbbMax))
 deltaDn = 5/60/24;
 dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
@@ -105,7 +105,6 @@ for i = 1:length(cubeName)
         rotTimes = epoch2Matlab(mean(timeInt));
         dnIdx = find(strcmp(cubeName{i},cubeNamesAll(:)));
         rotIdx = interp1(rotTimes(32:end-32),32:header.rotations-32,dnVec(dnIdx),'nearest','extrap');
-        rotIdx = unique(rotIdx);
         for j = rotIdx
             fprintf('%d.',j)
             thisFrame = fdata(minRange:end,:,j);
@@ -189,9 +188,45 @@ stxMaxCat = stxMaxCat(~nanIdx);
 dnMaxCat = dnMaxCat(~nanIdx);
 maxCat = [stxMaxCat(:) dnMaxCat(:)];
 maxCatUnique = unique(maxCat,'rows');
+stxMaxCat = maxCatUnique(:,1);
+dnMaxCat = maxCatUnique(:,2);
 %% SMOOTH RESULTING CURVE TO FILTER OUT NOISE
 stxMaxCat = maxCatUnique(:,1);
 dnMaxCat = maxCatUnique(:,2);
+% percentileVec = [75,75];
+% for iter = 1
+%     clear ddn dstx
+%     for i = 1:length(dnMaxCat)
+%         for j = 1:length(stxMaxCat)
+%             ddn(i,j) = (dnMaxCat(i)-dnMaxCat(j)).^2;
+%             dstx(i,j) = (stxMaxCat(i)-stxMaxCat(j)).^2;
+%         end
+%     end
+%     idnjumpers = [0;abs(mean(diff(ddn),2))];
+%     thresh = prctile(idnjumpers,percentileVec(iter));
+%     idnbad = idnjumpers>thresh;
+%     
+%     istxjumpers = [0 abs(mean(diff(dstx,[],2)))];
+%     thresh = prctile(istxjumpers,percentileVec(iter));
+%     istxbad = istxjumpers>thresh;
+% 
+%     
+%     keyboard
+%     
+%     dnMaxCat = dnMaxCat(~idnbad | ~istxbad');
+%     stxMaxCat = stxMaxCat(~idnbad | ~istxbad');
+% end
+% 
+% filterWidth = 100;
+% 
+% dnFrontSmooth = medfilt1(dnMaxCat,filterWidth,'truncate');
+% sFrontSmooth = stxMaxCat;
+
+% [dnFrontSmooth,dnGoodness] = fit(1:length(dnMaxCat),dnMaxCat,'smoothingspline');
+% [sFrontSmooth,stxGoodness] = fit(1:length(stxMaxCat),stxMaxCat,'smoothingspline');
+
+% dnFrontSmooth = smooth(dnMaxCat,filterWidth,'rloess');
+% sFrontSmooth = smooth(stxMaxCat,filterWidth,'rloess');
 
 hampelWidths = [100 50 25 12 6 3];
 dnFrontSmooth = dnMaxCat;
@@ -273,6 +308,5 @@ txOut.txName = transectPrefix;
 
 saveName = sprintf('%s_%s_to_%s',transectPrefix,datestr(txOut.dnFront(1),'yyyymmddTHHMMSSZ'),datestr(txOut.dnFront(end),'yyyymmddTHHMMSSZ'));
 if ~exist(savePath,'dir');mkdir(savePath);end
-if exist(fullfile(savePath,saveName),'file');disp('File to save exists. Do so manually.\n');keyboard;end
+if exist(
 save(fullfile(savePath,saveName),'-v7.3','-struct','txOut')
-fprintf('Transect Saved to: %s\n',fullfile(savePath,saveName))

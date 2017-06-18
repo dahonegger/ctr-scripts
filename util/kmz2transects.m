@@ -1,17 +1,21 @@
-function [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName,doPlot)
+function [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName,bufferLength,doPlot)
 % kmz2transects:
-% [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName,doPlot)
+% [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName,bufferLength,doPlot)
 
 % created to work with input file kmzName = 'mission planning whoi 2.kmz';
     %   unzips .kmz to .kml
     %   reads in rectangle corners
     %   draws transect through midpoint of rectangles, lengthwise
+    %   adds points past the ends to the transects (bufferLength)
     %   creates plot !!!IF doPlot=true!!!
 
 % outputs:
     %    transects are 2xN arrays containing N lat,lon pairs
 	%    fig is a figure showing bounding boxes and transects
    
+if ~exist('bufferLength','var') || isempty(bufferLength)
+    bufferLength = 0;
+end
 if ~exist('doPlot','var') || isempty(doPlot)
     doPlot = false;
 end
@@ -46,9 +50,9 @@ whoi.yutmwp = [whoi.mpA(2),whoi.mpB(2)];
 whoi.xwp = whoi.xutmwp;
 whoi.ywp = whoi.yutmwp;
 whoi.s = hypot(diff(whoi.xwp),diff(whoi.ywp));
-whoi.stx = 0:10:whoi.s;
-whoi.xtx = interp1([0 whoi.s],whoi.xwp,whoi.stx);
-whoi.ytx = interp1([0 whoi.s],whoi.ywp,whoi.stx);
+whoi.stx = (0-bufferLength):10:(whoi.s+bufferLength);
+whoi.xtx = interp1([0 whoi.s],whoi.xwp,whoi.stx,'linear','extrap');
+whoi.ytx = interp1([0 whoi.s],whoi.ywp,whoi.stx,'linear','extrap');
 whoi.Etx = whoi.xtx; 
 whoi.Ntx = whoi.ytx;
 [whoi.Lattx whoi.Lontx] = UTM2ll(whoi.Ntx, whoi.Etx, 18);
@@ -65,9 +69,9 @@ apl.yutmwp = [apl.mpA(2),apl.mpB(2)];
 apl.xwp = apl.xutmwp;
 apl.ywp = apl.yutmwp;
 apl.s = hypot(diff(apl.xwp),diff(apl.ywp));
-apl.stx = 0:10:apl.s;
-apl.xtx = interp1([0 apl.s],apl.xwp,apl.stx);
-apl.ytx = interp1([0 apl.s],apl.ywp,apl.stx);
+apl.stx = (0-bufferLength):10:(apl.s+bufferLength);
+apl.xtx = interp1([0 apl.s],apl.xwp,apl.stx,'linear','extrap');
+apl.ytx = interp1([0 apl.s],apl.ywp,apl.stx,'linear','extrap');
 apl.Etx = apl.xtx; 
 apl.Ntx = apl.ytx;
 [apl.Lattx apl.Lontx] = UTM2ll(apl.Ntx, apl.Etx, 18);
@@ -85,9 +89,9 @@ ut.yutmwp = [ut.mpA(2),ut.mpB(2)];
 ut.xwp = ut.xutmwp;
 ut.ywp = ut.yutmwp;
 ut.s = hypot(diff(ut.xwp),diff(ut.ywp));
-ut.stx = 0:10:ut.s;
-ut.xtx = interp1([0 ut.s],ut.xwp,ut.stx);
-ut.ytx = interp1([0 ut.s],ut.ywp,ut.stx);
+ut.stx = (0-bufferLength):10:(ut.s+bufferLength);
+ut.xtx = interp1([0 ut.s],ut.xwp,ut.stx,'linear','extrap');
+ut.ytx = interp1([0 ut.s],ut.ywp,ut.stx,'linear','extrap');
 ut.Etx = ut.xtx; 
 ut.Ntx = ut.ytx;
 [ut.Lattx,ut.Lontx] = UTM2ll(ut.Ntx, ut.Etx, 18);
