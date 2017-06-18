@@ -97,12 +97,12 @@ for i = 1:length(files)
     fprintf('\n')
 end
 midNum = fix(length(files)/2);
-load([files(fix(length(files)/2))
+load([files(fix(length(files)/2)).folder,files(fix(length(files)/2)).name])
 
 %% Plot stack
 
 stackFig = figure;
-    hp = pcolor(stx,dn,Itx);
+    hp = pcolor(stx,dn,bfWrapper(double(Itx)));
         shading interp
         datetick('y','keeplimits')
     
@@ -110,12 +110,25 @@ stackFig = figure;
 
 [grd.stx,grd.dn] = ndgrid(stx,dn);
 gInt = griddedInterpolant(grd.stx,grd.dn,Itx');
-[reg.stx,reg.dn] = meshgrid(stx,dn(1):3/60/24:dn(end));
+[reg.stx,reg.dn] = meshgrid(stx,dn(1):1/60/24:dn(end));
 reg.Itx = gInt(reg.stx,reg.dn);
 
 imFig = figure;
     imagesc(reg.stx(1,:),reg.dn(:,1),reg.Itx)
     axis xy
+
+%% Frangi filter
+
+im = uint8(flipud(reg.Itx));
+im = uint8(bfWrapper(double(im)));
+opts.BlackWhite = false;
+opts.FrangiScaleRange = [1 4];
+opts.FrangiScaleRatio = 1;
+[Iout,scale,direction] = FrangiFilter2D(single(im),opts);
+figure;imshow(Iout);
+
+% figure;imshow(Iout>0.5)
+
 
 %% Image processing start:
 
@@ -156,7 +169,8 @@ im = uint8(bfWrapper(double(im)));
     % the orientation reliability is greater than 0.5
     show(binim.*mask.*(reliability>0.6), 7)
 %%
-im2edge = newim;
+im2edge = uint8(flipud(reg.Itx));
+im2edge = uint8(bfWrapper(double(im2edge)));
 % edgeim = edge(reg.Itx,'canny',[.05 .1],2);
 edgeim = edge(im2edge,'canny',[.05 .2],2);
 
@@ -167,7 +181,7 @@ imFig1 = figure;
     imshow(edgeim);
 
 % edgelink
-[edgelist,labelededgeim] = edgelink(edgeim,100);
+[edgelist,labelededgeim] = edgelink(edgeim,300);
 
 imFig2 = figure;
     drawedgelist(edgelist,size(im),1,'rand',2);
