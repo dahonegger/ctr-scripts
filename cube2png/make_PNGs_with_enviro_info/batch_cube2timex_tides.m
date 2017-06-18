@@ -6,15 +6,26 @@ addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 
 % add path to mat files and choose directory for png's   
 baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo\';
+saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo3\';
 
 % rewrite existing files in save directory? true=yes
 doOverwrite = false;
 
-%% 
+% Download new files?
+downloadWind = true;
+
+
+%% Prep files
+% make save directory
 if ~exist(saveDir);mkdir(saveDir);end
 dayFolder = dir([baseDir,'2017*']);
 
+% download environmental files
+% WIND: buoy number, save directory, save fname
+if downloadWind;fetchNDBCWind(44039,'E:\SupportData\Wind','MetData_NDBC44039.txt'); end 
+
+
+%% Process Files 
 imgId = 1;
 for iDay = 1:length(dayFolder)
         
