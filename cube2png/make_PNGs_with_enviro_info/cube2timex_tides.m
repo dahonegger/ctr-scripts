@@ -19,6 +19,7 @@ userOriginLonLat        = [-72.343472 41.271747];   % Use these lat-lon origin c
 % Load radar data
 % load(cubeFile,'Azi','Rg','results','data','timeInt')
 load(cubeFile,'Azi','Rg','results','timex','timeInt') % 6/16/17 with new process scheme, 'timex' available
+[a, MSGID] = lastwarn();warning('off', MSGID);
 if ~exist('timex','var') || isempty(timex)
     load(cubeFile,'data')
     timex = double(mean(data,3));
@@ -100,10 +101,10 @@ moorY = moorN - radN;
    
 % Load wind data from wind station file
 % [dnWind,magWind,dirWind] = loadWindStation('SABC3.csv', nowTime); 
-
+[dnWind,magWind,dirWind] = loadWindNDBC('MetData_NDBC44039.txt', nowTime);
 
 % Load discharge data from USGS file
-[dnDischarge,rawDischarge,trDischarge] = loadDischarge('CTdischarge_Site01193050.txt');
+[dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS('CTdischarge_Site01193050.txt');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
@@ -266,7 +267,7 @@ axis image;axis([-1.05 1.05 -1.05 1.05])
 [uWind vWind] = pol2cart((90-dirWind)*pi/180, 1); 
 arrow([uWind vWind],[0 0],'baseangle',45,'width',magWind,'tipangle',25,'facecolor','red','edgecolor','red');
 [uText vText] = pol2cart((90-180-dirWind)*pi/180,0.28); %position text off tip of arrow
-text(uText,vText,[num2str(magWind),' m/s'],'horizontalalignment','center','interpreter','latex')
+text(uText,vText,[num2str(round(magWind,1)),' m/s'],'horizontalalignment','center','interpreter','latex')
 set(axWind,'xtick',[],'ytick',[],'xcolor','w','ycolor','w')
 title('Wind','fontsize',14,'interpreter','latex')
 

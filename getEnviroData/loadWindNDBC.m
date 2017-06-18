@@ -33,23 +33,30 @@ while ~feof(fid)
     k=k+1;
 end
 fclose(fid);
-
 if nargin > 1
-    tmp = abs(dnWind-tquery);
+    
+    tmp = min(abs(dnWind-tquery));
     if tmp > 60 %when file runs out...
         % KEEP ERROR IF YOU WANT PROCESSING TO STOP
         msg = 'There is no wind information available within 60 mins of the radar file.';
-        error(msg);
+        fprintf(msg);
+%         error(msg);
         % UNCOMMENT BELOW IF YOU WANT PROCESSING TO CONTINUE, WITHOUT WIND DATA
-%         [idx idx] = 0; %index of closest value
-%         dnWind = tquery; %closest time 
-%         vWind = 0;
-%         dirWind = 0;
+        dnWind = tquery; %closest time 
+        vWind = 0.1;
+        dirWind = 0;
     else
-        [idx idx] = min(tmp); %index of closest value
-        dnWind = dnWind(idx); %closest time 
-        vWind = vWind(idx);
-        dirWind = dirWind(idx);
+          [dnWind, index] = unique(dnWind);  
+          dirWind = interp1(dnWind,dirWind(index),tquery);
+          vWind = interp1(dnWind,vWind(index),tquery);
+          dnWind = tquery;
+        
+        
+%         [idx idx] = min(tmp); %index of closest value
+%         dnWind = dnWind(idx); %closest time 
+%         vWind = vWind(idx);
+%         dirWind = dirWind(idx);
+   
     end
 else
 end

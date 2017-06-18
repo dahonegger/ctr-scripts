@@ -131,7 +131,7 @@ persistent ARROW_PERSP_WARN ARROW_STRETCH_WARN ARROW_AXLIMITS ARROW_AX
 if isempty(ARROW_PERSP_WARN  ), ARROW_PERSP_WARN  =1; end
 if isempty(ARROW_STRETCH_WARN), ARROW_STRETCH_WARN=1; end
 
-dbstack
+% dbstack
 
 % Handle callbacks
 if (nargin>0 && ischar(varargin{1}) && strcmpi(varargin{1},'callback')),
