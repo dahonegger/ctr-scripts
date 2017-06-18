@@ -28,7 +28,7 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 thisEbbMax = dnMaxEbb(63);
 disp(datestr(thisEbbMax))
 deltaDn = 5/60/24;
-dnVec = (thisEbbMax - 2/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
+dnVec = (thisEbbMax - 3/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
 
 clear cubeNamesAll
 tic
