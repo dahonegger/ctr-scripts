@@ -12,8 +12,8 @@ saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo3\';
 doOverwrite = false;
 
 % Download new files?
-downloadWind = true;
-
+downloadWind = false;
+downloadDischarge = false;
 
 %% Prep files
 % make save directory
@@ -22,8 +22,9 @@ dayFolder = dir([baseDir,'2017*']);
 
 % download environmental files
 % WIND: buoy number, save directory, save fname
-if downloadWind;fetchNDBCWind(44039,'E:\SupportData\Wind','MetData_NDBC44039.txt'); end 
-
+if downloadWind;fetchWindNDBC(44039,fullfile('E:\','SupportData','Wind'),'MetData_NDBC44039.txt'); end 
+% DISCHARGE: save directory, save fname 
+if downloadDischarge; fetchDischargeUSGS(fullfile('E:\','SupportData','Discharge'),'CTdischarge_Site01193050.txt');end
 
 %% Process Files 
 imgId = 1;
@@ -51,8 +52,15 @@ for iDay = 1:length(dayFolder)
                 fprintf('%s exists. Skipping ...\n',pngName)
             else
                 fprintf('%s ...',cubeBaseName)
-                cube2timex_tides(cubeName,pngName)
-                fprintf('Done.\n')
+%                 try
+                    cube2timex_tides(cubeName,pngName)
+                    fprintf('Done.\n')
+%                 catch
+%                     fid = fopen(['FAILED_on_file_',pngBaseName,'.txt'], 'wt' );
+%                     fclose(fid)
+%                 end
+
+                    
             end
             
             imgId = imgId + 1;
