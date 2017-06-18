@@ -52,13 +52,13 @@ for iDay = 1:length(dayFolder)
                 fprintf('%s exists. Skipping ...\n',pngName)
             else
                 fprintf('%s ...',cubeBaseName)
-                try
+%                 try
                     cube2timex_tides(cubeName,pngName)
                     fprintf('Done.\n')
-                catch
-                    fid = fopen(['FAILED_on_file_',pngBaseName,'.txt'], 'wt' );
-                    fclose(fid)
-                end
+%                 catch
+%                     fid = fopen(['FAILED_on_file_',pngBaseName,'.txt'], 'wt' );
+%                     fclose(fid)
+%                 end
 
                     
             end

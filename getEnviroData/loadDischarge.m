@@ -6,8 +6,8 @@ function [ dnDischarge,rawDischarge,trDischarge ] = loadDischarge(fname)
 %   outputs:
     %   dnDischarge: datenum time UTC **note that USGS reported is EDT,
         %      this function converts from EDT to UTC
-    %   rawDischarge: raw discharge
-    %   trDischarge: tidally referenced discharge reported by USGS
+    %   rawDischarge: raw discharge (converted to m^3/s)
+    %   trDischarge: tidally referenced discharge reported by USGS (converted to m^3/s)
 
 	% Alex Simpson 6/14/17
 
@@ -33,6 +33,9 @@ end
 
 fclose(fid);
 
+%convert cfs to m^3/s
+rawDischarge = rawDischarge.*(0.3048.^3);
+trDischarge = trDischarge.*(0.3048.^3);
 
 end
 

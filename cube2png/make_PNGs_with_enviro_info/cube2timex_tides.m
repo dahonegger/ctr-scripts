@@ -19,7 +19,7 @@ userOriginLonLat        = [-72.343472 41.271747];   % Use these lat-lon origin c
 % Load radar data
 % load(cubeFile,'Azi','Rg','results','data','timeInt')
 load(cubeFile,'Azi','Rg','results','timex','timeInt') % 6/16/17 with new process scheme, 'timex' available
-[a, MSGID] = lastwarn();warning('off', MSGID);
+% [a, MSGID] = lastwarn();warning('off', MSGID);
 if ~exist('timex','var') || isempty(timex)
     load(cubeFile,'data')
     timex = double(mean(data,3));
@@ -104,7 +104,7 @@ moorY = moorN - radN;
 [dnWind,magWind,dirWind] = loadWindNDBC('MetData_NDBC44039.txt', nowTime);
 
 % Load discharge data from USGS file
-[dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS('CTdischarge_Site01193050.txt');
+[dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS(fullfile('E:\','SupportData','Discharge','CTdischarge_Site01193050.txt'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
@@ -277,18 +277,19 @@ cla(axDischarge)
 hold(axDischarge,'on')
 % plot(dnDischarge,rawDischarge,'-k','linewidth',2) % plots raw discharge
 plot(dnDischarge(~isnan(trDischarge)),trDischarge(~isnan(trDischarge)),'-k','linewidth',2)
+plot(dnDischarge(~isnan(rawDischarge)),rawDischarge(~isnan(rawDischarge)),'-b','linewidth',1)
 plot([nowTime nowTime],[min(rawDischarge)-3000 max(rawDischarge)+3000],'-','color',[.5 .5 .5],'linewidth',2)
 xlim([nowTime-4 nowTime+4])
 ylim([min(rawDischarge)-3000 max(rawDischarge)+3000])
 set(axDischarge,'xtick',fix([nowTime-4:nowTime+4]))
 datetick('x','mmm-dd','keeplimits','keepticks')    
-hy1 = ylabel('Discharge [ft$^3$/s]','fontsize',11,'interpreter','latex');
+hy1 = ylabel('Discharge [m$^3$/s]','fontsize',11,'interpreter','latex');
 % tmp1 = get(hy1,'position');
 % set(hy1,'position',[tmp1(1)+1/50 tmp1(2:3)])
 box on
 title('Discharge','fontsize',14,'interpreter','latex')
  
-warning('off','all')
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SAVE & CLOSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 print(fig,'-dpng','-r100',timexFile)
 close(fig)
