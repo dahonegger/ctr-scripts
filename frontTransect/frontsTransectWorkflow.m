@@ -25,10 +25,10 @@ dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
 cubeDir = fullfile('E:','DAQ-data','processed');
 % cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
-thisEbbMax = dnMaxEbb(59);
+thisEbbMax = dnMaxEbb(63);
 disp(datestr(thisEbbMax))
 deltaDn = 5/60/24;
-dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
+dnVec = (thisEbbMax - 2/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
 
 clear cubeNamesAll
 tic
