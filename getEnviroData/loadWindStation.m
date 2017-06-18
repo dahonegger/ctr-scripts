@@ -34,9 +34,14 @@ fclose(fid);
 
 if nargin > 1
     tmp = abs(dnWind-tquery);
-    if tmp > 60
-        msg = 'There is no wind information available within 60 mins of the radar file.';
-        error(msg);
+    if tmp > 60 %when file runs out...
+%         msg = 'There is no wind information available within 60 mins of the radar file.';
+%         error(msg);
+        [idx idx] = 0; %index of closest value
+        dnWind = tquery; %closest time 
+        vWind = 0;
+        dirWind = 0;
+   
     else
         [idx idx] = min(tmp); %index of closest value
         dnWind = dnWind(idx); %closest time 
