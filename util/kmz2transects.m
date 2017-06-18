@@ -1,16 +1,20 @@
-function [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName)
-% kmz2transects 
+function [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName,doPlot)
+% kmz2transects:
+% [whoiTransect, aplTransect, utTransect, fig] = kmz2transects(kmzName,doPlot)
 
 % created to work with input file kmzName = 'mission planning whoi 2.kmz';
     %   unzips .kmz to .kml
     %   reads in rectangle corners
     %   draws transect through midpoint of rectangles, lengthwise
-    %   creates plot
+    %   creates plot !!!IF doPlot=true!!!
 
 % outputs:
     %    transects are 2xN arrays containing N lat,lon pairs
 	%    fig is a figure showing bounding boxes and transects
    
+if ~exist('doPlot','var') || isempty(doPlot)
+    doPlot = false;
+end
     
 % unzip .kmz by putting doc.kml in temp folder
 tmpID = randi(1e4,1);
@@ -86,7 +90,7 @@ ut.xtx = interp1([0 ut.s],ut.xwp,ut.stx);
 ut.ytx = interp1([0 ut.s],ut.ywp,ut.stx);
 ut.Etx = ut.xtx; 
 ut.Ntx = ut.ytx;
-[ut.Lattx ut.Lontx] = UTM2ll(ut.Ntx, ut.Etx, 18);
+[ut.Lattx,ut.Lontx] = UTM2ll(ut.Ntx, ut.Etx, 18);
 
 
 % make final variables
@@ -95,19 +99,19 @@ aplTransect = [apl.Lattx; apl.Lontx];
 utTransect = [ut.Lattx; ut.Lontx];
 
 
+if doPlot
+    fig=figure;
+    xlabel('lon')
+    ylabel('lat')
+    hold on
+    plot(whoi.boxLons,whoi.boxLats,'-g','linewidth',2)
+    plot(apl.boxLons,apl.boxLats,'-b','linewidth',2)
+    plot(ut.boxLons,ut.boxLats,'-r','linewidth',2)
 
-fig=figure;
-xlabel('lon')
-ylabel('lat')
-hold on
-plot(whoi.boxLons,whoi.boxLats,'-g','linewidth',2)
-plot(apl.boxLons,apl.boxLats,'-b','linewidth',2)
-plot(ut.boxLons,ut.boxLats,'-r','linewidth',2)
-
-plot(whoiTransect(2,:),whoiTransect(1,:),'-k'); text(whoiTransect(2,end),whoiTransect(1,end),'WHOI');
-plot(aplTransect(2,:),aplTransect(1,:),'-k'); text(aplTransect(2,end),aplTransect(1,end),'APL')
-plot(utTransect(2,:),utTransect(1,:),'-k'); text(utTransect(2,end),utTransect(1,end),'UT');
-
+    plot(whoiTransect(2,:),whoiTransect(1,:),'-k'); text(whoiTransect(2,end),whoiTransect(1,end),'WHOI');
+    plot(aplTransect(2,:),aplTransect(1,:),'-k'); text(aplTransect(2,end),aplTransect(1,end),'APL')
+    plot(utTransect(2,:),utTransect(1,:),'-k'); text(utTransect(2,end),utTransect(1,end),'UT');
+end
 
 % delete temp folder
 rmdir(tmpReadFolder,'s')
