@@ -99,8 +99,7 @@ moorY = moorN - radN;
 % moor2 = load('nav_ctriv_deploy_may2017.mat'); %the other file... 
    
 % Load wind data from wind station file
-% [dnWind,magWind,dirWind] = loadWindStation('SABC3.csv', nowTime); 
-
+[dnWind,magWind,dirWind] = loadWindStation('SABC3.csv', nowTime); 
 
 % Load discharge data from USGS file
 [dnDischarge,rawDischarge,trDischarge] = loadDischarge('CTdischarge_Site01193050.txt');

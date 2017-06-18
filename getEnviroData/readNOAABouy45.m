@@ -1,4 +1,4 @@
-function [bouyTime,bouyWSPD,bouyWDIR,bouyPRES]=readNOAABouy(bouyNum,numYears)
+function [bouyTime,bouyWSPD,bouyWDIR,bouyPRES]=readNOAABouy45(bouyNum,numYears)
 %% Copyright 2016 The MathWorks, Inc.
 % Download historical bouy wind data to train the Neural Network.  Note 
 % that the buoy provides wind data with a delay of just over one hour. The data 
