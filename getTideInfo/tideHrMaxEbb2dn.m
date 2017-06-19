@@ -1,4 +1,4 @@
-function dnOut = tideHr2dn(tideHr,dnTide,yTide)
+function dnOut = tideHrMaxEbb2dn(tideHr,dnTide,yTide)
 %
 % This function calculates the real world times associated with a tidal
 % hour, given a tidal time series.

@@ -1,4 +1,4 @@
-function [tideHr,tideNum] = tideHour(dnIn,dnTide,yTide)
+function [tideHr,tideNum] = tideHour(dnIn,dnTide,yTide,allowNeg)
 %
 % This script converts the current time to tide hour (hour after
 % zero-upcrossing) using the tidal time series provided. It'd be smart to
@@ -9,6 +9,8 @@ function [tideHr,tideNum] = tideHour(dnIn,dnTide,yTide)
 % dnIn          = Matlab datenum of time in question
 % dnTide        = Matlab datenum vector of tidal time series
 % yTide         = Vector of tidal values (e.g., elevation or current)
+% allowNeg      = [optional, default=false] Force reference to nearest tide
+%                  time-datum, permitting negative values
 %
 % OUTPUT:
 % 
@@ -18,6 +20,9 @@ function [tideHr,tideNum] = tideHour(dnIn,dnTide,yTide)
 % 2017-Jun-10 David Honegger
 %
 
+if ~exist('allowNeg','var') || isempty(allowNeg)
+    allowNeg = false;
+end
 
 % Compute zero-upcrossing times of tidal time series
 tUp = zeroUpCrossing(dnTide,yTide);
@@ -40,9 +45,14 @@ end
 tideDay = nan(size(dnIn));
 for i = 1:length(dnIn)
     dist = dnIn(i) - tUp;
-    [previousDist,idx] = min(dist(dist>=0));
-    if ~isempty(previousDist)
-        tideDay(i) = previousDist;
+    if allowNeg
+        [thisDist,idx] = min(abs(dist));
+        thisDist = thisDist.*sign(dist(idx));
+    else
+        [thisDist,idx] = min(dist(dist>=0));
+    end
+    if ~isempty(thisDist)
+        tideDay(i) = thisDist;
         tideNum(i) = tNum(idx);
     else
         tideDay(i) = nan;
