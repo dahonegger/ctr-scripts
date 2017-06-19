@@ -12,8 +12,8 @@ kmzName = fullfile(scrDir,'util','missionPlanningWhoi2.kmz');
 bufferLength = 3000;
 [whoiTransect, aplTransect, utTransect] = kmz2transects(kmzName,bufferLength);
 
-tx.lats = whoiTransect(1,:);
-tx.lons = whoiTransect(2,:);
+tx.lats = whoiTransect.Lattx;
+tx.lons = whoiTransect.Lontx;
 
 %% TIDE HOUR INFO
 [uTide,dnTide] = railroadBridgeCurrentLocal;
@@ -25,16 +25,21 @@ dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
 cubeDir = fullfile('E:','DAQ-data','processed');
 % cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
-thisEbbMax = dnMaxEbb(63);
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Earliest max ebb in June is #45
+thisEbbMax = dnMaxEbb(45);
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
+
 deltaDn = 5/60/24;
-dnVec = (thisEbbMax - 3/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
+dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
 
 clear cubeNamesAll
 tic
 for i = 1:length(dnVec)
     cubeNamesAll{i} = cubeNameFromTime(dnVec(i),cubeDir);
 end
+cubeNamesAll(cellfun(@isempty,cubeNamesAll)) = [];
 toc
 cubeName = unique(cubeNamesAll);
 % files = getFiles(cubeDir);

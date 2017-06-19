@@ -27,8 +27,7 @@ tmpReadFolder = sprintf('tempFolder%05.f-r',tmpID);
 unzip(kmzName,tmpReadFolder) 
 kmlDir = dir(fullfile(tmpReadFolder,'*.kml'));
 if length(kmlDir)>1
-    disp('More than one kml file in this kmz. That''s weird ...')
-    error('Check the kmz file. Something is wrong.')
+    % Do nothing
 else
     kmlReadFile = kmlDir.name;
 end
@@ -98,9 +97,18 @@ ut.Ntx = ut.ytx;
 
 
 % make final variables
-whoiTransect = [whoi.Lattx; whoi.Lontx];
-aplTransect = [apl.Lattx; apl.Lontx];
-utTransect = [ut.Lattx; ut.Lontx];
+whoiTransect.Lontx = whoi.Lontx;
+whoiTransect.Lattx = whoi.Lattx;
+whoiTransect.Lonbox = whoi.boxLons;
+whoiTransect.Latbox = whoi.boxLats;
+aplTransect.Lontx = apl.Lontx;
+aplTransect.Lattx = apl.Lattx;
+aplTransect.Lonbox = apl.boxLons;
+aplTransect.Latbox = apl.boxLats;
+utTransect.Lontx = ut.Lontx;
+utTransect.Lattx = ut.Lattx;
+utTransect.Lonbox = ut.boxLons;
+utTransect.Latbox = ut.boxLats;
 
 
 if doPlot

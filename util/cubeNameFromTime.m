@@ -8,7 +8,7 @@ function [fileToGrab,timeDiff] = cubeNameFromTime(dnIn,sourceDir,grabRule,thresh
 dataSource = sourceDir;
 
 % Defaults
-defaultThreshold = 60/60/24; % 60 mins
+defaultThreshold = 20/60/24; % 20 mins
 defaultGrabRule = 'absolute';
 if nargin<3
     grabRule = defaultGrabRule;
@@ -76,8 +76,9 @@ end
 
 if doThrowWarning
     %
-    %warning(sprintf('Nearest run, %s, is %.0f min from the input time of %s.\nThis exceeds threshold of %.0f min.\n',...
-%                 fileList(fileIdx).name,abs(timeDiff)*24*60,datestr(dnIn),threshold*24*60))
+%     warning('Nearest run, %s, is %.0f min from the input time of %s.\nThis exceeds threshold of %.0f min.\n',...
+%                 fileList(fileIdx).name,abs(timeDiff)*24*60,datestr(dnIn),threshold*24*60)
+    fileToGrab = [];
 end
 
 end
