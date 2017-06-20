@@ -19,7 +19,6 @@ tx.lons = whoiTransect.Lontx;
 [uTide,dnTide] = railroadBridgeCurrentLocal;
 dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
     
-
 %% CHOOSE THE TIME SPAN
 % Somehow get the cubes needed to run the transect interpolation script:
 cubeDir = fullfile('E:','DAQ-data','processed');
