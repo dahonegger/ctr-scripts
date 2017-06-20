@@ -14,7 +14,6 @@ function [dnWind,vWind,dirWind] = loadWindNDBC(fname, tquery)
 % Alex Simpson 6/17/17
 
 
-fname = 'MetData_NDBC44039.txt';
 fid=fopen(fname);
 for i = 1:2
     [~] = fgetl(fid);

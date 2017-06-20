@@ -20,14 +20,14 @@ txDn_full = 0;
 
 % download environmental files
 % WIND: buoy number, save directory, save fname
-if downloadWind;fetchWindNDBC(44039,fullfile('E:\','SupportData','Wind'),'MetData_NDBC44039.txt'); end 
+% if downloadWind;fetchWindNDBC(44039,fullfile('E:\','SupportData','Wind'),'MetData_NDBC44039.txt'); end 
 
 %% loop through mat files
 for iDay = 13:length(dayFolder)%loop through days
 % for iDay = 14:16 %loop through days
         dayFolder(iDay).polRun = dir(fullfile(baseDir,dayFolder(iDay).name,'*_pol.mat'));
 
-   for iRun = 1:length(dayFolder(iDay).polRun) %loop through files
+   for iRun = 1:3:length(dayFolder(iDay).polRun) %loop through files
 % iRun = 1;
         cubeName = fullfile(baseDir,dayFolder(iDay).name,dayFolder(iDay).polRun(iRun).name);
   
@@ -70,4 +70,4 @@ end
 txIMat_full = txIMat_full(:,2:end);
 txDn_full = txDn_full(2:end);
 
-save(['C:\Data\CTR\postprocessed\windAnalysis\',fname],'txIMat_full','txDn_full','Rg','-v7.3')
+save(['C:\Data\CTR\postprocessed\windAnalysis\',output_fname],'txIMat_full','txDn_full','Rg','-v7.3')
