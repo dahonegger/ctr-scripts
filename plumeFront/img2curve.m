@@ -169,7 +169,7 @@ figEndpoints = figure;
             delete(hClick)
             delete(hNearest)
         else
-            iEnd(iPoint) = di;
+            iEnd(iPoint) = di(1);
         end
         if iPoint==2
             notDone = false;

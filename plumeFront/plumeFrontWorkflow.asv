@@ -17,8 +17,9 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 % cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(55);
+
+%%% Earliest max ebb in June is #45; first ebb with data in May is #11 ..... May15:22
+thisEbbMax = dnMaxEbb(59);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
@@ -87,7 +88,7 @@ end
 
 clear tx
 itx = 1;
-for i = 1:length(cubeName)
+for i = 5:length(cubeName)
     fprintf('%d of %d.',i,length(cubeName))
     load(cubeName{i},'timeInt','timex','header')
     if header.rotations > 64
@@ -111,8 +112,20 @@ for i = 1:length(cubeName)
                 
                 thisTime = epoch2Matlab(mean(timeInt(:,j)));
                 
-                c
-                thisCurve = img2curve(uint8(thisFrame));
+                curveDone = false;
+                while ~curveDone
+                    thisCurve = img2curve(uint8(thisFrame));
+                    checkFig = figure('position',[0 0 1280 720]);
+                        imagesc(bfWrapper(double(thisFrame)))
+                        hold on
+                        plot(thisCurve.x,thisCurve.y,'-r','linewidth',1.5)
+                    title('Happy with this curve? LMB=yes; RMB=try again')
+                    [~,~,button] = ginput(1);
+                    close(checkFig)
+                    if button==1
+                        curveDone = true;
+                    end
+                end
                        
                 for ip = 1:length(thisCurve.x)
                     thisCurve.lon(ip) = subLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
@@ -154,7 +167,21 @@ for i = 1:length(cubeName)
         delete(testFig)
         if button==1
             thisTime = epoch2Matlab(mean(timeInt(:)));
-            thisCurve = img2curve(uint8(thisFrame));
+            
+            curveDone = false;
+            while ~curveDone
+                thisCurve = img2curve(uint8(thisFrame));
+                checkFig = figure('position',[0 0 1280 720]);
+                    imagesc(bfWrapper(double(thisFrame)))
+                    hold on
+                    plot(thisCurve.x,thisCurve.y,'-r','linewidth',1.5)
+                title('Happy with this curve? LMB=yes; RMB=try again')
+                [~,~,button] = ginput(1);
+                close(checkFig)
+                if button==1
+                    curveDone = true;
+                end
+            end
                   
             for ip = 1:length(thisCurve.x)
                 thisCurve.lon(ip) = subLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));

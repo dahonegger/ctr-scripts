@@ -17,8 +17,9 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 % cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(55);
+
+%%% Earliest max ebb in June is #45; first ebb with data in May is #11 ..... May 20th @ 15:22
+thisEbbMax = dnMaxEbb(70);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
@@ -87,6 +88,8 @@ end
 
 clear tx
 itx = 1;
+
+%% (Separate loop cell)
 for i = 1:length(cubeName)
     fprintf('%d of %d.',i,length(cubeName))
     load(cubeName{i},'timeInt','timex','header')
@@ -235,8 +238,8 @@ showFig = figure('position',[0 0 1280 720]);
     close(showFig);
 
 
-%%
 front = tx;
+%%
 for i = 1:length(front)
     front(i).tideHr = tideHourMaxEbb(front(i).dn,dnTide,uTide,true);
 end
