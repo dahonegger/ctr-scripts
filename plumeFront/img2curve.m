@@ -39,7 +39,7 @@ end
 
 if doMask
     if ~exist('roiIn','var') || isempty(roiIn)
-        figROI = figure;
+        figROI = figure('position',[0 0 1280 720]);
             [mask,roi.x,roi.y] = roipoly(im);
         close(figROI)
     else
@@ -206,7 +206,7 @@ delete(figEndpoints)
 % [sUnique,iUnique] = unique(sMaximaSorted);
 % xUnique = xMaximaSmooth(iUnique);
 % yUnique = yMaximaSmooth(iUnique);
-sReg = min(sMaximaSmoothIn):max(sMaximaSmoothIn);
+% sReg = min(sMaximaSmoothIn):max(sMaximaSmoothIn);
 curve.x = xMaximaSmoothIn;%interp1(sMaximaSmoothIn,xMaximaSmoothIn,sReg);
 curve.y = yMaximaSmoothIn;%interp1(sMaximaSmoothIn,yMaximaSmoothIn,sReg);
 % %% NOW TWEAK TO MOVE BACK UP TO THE RIDGE

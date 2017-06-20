@@ -18,11 +18,11 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(45);
+thisEbbMax = dnMaxEbb(52);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
-deltaDn = 30/60/24;
+deltaDn = 15/60/24;
 dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
 
 clear cubeNamesAll
@@ -63,12 +63,12 @@ subRg  = Rg(rgIdx);
 subAzi = Azi(aziIdx);
 subLon = lon(rgIdx,aziIdx);
 subLat = lat(rgIdx,aziIdx);
-subIm  = uint8(timex(rgIdx,aziIdx));
+sampleIm  = uint8(timex(rgIdx,aziIdx));
 
 %%% Debug %%%
 if doDebug
 dbFig(1) = figure;
-    hp = pcolor(subLon,subLat,subIm);
+    hp = pcolor(subLon,subLat,sampleIm);
         shading flat
         axis image
         colormap(hot)
@@ -76,7 +76,7 @@ dbFig(1) = figure;
         aspectRatio = (max(lon(:))-min(lon(:)))/(max(lat(:))-min(lat(:)));
         daspect([aspectRatio,1,1])
 dbFig(2) = figure;
-    hp = imagesc(subIm);
+    hp = imagesc(sampleIm);
         colormap(hot)
         caxis([0 220])
 end
@@ -85,6 +85,7 @@ end
 
 %% LOOP THRU FILES
 
+clear tx
 itx = 1;
 for i = 1:length(cubeName)
     fprintf('%d of %d.',i,length(cubeName))
@@ -118,9 +119,24 @@ for i = 1:length(cubeName)
                 %%%%%%%%%%%%%
 
                 txNow.dn  = thisTime;
-                txNow.lon = thisCurve.lon;
-                txNow.lat = thisCurve.lat;
+                txNow.lon = smooth(thisCurve.lon,5,'rlowess');
+                txNow.lat = smooth(thisCurve.lat,5,'rlowess');
 
+                showFig = figure('position',[0 0 1280 720]);
+                    subplot(211)
+                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                        shading flat
+                        axis image
+                    subplot(212)
+                    hold on
+                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                        shading flat
+                        axis image
+                    plot(txNow.lon,txNow.lat,'-r','linewidth',1.5)
+                title('Click to continue')
+                ginput(1);
+                close(showFig);
+                
                 %%%%%%%%%%%%%
 
                 tx(itx) = txNow;
@@ -145,9 +161,24 @@ for i = 1:length(cubeName)
             %%%%%%%%%%%%%
             
             txNow.dn  = thisTime;
-            txNow.lon = thisCurve.lon;
-            txNow.lat = thisCurve.lat;
+            txNow.lon = smooth(thisCurve.lon,5,'rlowess');
+            txNow.lat = smooth(thisCurve.lat,5,'rlowess');
             
+            showFig = figure('position',[0 0 1280 720]);
+                    subplot(211)
+                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                        shading flat
+                        axis image
+                    subplot(212)
+                    hold on
+                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                        shading flat
+                        axis image
+                    plot(txNow.lon,txNow.lat,'-r','linewidth',1.5)
+                title('Click to continue')
+                ginput(1);
+                close(showFig);
+                
             %%%%%%%%%%%%%
             
             tx(itx) = txNow;
@@ -158,8 +189,32 @@ for i = 1:length(cubeName)
     fprintf('\n')
 end
 
+
+showFig = figure('position',[0 0 1280 720]);
+    hp = pcolor(subLon,subLat,sampleIm);
+        shading flat
+        axis image
+        colormap(hot)
+        caxis([0 220])
+        aspectRatio = (max(lon(:))-min(lon(:)))/(max(lat(:))-min(lat(:)));
+        daspect([aspectRatio,1,1])
+   hold on
+        for i = 1:length(tx)
+            plot(tx(i).lon,tx(i).lat,'-c','linewidth',1.5)
+        end
+    title('Click to continue')
+    ginput(1);
+    close(showFig);
+
+
+%%
+front = tx;
+for i = 1:length(front)
+    front(i).tideHr = tideHourMaxEbb(front(i).dn,dnTide,uTide,true);
+end
+
 saveName = sprintf('%s_%s_to_%s',saveFilePrefix,datestr(tx(1).dn,'yyyymmddTHHMMSSZ'),datestr(tx(end).dn,'yyyymmddTHHMMSSZ'));
 if ~exist(savePath,'dir');mkdir(savePath);end
 if exist(fullfile(savePath,saveName),'file');disp('File to save exists. Do so manually.\n');keyboard;end
-save(fullfile(savePath,saveName),'-v7.3','-struct','txOut')
+save(fullfile(savePath,saveName),'-v7.3','front')
 fprintf('Front time series saved to: %s\n',fullfile(savePath,saveName))
