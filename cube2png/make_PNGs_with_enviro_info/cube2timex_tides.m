@@ -19,6 +19,7 @@ userOriginLonLat        = [-72.343472 41.271747];   % Use these lat-lon origin c
 % Load radar data
 % load(cubeFile,'Azi','Rg','results','data','timeInt')
 load(cubeFile,'Azi','Rg','results','timex','timeInt') % 6/16/17 with new process scheme, 'timex' available
+% [a, MSGID] = lastwarn();warning('off', MSGID);
 if ~exist('timex','var') || isempty(timex)
     load(cubeFile,'data')
     timex = double(mean(data,3));
@@ -100,10 +101,10 @@ moorY = moorN - radN;
    
 % Load wind data from wind station file
 % [dnWind,magWind,dirWind] = loadWindStation('SABC3.csv', nowTime); 
-
+[dnWind,magWind,dirWind] = loadWindNDBC('MetData_NDBC44039.txt', nowTime);
 
 % Load discharge data from USGS file
-[dnDischarge,rawDischarge,trDischarge] = loadDischarge('CTdischarge_Site01193050.txt');
+[dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS(fullfile('E:\','SupportData','Discharge','CTdischarge_Site01193050.txt'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
@@ -150,12 +151,12 @@ plot(moorX/1000,moorY/1000,'^c','linewidth',1.5,'markersize',8.5,'MarkerFaceColo
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TIDE DIRECTION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 set(fig,'currentaxes',axRad); hold on;
-arScale = 1.6;
+arScale = 1.8;
 arRef1 = 0.5.*arScale; %0.5 m/s reference length
 arRef2 = 0.15.*arScale; % side bar width on reference 
 arW = .5; arH = 2;
 % CP and RB base coordinates (km)
-arX.RB = 2.45; arY.RB = 3.4;
+arX.RB = 2.15; arY.RB = 3.4;
 arX.CP = arX.RB; arY.CP = arY.RB;
 
 
@@ -163,19 +164,19 @@ arX.CP = arX.RB; arY.CP = arY.RB;
 theta = linspace(0,2*pi,200); 
 [circle1X, circle1Y] = pol2cart(theta,arRef1); % .5 m/s
 [circle2X, circle2Y] = pol2cart(theta,arRef1.*2); % 1 m/s
-[circle3x, circle3Y] = pol2cart(theta,arRef1.*3); % 1.5 m/s
+% [circle3x, circle3Y] = pol2cart(theta,arRef1.*3); % 1.5 m/s
 circle1 = fill(circle1X+arX.RB,circle1Y+arY.RB,'white');
 alpha(circle1,0.85)
 circle2 = fill(circle2X+arX.RB,circle2Y+arY.RB,'white');
 alpha(circle2,0.75)
-circle3 = fill(circle3x+arX.RB,circle3Y+arY.RB,'white');
-alpha(circle3,0.5)
+% circle3 = fill(circle3x+arX.RB,circle3Y+arY.RB,'white');
+% alpha(circle3,0.5)
 refText1 = text(arX.RB+arRef1./2.5,arY.RB+arRef1./2.5,'0.5');
 set(refText1,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
 refText2 = text(arX.RB+arRef1,arY.RB+arRef1,'1 m/s');
 set(refText2,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
-refText3 = text(arX.RB+1.78.*arRef1,arY.RB+1.78.*arRef1,'1.5');
-set(refText3,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
+% refText3 = text(arX.RB+1.78.*arRef1,arY.RB+1.78.*arRef1,'1.5');
+% set(refText3,'rotation',-45,'interpreter','latex','horizontalalignment','center','verticalalignment','bottom')
 
 % make CP scale bars
 plot([arX.CP-arRef1 arX.CP+arRef1],[arY.CP arY.CP],'-k','linewidth',1)
@@ -189,7 +190,7 @@ plot([arX.RB arX.RB],[arY.RB-arRef1 arY.RB+arRef1],'-k','linewidth',1)
 
 % direction current in sound (Cornfield Point "CP") - GREEN
 arLength.CP = yCurrent.CP(nowIndex.CP).*arScale;
-scaleWidth.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*15;
+scaleWidth.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*17;
 scaleLength.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*40;
 scaleBaseangle.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*90;
 scaleTipangle.CP = min(abs(yCurrent.CP(nowIndex.CP)),0.5).*50;
@@ -266,7 +267,7 @@ axis image;axis([-1.05 1.05 -1.05 1.05])
 [uWind vWind] = pol2cart((90-dirWind)*pi/180, 1); 
 arrow([uWind vWind],[0 0],'baseangle',45,'width',magWind,'tipangle',25,'facecolor','red','edgecolor','red');
 [uText vText] = pol2cart((90-180-dirWind)*pi/180,0.28); %position text off tip of arrow
-text(uText,vText,[num2str(magWind),' m/s'],'horizontalalignment','center','interpreter','latex')
+text(uText,vText,[num2str(round(magWind,1)),' m/s'],'horizontalalignment','center','interpreter','latex')
 set(axWind,'xtick',[],'ytick',[],'xcolor','w','ycolor','w')
 title('Wind','fontsize',14,'interpreter','latex')
 
@@ -275,19 +276,22 @@ set(fig,'currentaxes',axDischarge)
 cla(axDischarge)
 hold(axDischarge,'on')
 % plot(dnDischarge,rawDischarge,'-k','linewidth',2) % plots raw discharge
+plot(dnDischarge(~isnan(rawDischarge)),rawDischarge(~isnan(rawDischarge)),'-b','linewidth',1)
 plot(dnDischarge(~isnan(trDischarge)),trDischarge(~isnan(trDischarge)),'-k','linewidth',2)
-plot([nowTime nowTime],[min(rawDischarge)-3000 max(rawDischarge)+3000],'-','color',[.5 .5 .5],'linewidth',2)
+plot([nowTime nowTime],[min(rawDischarge)-3000 max(rawDischarge)+3000],'-','color',[.5 .5 .5],'linewidth',2);
 xlim([nowTime-4 nowTime+4])
 ylim([min(rawDischarge)-3000 max(rawDischarge)+3000])
 set(axDischarge,'xtick',fix([nowTime-4:nowTime+4]))
 datetick('x','mmm-dd','keeplimits','keepticks')    
-hy1 = ylabel('Discharge [ft$^3$/s]','fontsize',11,'interpreter','latex');
+hy1 = ylabel('Discharge [m$^3$/s]','fontsize',11,'interpreter','latex');
 % tmp1 = get(hy1,'position');
 % set(hy1,'position',[tmp1(1)+1/50 tmp1(2:3)])
+disLeg = legend('Raw','Tidally Filtered','orientation','horizontal');
+set(disLeg,'position',[0.8310    0.3063    0.1267    0.0240])
 box on
 title('Discharge','fontsize',14,'interpreter','latex')
  
-warning('off','all')
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SAVE & CLOSE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 print(fig,'-dpng','-r100',timexFile)
 close(fig)
