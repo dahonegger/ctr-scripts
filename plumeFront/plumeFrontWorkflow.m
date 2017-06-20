@@ -18,7 +18,7 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(52);
+thisEbbMax = dnMaxEbb(55);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
@@ -110,7 +110,21 @@ for i = 1:length(cubeName)
             if button==1
                 
                 thisTime = epoch2Matlab(mean(timeInt(:,j)));
-                thisCurve = img2curve(uint8(thisFrame));
+                
+                curveDone = false;
+                while ~curveDone
+                    thisCurve = img2curve(uint8(thisFrame));
+                    checkFig = figure('position',[0 0 1280 720]);
+                        imagesc(bfWrapper(double(thisFrame)))
+                        hold on
+                        plot(thisCurve.x,thisCurve.y,'-r','linewidth',1.5)
+                    title('Happy with this curve? LMB=yes; RMB=try again')
+                    [~,~,button] = ginput(1);
+                    close(checkFig)
+                    if button==1
+                        curveDone = true;
+                    end
+                end
                        
                 for ip = 1:length(thisCurve.x)
                     thisCurve.lon(ip) = subLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
@@ -152,7 +166,21 @@ for i = 1:length(cubeName)
         delete(testFig)
         if button==1
             thisTime = epoch2Matlab(mean(timeInt(:)));
-            thisCurve = img2curve(uint8(thisFrame));
+            
+            curveDone = false;
+            while ~curveDone
+                thisCurve = img2curve(uint8(thisFrame));
+                checkFig = figure('position',[0 0 1280 720]);
+                    imagesc(bfWrapper(double(thisFrame)))
+                    hold on
+                    plot(thisCurve.x,thisCurve.y,'-r','linewidth',1.5)
+                title('Happy with this curve? LMB=yes; RMB=try again')
+                [~,~,button] = ginput(1);
+                close(checkFig)
+                if button==1
+                    curveDone = true;
+                end
+            end
                   
             for ip = 1:length(thisCurve.x)
                 thisCurve.lon(ip) = subLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));

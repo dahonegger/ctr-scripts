@@ -18,11 +18,11 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(45);
+thisEbbMax = dnMaxEbb(55);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
-deltaDn = 30/60/24;
+deltaDn = 15/60/24;
 dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
 
 clear cubeNamesAll
@@ -85,6 +85,7 @@ end
 
 %% LOOP THRU FILES
 
+clear tx
 itx = 1;
 for i = 1:length(cubeName)
     fprintf('%d of %d.',i,length(cubeName))
@@ -109,6 +110,8 @@ for i = 1:length(cubeName)
             if button==1
                 
                 thisTime = epoch2Matlab(mean(timeInt(:,j)));
+                
+                c
                 thisCurve = img2curve(uint8(thisFrame));
                        
                 for ip = 1:length(thisCurve.x)
@@ -118,8 +121,8 @@ for i = 1:length(cubeName)
                 %%%%%%%%%%%%%
 
                 txNow.dn  = thisTime;
-                txNow.lon = thisCurve.lon;
-                txNow.lat = thisCurve.lat;
+                txNow.lon = smooth(thisCurve.lon,5,'rlowess');
+                txNow.lat = smooth(thisCurve.lat,5,'rlowess');
 
                 showFig = figure('position',[0 0 1280 720]);
                     subplot(211)
@@ -207,8 +210,13 @@ showFig = figure('position',[0 0 1280 720]);
 
 
 %%
+front = tx;
+for i = 1:length(front)
+    front(i).tideHr = tideHourMaxEbb(front(i).dn,dnTide,uTide,true);
+end
+
 saveName = sprintf('%s_%s_to_%s',saveFilePrefix,datestr(tx(1).dn,'yyyymmddTHHMMSSZ'),datestr(tx(end).dn,'yyyymmddTHHMMSSZ'));
 if ~exist(savePath,'dir');mkdir(savePath);end
 if exist(fullfile(savePath,saveName),'file');disp('File to save exists. Do so manually.\n');keyboard;end
-save(fullfile(savePath,saveName),'-v7.3','-struct','txOut')
+save(fullfile(savePath,saveName),'-v7.3','front')
 fprintf('Front time series saved to: %s\n',fullfile(savePath,saveName))
