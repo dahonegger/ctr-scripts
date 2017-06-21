@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Document>
+<Folder>
+<name>Vehicle Path w/ Timestamps</name>
+<description> </description>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3946,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8964,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.895,30.3949,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8949,30.3949,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8943,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8942,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8941,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8938,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8934,30.3951,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8933,30.3951,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8925,30.3952,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8916,30.3953,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8918,30.3952,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8896,30.3957,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8886,30.396,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8878,30.3962,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8877,30.3962,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8875,30.3963,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8874,30.3964,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8869,30.3965,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8868,30.3965,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8852,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8853,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8861,30.3971,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8852,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8851,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<Style>
+<IconStyle>
+ <color>FFFFFFFF</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8852,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+</Folder>
+</Document>

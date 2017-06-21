@@ -1,9 +1,17 @@
+%% Load local vars, if any
+if exist('localvars.m', 'file')
+    localvars;
+else
+    savePath = fullfile('C:','Data','CTR','plumeFront');
+    scrDir = fullfile('C:','Data','CTR','ctr-scripts');
+    cubeDir = fullfile('E:','DAQ-data','processed');
+    ebbNum = 72;
+end
+
 %% LABEL
 saveFilePrefix = 'plumeFront';
-savePath = fullfile('C:','Data','CTR','plumeFront');
 
 %% PREP
-scrDir = fullfile('C:','Data','CTR','ctr-scripts');
 addpath(genpath(scrDir))
 doDebug = false;
 
@@ -12,16 +20,10 @@ doDebug = false;
 dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
     
 %% CHOOSE THE TIME SPAN
-% Somehow get the cubes needed to run the transect interpolation script:
-cubeDir = fullfile('E:','DAQ-data','processed');
-% cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%% Earliest max ebb in June is #45
-%%% First ebb with data in May is #11 ..... May 20th @ 15:22
-%%% Last ebb with data in May is #28 ....... May 19th first ebb
-thisEbbMax = dnMaxEbb(24);
+if exist('thisEbbMax', 'var'), lastEbbMax = thisEbbMax; else, lastEbbMax = -1; end
+thisEbbMax = dnMaxEbb(ebbNum);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
@@ -90,23 +92,23 @@ end
 
 clear tx
 itx = 1;
-
-%% (Separate loop cell)
+% waitfor(msgbox('WARNING: Reset to for i = 1:...'));
 for i = 1:length(cubeName)
     fprintf('%d of %d.',i,length(cubeName))
     load(cubeName{i},'timeInt','timex','header')
     if header.rotations > 64
-        fprintf('Long run.Rot:')
+        fprintf('Long run. Rot:')
         % Deal with long run
-        load(cubeName{i},'data')
-        fdata = movmean(data,64,3);
+        mat = matfile(cubeName{i});
         rotTimes = epoch2Matlab(mean(timeInt));
-        dnIdx = find(strcmp(cubeName{i},cubeNamesAll(:)));
+        dnIdx = find(strcmp(cubeName{i},cubeNamesAll(:)));  % I think this is always just i
         rotIdx = interp1(rotTimes(32:end-32),32:header.rotations-32,dnVec(dnIdx),'nearest','extrap');
         rotIdx = unique(rotIdx);
+        fdata = mean(mat.data(:, :, rotIdx-31:rotIdx+32), 3);
         for j = rotIdx
-            fprintf('%d.',j)
-            thisFrame = fdata(rgIdx,aziIdx,j);
+            fprintf('%d. ', j)
+            fprintf('%s ', datestr(dnVec(dnIdx)));
+            thisFrame = fdata(rgIdx,aziIdx);
             testFig = figure('position',[0 0 500 800]);
                 imagesc(bfWrapper(double(thisFrame)));
                 title('Left click to continue. Right click to reject.')
@@ -232,14 +234,22 @@ showFig = figure('position',[0 0 1280 720]);
         aspectRatio = (max(lon(:))-min(lon(:)))/(max(lat(:))-min(lat(:)));
         daspect([aspectRatio,1,1])
    hold on
-        for i = 1:length(tx)
-            plot(tx(i).lon,tx(i).lat,'-c','linewidth',1.5)
-        end
-    title('Click to continue')
-    ginput(1);
-    close(showFig);
+   if ~exist('tx','var') || isempty(tx)
+       title('No radar runs for this tide. Click to continue')
+       ginput(1);
+       close(showFig)
+       return
+   else
+       for i = 1:length(tx)
+           plot(tx(i).lon,tx(i).lat,'-c','linewidth',1.5)
+       end
+       title('Click to continue')
+       ginput(1);
+       close(showFig);
+   end
 
 
+%%
 front = tx;
 %%
 for i = 1:length(front)

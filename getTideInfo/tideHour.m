@@ -33,13 +33,20 @@ if min(dnIn)<min(tUp) || max(dnIn)>max(tUp)
 end
 
 % Assign tide numbers to tUp
-tDv = datevec(tUp);
-tDv(:,3:end) = 0;
-changeIdx = [find(diff(datenum(tDv)));length(tUp)];
-tNum = 1:changeIdx(1);
-for i = 2:length(changeIdx)
-    tNum = [tNum 1:diff(changeIdx(i-1:i))];
-end
+
+%%%%%% THIS IS TO GIVE TIDE NUMBER OF THE MONTH %%%%%%
+% tDv = datevec(tUp);
+% tDv(:,3:end) = 0;
+% changeIdx = [find(diff(datenum(tDv)));length(tUp)];
+% tNum = 1:changeIdx(1);
+% for i = 2:length(changeIdx)
+%     tNum = [tNum 1:diff(changeIdx(i-1:i))];
+% end
+%%%%%% /THIS IS TO GIVE TIDE NUMBER OF THE MONTH %%%%%%
+
+%%%%%% THIS IS TO JUST GIVE TIDE NUMBER FROM START OF RECORD %%%%%%
+tNum = 1:length(tUp);   
+%%%%%% /THIS IS TO JUST GIVE TIDE NUMBER FROM START OF RECORD %%%%%%
     
 % 
 tideDay = nan(size(dnIn));
