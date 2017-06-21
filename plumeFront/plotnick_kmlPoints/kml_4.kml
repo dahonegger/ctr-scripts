@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Document>
+<Folder>
+<name>Vehicle Path w/ Timestamps</name>
+<description> </description>
+
+<Placemark>
+<name>start</name>
+<description>
+GoCougs</description>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:12:24Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.8</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3946,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:12:10Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:12:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<description>
+<![CDATA[<b>Vehicle Data</b>
+ <table border="0" >
+ <tr> <td>Thing1</td>  <td>4</td> </tr>
+ <tr> <td>Thing2</td>  <td>purple</td> </tr>
+</table>]]>
+</description>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:13:02Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.8</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:13:28Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.8</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:15:00Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8964,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:16:06Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:16:32Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:16:56Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:17:22Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:18:56Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>0.6</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:18:22Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:20:18Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.7</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:24:18Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/forbidden.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:25:04Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:25:30Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.9</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8966,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<description>
+<![CDATA[<b>Vehicle Data</b>
+ <table border="0" >
+ <tr> <td>Thing3</td>  <td>blitz</td> </tr>
+ <tr> <td>Thing4</td>  <td>3.1416</td> </tr>
+</table>]]>
+</description>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:26:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>1.4</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3948,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:26:04Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:27:58Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF830000</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:29:56Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF8F0000</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8965,30.3947,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:32:04Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFF3100</color>
+ <scale>1</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.895,30.3949,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:32:24Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFF3B00</color>
+ <scale>1.4</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/forbidden.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8949,30.3949,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:33:34Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFF7F00</color>
+ <scale>0.6</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8943,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:33:58Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFF8B00</color>
+ <scale>0.8</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8942,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:33:18Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFF9500</color>
+ <scale>1.3</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8941,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:34:04Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFFAE00</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8938,30.395,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:34:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFFDF00</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8934,30.3951,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<description>
+<![CDATA[<b>Vehicle Data</b>
+ <table border="0" >
+ <tr> <td>Thing1</td>  <td>4</td> </tr>
+ <tr> <td>Thing2</td>  <td>purple</td> </tr>
+</table>]]>
+</description>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:35:04Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFFFEC00</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8933,30.3951,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:36:44Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FFBDFF42</color>
+ <scale>1.4</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8925,30.3952,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:37:46Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF5EFFA1</color>
+ <scale>0.7</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8916,30.3953,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:38:58Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF19FFE6</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8918,30.3952,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:41:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0086FF</color>
+ <scale>2</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8896,30.3957,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:42:46Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0044FF</color>
+ <scale>1.7</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8886,30.396,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<description>
+GoCougs</description>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:43:36Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000AFF</color>
+ <scale>1.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/forbidden.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8878,30.3962,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:43:56Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0000FF</color>
+ <scale>1.1</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8877,30.3962,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:43:16Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0000F4</color>
+ <scale>0.9</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8875,30.3963,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:43:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0000E9</color>
+ <scale>1</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8874,30.3964,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:44:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0000C9</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8869,30.3965,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:44:58Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF0000BF</color>
+ <scale>1.1</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8868,30.3965,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:47:38Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000080</color>
+ <scale>0.8</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8852,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:47:04Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000080</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8853,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:48:56Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000080</color>
+ <scale>0.7</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8861,30.3971,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:48:16Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000080</color>
+ <scale>0.6</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8852,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:48:42Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000080</color>
+ <scale>0.5</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8851,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+<Placemark>
+<name>finish</name>
+<altitudeMode>relativeToGround</altitudeMode>
+<TimeStamp><when>2017-03-06T22:49:16Z</when></TimeStamp>
+<Style>
+<IconStyle>
+ <color>FF000080</color>
+ <scale>1.3</scale>
+ <Icon><href>http://maps.google.com/mapfiles/kml/shapes/road_shield3.png</href></Icon>
+</IconStyle>
+</Style>
+<Point>
+<coordinates>-97.8852,30.397,0</coordinates>
+</Point>
+</Placemark>
+
+</Folder>
+</Document>

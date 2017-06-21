@@ -12,7 +12,7 @@ frontDir = fullfile('C:','Data','CTR','plumeFront');
 files = dir(fullfile(frontDir,'plumeFront*.mat'));
 clear ebb
 for i = 1:length(files)
-    ebb(i) = load(files(i).name);
+    ebb(i) = load(fullfile(files(i).folder,files(i).name));
 end
 clear tNum
 for i = 1:length(ebb)
@@ -120,28 +120,28 @@ end
 
 
 
-%% Animation
-animFig = copyobj(radarFig,0);
-    hold on
-    plot(whoi.Lonbox,whoi.Latbox,'-c')
-    plot(apl.Lonbox,apl.Latbox,'-c')
-    plot(ut.Lonbox,ut.Latbox,'-c')
-    for i = 1:length(tideHourGrid) 
-        idx = find(abs(tideHourAll-tideHourGrid(i))<0.125);
-%         idx = intersect(idx,find(dateNumAll<datenum([2017 06 12 0 0 0])));
-%         idx = idx(end-2:end);
-        ax = gca;
-        ax.ColorOrder = parula(length(idx));
-        clear hf labels
-        for j = 1:length(idx)
-            hf(j) = plot(lonAll{idx(j)},latAll{idx(j)},'-','linewidth',1.25);
-            labels{j} = sprintf('%.f tides before lead',diff(tideNumAll([idx(j) idx(end)])));
-        end
-        title(sprintf('%1.2f Hours since max ebb',tideHourGrid(i)))
-        
-        legend(hf,labels)
-    
-        drawnow
-        pause
-        delete(hf)
-    end
+% %% Animation
+% animFig = copyobj(radarFig,0);
+%     hold on
+%     plot(whoi.Lonbox,whoi.Latbox,'-c')
+%     plot(apl.Lonbox,apl.Latbox,'-c')
+%     plot(ut.Lonbox,ut.Latbox,'-c')
+%     for i = 1:length(tideHourGrid) 
+%         idx = find(abs(tideHourAll-tideHourGrid(i))<0.125);
+% %         idx = intersect(idx,find(dateNumAll<datenum([2017 06 12 0 0 0])));
+% %         idx = idx(end-2:end);
+%         ax = gca;
+%         ax.ColorOrder = parula(length(idx));
+%         clear hf labels
+%         for j = 1:length(idx)
+%             hf(j) = plot(lonAll{idx(j)},latAll{idx(j)},'-','linewidth',1.25);
+%             labels{j} = sprintf('%.f tides before lead',diff(tideNumAll([idx(j) idx(end)])));
+%         end
+%         title(sprintf('%1.2f Hours since max ebb',tideHourGrid(i)))
+%         
+%         legend(hf,labels)
+%     
+%         drawnow
+%         pause
+%         delete(hf)
+%     end
