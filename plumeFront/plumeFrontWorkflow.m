@@ -18,8 +18,10 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% Earliest max ebb in June is #45; first ebb with data in May is #11 ..... May 20th @ 15:22
-thisEbbMax = dnMaxEbb(70);
+%%% Earliest max ebb in June is #45
+%%% First ebb with data in May is #11 ..... May 20th @ 15:22
+%%% Last ebb with data in May is #28 ....... May 19th first ebb
+thisEbbMax = dnMaxEbb(24);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
@@ -97,7 +99,7 @@ for i = 1:length(cubeName)
         fprintf('Long run.Rot:')
         % Deal with long run
         load(cubeName{i},'data')
-        fdata = movmean(data,32,3);
+        fdata = movmean(data,64,3);
         rotTimes = epoch2Matlab(mean(timeInt));
         dnIdx = find(strcmp(cubeName{i},cubeNamesAll(:)));
         rotIdx = interp1(rotTimes(32:end-32),32:header.rotations-32,dnVec(dnIdx),'nearest','extrap');
