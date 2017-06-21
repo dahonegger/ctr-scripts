@@ -21,7 +21,7 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 %%% Earliest max ebb in June is #45
 %%% First ebb with data in May is #11 ..... May 20th @ 15:22
 %%% Last ebb with data in May is #28 ....... May 19th first ebb
-thisEbbMax = dnMaxEbb(24);
+thisEbbMax = dnMaxEbb(72);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 
@@ -232,13 +232,19 @@ showFig = figure('position',[0 0 1280 720]);
         aspectRatio = (max(lon(:))-min(lon(:)))/(max(lat(:))-min(lat(:)));
         daspect([aspectRatio,1,1])
    hold on
+   if ~exist('tx','var') || isempty(tx)
+       title('No radar runs for this tide. Click to continue')
+       ginput(1);
+       close(showFig)
+       return
+   else
         for i = 1:length(tx)
             plot(tx(i).lon,tx(i).lat,'-c','linewidth',1.5)
         end
     title('Click to continue')
     ginput(1);
     close(showFig);
-
+   end
 
 front = tx;
 %%
