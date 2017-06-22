@@ -35,7 +35,7 @@ for iDay = 1:length(yearDayList)
     thisMonth = mm(kmzIdxList(1));
     thisDay = dd(kmzIdxList(1));
     
-    concatKmzName = sprintf('kmzStack_%sUTC.kmz',datestr([thisYear thisMonth thisDay 0 0 0],'yyyy-mmm-dd'));
+    concatKmzName = sprintf('kmzStack_%s.kmz',datestr([thisYear thisMonth thisDay 0 0 0],'yyyy-mm-dd'));
     
     kmzConcatenate(kmzFullList(kmzIdxList),fullfile(kmzStackBase,concatKmzName))
     

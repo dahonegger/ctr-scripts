@@ -5,6 +5,8 @@ function [fileToGrab,timeDiff] = cubeNameFromTime(dnIn,sourceDir,grabRule,thresh
 
 % dataSource = fullfile('D:','Data','CTR','postprocessed','rectCubes',filesep);
 % dataSource = fullfile('E:','LyndePt');
+persistent dnList fileList;
+
 dataSource = sourceDir;
 
 % Defaults
@@ -16,36 +18,25 @@ if nargin<3
 elseif nargin<4
     threshold = defaultThreshold;
 end
-    
-fileList = dir([dataSource,'*.mat']);
 
-doLoopThruDays = false;
-if isempty(fileList)
-%     fprintf('No matfiles in source directory. Assuming archive file structure.\n')
-    doLoopThruDays = true;
-end
-    
+if isempty(dnList) || isempty(fileList)
+    fileList = dir([dataSource,'*.mat']);
 
-if doLoopThruDays
-    folderList = dir(fullfile(dataSource,'2017-*'));
-    if ~isfield(folderList,'folder');[folderList(:).folder] = deal(dataSource);end
-    
-    dnList = [];
-    folderNum = [];
-    fileNum = [];
-    for iDay = 1:length(folderList)
-        folderList(iDay).fileList = dir(fullfile(folderList(iDay).folder,folderList(iDay).name,'*.mat'));
-        
-        folderList(iDay).dnList = dnFromTimeStamps(folderList(iDay).fileList);
-        dnList = [dnList;folderList(iDay).dnList];
-        folderNum = [folderNum;0*folderList(iDay).dnList+iDay];
-        fileNum = [fileNum,1:length(folderList(iDay).dnList)];
+    doLoopThruDays = false;
+    if isempty(fileList)
+    %     fprintf('No matfiles in source directory. Assuming archive file structure.\n')
+        doLoopThruDays = true;
     end
-else
-    if ~isfield(fileList,'folder');[fileList(:).folder] = deal(dataSource);end
+
+
+    if doLoopThruDays
+        fileList = dir(fullfile(dataSource, '????-*-*', '*.mat'));
+    end
+    if ~isfield(fileList,'folder')
+        [fileList(:).folder] = deal(dataSource);
+    end
     dnList = dnFromTimeStamps(fileList);
 end
-
 
 timeDiffVec = dnList - dnIn;
 
@@ -63,13 +54,7 @@ end
 
 
 if abs(timeDiff) < threshold
-    if doLoopThruDays
-        fileToGrab = fullfile(...
-            folderList(folderNum(fileIdx)).fileList(fileNum(fileIdx)).folder,...
-            folderList(folderNum(fileIdx)).fileList(fileNum(fileIdx)).name);
-    else
-        fileToGrab = fullfile(fileList(fileIdx).folder,fileList(fileIdx).name);
-    end
+    fileToGrab = fullfile(fileList(fileIdx).folder,fileList(fileIdx).name);
 else
     doThrowWarning = true;
 end
@@ -85,17 +70,7 @@ end
 
 function dnList = dnFromTimeStamps(fileList)
     % Extract timestamps
-    yy = zeros(size(fileList));
-    [yd,HH,MM,SS] = deal(yy);
-    dnList = nan(size(fileList(:)));
-    for i = 1:length(fileList)
-        key = '20';
-        strIdx = strfind(fileList(i).name,key);
-        yy(i) = str2double(fileList(i).name(strIdx:strIdx+3));
-        yd(i) = str2double(fileList(i).name(strIdx+4:strIdx+6));
-        HH(i) = str2double(fileList(i).name(strIdx+7:strIdx+8));
-        MM(i) = str2double(fileList(i).name(strIdx+9:strIdx+10));
-
-        dnList(i) = datenum([yy(i) 0 yd(i) HH(i) MM(i) SS(i)]);
-    end
+    dn_strs = regexp({fileList.name}, '20\d{9}', 'match', 'once');
+    dt_vals = cellfun(@(C) sscanf(C, '%4f%3f%2f%2f'), dn_strs, 'UniformOutput', false);
+    dnList = cellfun(@(C) datenum([C(1), 0, C(2:4)', 0]), dt_vals);
 end
