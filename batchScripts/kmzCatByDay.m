@@ -1,43 +1,31 @@
-kmzBase = fullfile('\\attic.engr.oregonstate.edu','hallerm','RADAR_DATA','CTR','postprocessed','rectKmz');
-kmzFullList = dir(fullfile(kmzBase,'*.kmz'));
-if ~isfield(kmzFullList,'folder');[kmzFullList(:).folder] = deal(kmzBase);end
-    
+%% Get Files
+if ispc
+    attic = '\\attic.engr.oregonstate.edu\hallerm';
+else
+    attic = '/nfs/attic/hallerm';
+end
 
-kmzStackBase = fullfile(kmzBase,'..','kmzStack');
+% kmzConcatenate
+addpath(fullfile('..','kmzConcatenate'));
+
+kmzBase = fullfile(attic,'RADAR_DATA','CTR','site_push','kmz');
+kmzStackBase = fullfile(attic,'RADAR_DATA','CTR','site_push','kmzStack');
 if ~exist(kmzStackBase,'dir');mkdir(kmzStackBase);end
 
-% Extract timestamps
-yy = zeros(size(kmzFullList));
-yd = yy;
-mm = yy;
-dd = yy;
-for i = 1:length(kmzFullList)
-    
-    key = '20';
-    strIdx = strfind(kmzFullList(i).name,key);
-    yy(i) = str2double(kmzFullList(i).name(strIdx:strIdx+3));
-    yd(i) = str2double(kmzFullList(i).name(strIdx+4:strIdx+6));
-    
-    dv = datevec(datenum([yy(i) 0 yd(i) 0 0 0]));
-    mm(i) = dv(2);
-    dd(i) = dv(3);
-    
-end
+dayDirs = dir(fullfile(kmzBase, '20*-*-*'));
 
-% Separate by day
-yearDayList = unique(yd);
-for iDay = 1:length(yearDayList)
-    
-    thisYearDay = yearDayList(iDay);
-    kmzIdxList = find(yd==thisYearDay);
-    
-    thisYear = yy(kmzIdxList(1));
-    thisMonth = mm(kmzIdxList(1));
-    thisDay = dd(kmzIdxList(1));
-    
-    concatKmzName = sprintf('kmzStack_%s.kmz',datestr([thisYear thisMonth thisDay 0 0 0],'yyyy-mm-dd'));
-    
-    kmzConcatenate(kmzFullList(kmzIdxList),fullfile(kmzStackBase,concatKmzName))
-    
+% Get existing kmzStack files
+exgKmzDayStacks = dir(fullfile(kmzStackBase, 'kmzStack_20*-*-*.kmz'));
+
+for i = 1:numel(dayDirs)
+    fprintf('Stacking %s...', dayDirs(i).name);
+    dayDir = dayDirs(i).name;
+    stackName = ['kmzStack_', dayDir, '.kmz'];
+    if ismember(stackName, {exgKmzDayStacks.name}) && i < numel(dayDirs)-3
+        fprintf('Exists.\n');
+        continue
+    end
+    dayKmzs = dir(fullfile(kmzBase, dayDir, '*.kmz'));
+    kmzConcatenate(dayKmzs,fullfile(kmzStackBase,stackName))
+    fprintf('Done.\n')
 end
-    
