@@ -22,7 +22,7 @@ load(cubeFile,'Azi','Rg','results','timex','timeInt') % 6/16/17 with new process
 % [a, MSGID] = lastwarn();warning('off', MSGID);
 if ~exist('timex','var') || isempty(timex)
     load(cubeFile,'data')
-    timex = double(nannanmean(data,3));
+    timex = double(nanmean(data,3));
 else
 end
     
@@ -54,9 +54,9 @@ xdom = xdom + x0;
 ydom = ydom + y0;
 
 % Compute timex
-% timex = nannanmean(data,3); %6/16/17 no longer need to do 
+% timex = nanmean(data,3); %6/16/17 no longer need to do 
 
-nowTime = epoch2Matlab(nannanmean(timeInt(:))); % UTC
+nowTime = epoch2Matlab(nanmean(timeInt(:))); % UTC
 if nowTime < datenum(2017,05,26,20,0,0)
     colorAxLimits = [10 125]; % for before uniform brighness increase
 elseif nowTime >= datenum(2017,05,26,20,0,0) && nowTime < datenum(2017,05,29,20,0,0)
@@ -142,7 +142,7 @@ ylabel('[km]','fontsize',14,'interpreter','latex')
 axRad.TickLabelInterpreter = 'latex';
 runLength = timeInt(end,end)-timeInt(1,1);
 titleLine1 = sprintf('\\makebox[4in][c]{Lynde Point X-band Radar: %2.1f min Exposure}',runLength/60);
-titleLine2 = sprintf('\\makebox[4in][c]{%s UTC (%s EDT)}',datestr(epoch2Matlab(nannanmean(timeInt(:))),'yyyy-mmm-dd HH:MM:SS'),datestr(epoch2Matlab(nannanmean(timeInt(:)))-4/24,'HH:MM:SS'));
+titleLine2 = sprintf('\\makebox[4in][c]{%s UTC (%s EDT)}',datestr(epoch2Matlab(nanmean(timeInt(:))),'yyyy-mmm-dd HH:MM:SS'),datestr(epoch2Matlab(nanmean(timeInt(:)))-4/24,'HH:MM:SS'));
 % titleLine2 = sprintf('\\makebox[4in][c]{%s UTC (%s EDT)}',datestr(nowTime+4/24,'yyyy-mmm-dd HH:MM:SS'),datestr(nowTime,'HH:MM:SS'));
 title({titleLine1,titleLine2},...
 'fontsize',14,'interpreter','latex');

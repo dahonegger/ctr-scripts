@@ -6,6 +6,7 @@ close all; clear all;
 addpath(genpath('E:\SupportData')) %CTR HUB 
 addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 addpath(genpath('C:\Data\CTR\postprocessed\windAnalysis'))
+addpath(genpath('C:\Data\CTR\supportData'))
 
 % add path to mat files and choose directory for png's   
 baseDir = 'E:\DAQ-data\processed\';

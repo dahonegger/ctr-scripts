@@ -6,7 +6,7 @@ addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 
 % add path to mat files and choose directory for png's   
 baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo_test\';
+saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo4\';
 
 % rewrite existing files in save directory? true=yes
 doOverwrite = false;
@@ -28,13 +28,13 @@ if downloadDischarge; fetchDischargeUSGS(fullfile('E:\','SupportData','Discharge
 
 %% Process Files 
 imgId = 1;
-for iDay = 25:length(dayFolder)
+for iDay = 1:length(dayFolder)
         
     dayFolder(iDay).polRun = dir(fullfile(baseDir,dayFolder(iDay).name,'*_pol.mat'));
     saveDirSub = [saveDir,dayFolder(iDay).name];
     if ~exist(saveDirSub);mkdir(saveDirSub);end
     
-        for iRun = 600:length(dayFolder(iDay).polRun)
+        for iRun = 1:length(dayFolder(iDay).polRun)
             
             fprintf('%3.f of %3.f in dir %3.f of %3.f: ',...
                 iRun,length(dayFolder(iDay).polRun),...
