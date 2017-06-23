@@ -8,7 +8,7 @@ addpath(genpath('C:\Data\CTR\supportData'))
 
 % add path to mat files and choose directory for png's   
 baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\windAnalysis\';
+saveDir = 'E:\PNGs\windAnalysis\';
 
 
 % Download new files?
@@ -19,7 +19,7 @@ downloadWind = false;
 % makeTransectMatrix
 % or load the transect matrix that has been saved
 
-load('ITransects3.mat')
+load('ITransects4.mat')
 
 smooth_size = 10; %for smoothing NDBC, OSU, and Intensity transect along "puff" range
 
@@ -118,7 +118,7 @@ ylim([0 max(Rg)])
 xlim([min(txDn_full) max(txDn_full)])
 datetick('x','keeplimits')
 axIntensity.TickLabelInterpreter = 'latex';
-ylabel('Range [m]','interpreter','latex','fontsize',14)
+ylabel('Range [m]','interpreter','latex','fontsize',12)
 set(axIntensity,'xgrid','on','gridcolor','white')
 
 % Wind Direction
@@ -126,7 +126,7 @@ set(axIntensity,'xgrid','on','gridcolor','white')
 set(fig,'currentaxes',axWindDir);
 hold on
 plot(NDBCdnWind,NDBCdirWind,'.k') %NDBC 
-plot(FFTdnWind,FFTdirWind,'.r') %OSU SENSOR
+plot(FFTdnWind,FFTdirWind,'.b') %OSU SENSOR
 % plot([min(txDn_full) max(txDn_full)],[0 0],'-','color',[0.5 0.5 0.5]) 
 plot([min(txDn_full) max(txDn_full)],[90 90],'-','color',[0.5 0.5 0.5]) 
 plot([min(txDn_full) max(txDn_full)],[180 180],'-','color',[0.5 0.5 0.5]) 
@@ -137,39 +137,42 @@ set(axWindDir,'xticklabel','')
 axWindDir.TickLabelInterpreter = 'latex';
 yticks([0 90 180 270])
 ylim([0 360])
-ylabel('Wind Direction [$^o$]','interpreter','latex','fontsize',14)
+ylabel({'Wind Direction', '[$^o$]'},'interpreter','latex','fontsize',12)
 set(axWindDir,'xgrid','on','gridcolor','black')
+box on
 
 %Wind Magnitude
 set(fig,'currentaxes',axWindMag);
 hold on
 plot(NDBCdnWind,NDBCmagWind,'.k') %NDBC
-plot(FFTdnWind,FFTmagWind,'.r') %OSU SENSOR 
+plot(FFTdnWind,FFTmagWind,'.b') %OSU SENSOR 
 xlim([min(txDn_full) max(txDn_full)])
 datetick('x','keeplimits')
 axWindMag.TickLabelInterpreter = 'latex';
-ylabel('Wind Speed [m/s]','interpreter','latex','fontsize',14)
+ylabel({'Wind Speed', '[m/s]'},'interpreter','latex','fontsize',12)
 grid on
 set(axWindMag,'xticklabel','')
+box on
 
 %Wind N Component
 set(fig,'currentaxes',axWindN);
 hold on
 plot(NDBCdnWind,NDBCvWind,'.k') %NDBC
-plot(FFTdnWind,FFTvWind,'.r') %OSU SENSOR
+plot(FFTdnWind,FFTvWind,'.b') %OSU SENSOR
 plot([min(txDn_full) max(txDn_full)],[0 0],'-k') 
 xlim([min(txDn_full) max(txDn_full)])
 axWindN.TickLabelInterpreter = 'latex';
 datetick('x','keeplimits')
-ylabel({'N component','of Wind [m/s]'},'interpreter','latex','fontsize',14)
+ylabel({'N component','of Wind [m/s]'},'interpreter','latex','fontsize',12)
 grid on
+box on
 
 
 %% Zoom plot w/ tide
 %get transect over time at range of interest (e.g. stationary bathy
 %signature)
 
-RangeOfInterest = 4300;
+RangeOfInterest = 3895;
 [idx idx] = min(abs(Rg-RangeOfInterest));
 RangeIndices = [idx-7:1:idx+7];
 
@@ -178,7 +181,7 @@ Irange_subset_smooth = smooth(Irange_subset,smooth_size,'rloess');
 
 
 fig2 = figure;
-figname2 = 'Zoom_Intensity_Transects_Wind_Comparison';
+figname2 = 'Zoom_Intensity_Transects_Wind_Comparison_mag';
 fig2.PaperUnits = 'inches';
 fig2.PaperPosition = [0 0 12.8 7.2];
 fig2.Units = 'pixels';
@@ -187,7 +190,7 @@ fig2.Position = [0 0 880 720];
 
 axIntensity2 = axes(fig2,'position',[0.0690    0.5133    0.8191    0.4656]);
 % axTide = axes(fig2,'position',[0.0690    0.2778    0.8184    0.1744]);
-axTide = axes(fig2,'position',[0.0690    0.5967    0.8191    0.1744]);
+axTide = axes(fig2,'position',[0.0690    0.5467    0.8191    0.1744]);
 axWindN2 = axes('position',[0.0690    0.2622    0.8191    0.1944]);
 
 [T, R] = meshgrid(txDn_full,Rg);
@@ -200,13 +203,13 @@ plot(T(RangeIndices(1),:),R(RangeIndices(1),:),'--w')
 plot(T(RangeIndices(end),:),R(RangeIndices(end),:),'--w')
 shading interp
 colormap hot 
-ylim([3800 4800])
+ylim([3550 4200])
 xlim([min(txDn_full) max(txDn_full)])
 set(axIntensity2,'xticklabel',[])
 datetick('x','keeplimits','keepticks')
 % c=colorbar;
 caxis([5 80])
-ylabel('Range [m]','interpreter','latex','fontsize',14)
+ylabel('Range [m]','interpreter','latex','fontsize',12)
 grid on
 axIntensity2.TickLabelInterpreter = 'latex';
 
@@ -216,7 +219,7 @@ cla(axTide)
 hold(axTide,'on')
 xlim([min(txDn_full) max(txDn_full)])
 datetick('x','mmm-dd','keeplimits','keepticks')    
-hy1 = ylabel('Current [m/s]','fontsize',11,'interpreter','latex','fontsize',14);
+hy1 = ylabel('Current [m/s]','fontsize',11,'interpreter','latex','fontsize',12);
 tmp1 = get(hy1,'position');
 set(hy1,'position',[tmp1(1)+1/50 tmp1(2:3)])
 ylim([-1.82 1.82])
@@ -237,23 +240,26 @@ set(axTide,'color','none')
 set(fig2,'currentaxes',axWindN2);
 hold on
 yyaxis left
-plot(NDBCdnWind,NDBCvWind,'.k')
-plot(FFTdnWind,FFTvWind,'.b')
+plot(NDBCdnWind,NDBCmagWind,'.k')
+plot(FFTdnWind,FFTmagWind,'.b')
 plot(TideDN,zeros(size(TideDN)),'.b')
 plot([min(txDn_full) max(txDn_full)],[0 0],'-k') 
-ylabel({'N component','of Wind [m/s]'},'interpreter','latex','fontsize',14)
+ylabel({'Magnitude','of Wind [m/s]'},'interpreter','latex','fontsize',12)
 
 yyaxis right
-plot(txDn_full,Irange_subset_smooth,'-r')
+plot(txDn_full,Irange_subset_smooth,'-r','linewidth',2)
 xlim([min(txDn_full) max(txDn_full)])
 datetick('x','keeplimits')
 axWindN2.TickLabelInterpreter = 'latex';
-ylim([-80 80])
+% ylim([-80 80])
+ylim([0 80])
 grid on
+ylabel('Mean Intensity','interpreter','latex','fontsize',12)
+box on
 
 %% print figures
-% print(fig,'-dpng','-r100',figname)
-% print(fig2,'-dpng','-r100',figname2)
+print(fig,'-dpng','-r100',fullfile(saveDir,figname))
+print(fig2,'-dpng','-r100',fullfile(saveDir,figname2))
 
 
 

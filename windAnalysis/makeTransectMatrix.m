@@ -5,7 +5,7 @@ addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 
 % add path to mat files and choose directory for png's   
 baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\windAnalysis\';
+saveDir = 'E:\SupportData\Wind\TransectMatrix\';
 
 
 output_fname = 'ITransects4.mat';

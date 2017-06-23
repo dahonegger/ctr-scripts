@@ -4,9 +4,8 @@ function cube2timex(cubeFile,timexFile)
 % Updated by Alex Simpson to show tide, wind, discharge data 
 
 % User options: leave empty [] for Matlab auto-sets
-colorAxLimits           = [0 220]; %WILL WANT TO UPDATE FOR BAD DATA PERIODS (~May 28-30)
+colorAxLimits           = [0 220]; % This gets updated for bad data periods (~May 28-30)
 axisLimits              = [-6 6 -6 6]; % Full, In kilometers
-% axisLimits              = [-3 3 -3 1]; % Zoom, In kilometers
 plottingDecimation      = [5 1]; % For faster plotting, make this [2 1] or higher
 
 % User overrides: leave empty [] otherwise
@@ -17,7 +16,6 @@ userOriginLonLat        = [-72.343472 41.271747];   % Use these lat-lon origin c
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LOAD DATA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Load radar data
-% load(cubeFile,'Azi','Rg','results','data','timeInt')
 load(cubeFile,'Azi','Rg','results','timex','timeInt') % 6/16/17 with new process scheme, 'timex' available
 % [a, MSGID] = lastwarn();warning('off', MSGID);
 if ~exist('timex','var') || isempty(timex)
@@ -53,9 +51,6 @@ TH = pi/180*(90-AZI-heading);
 xdom = xdom + x0;
 ydom = ydom + y0;
 
-% Compute timex
-% timex = nanmean(data,3); %6/16/17 no longer need to do 
-
 nowTime = epoch2Matlab(nanmean(timeInt(:))); % UTC
 if nowTime < datenum(2017,05,26,20,0,0)
     colorAxLimits = [10 125]; % for before uniform brighness increase
@@ -88,9 +83,6 @@ dirFlood.CP= 256; %deg True
 latCurrent.CP = 41.215; %N
 lonCurrent.CP = 72.3733; %W
 
-% Elevation (no longer using...)
-% [yElev.SB dnElev.SB] = railroadBridgeElevation; % Saybrook Points (UTC)
-
 % Load mooring data
 moor = load('casts_deploy_lisbuoys_065781_20170519_1302.mat');
 [moorN moorE] = lltoUTM(moor.latcast, moor.loncast);
@@ -100,7 +92,7 @@ moorY = moorN - radN;
 % moor2 = load('nav_ctriv_deploy_may2017.mat'); %the other file... 
    
 % Load wind data from wind station file
-% [dnWind,magWind,dirWind] = loadWindStation('SABC3.csv', nowTime); 
+% [dnWind,magWind,dirWind] = loadWindStation('SABC3.csv', nowTime); %the bad wind data
 [dnWind,magWind,dirWind] = loadWindNDBC('MetData_NDBC44039.txt', nowTime);
 
 % Load discharge data from USGS file

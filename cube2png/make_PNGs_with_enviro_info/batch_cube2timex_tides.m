@@ -5,15 +5,15 @@ addpath(genpath('E:\SupportData')) %CTR HUB
 addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 
 % add path to mat files and choose directory for png's   
-baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo5\';
+baseDir = 'E:\DAQ-data\processed\'; % where mat files live
+saveDir = 'E:\PNGs\timex_enviroInfo5\'; % where PNGs live
 
 % rewrite existing files in save directory? true=yes
 doOverwrite = false;
 
-% Download new files?
-downloadWind = true;
-downloadDischarge = true;
+% Download new support data files?
+downloadWind = false;
+downloadDischarge = false;
 
 %% Prep files
 % make save directory
@@ -52,19 +52,18 @@ for iDay = 1:length(dayFolder)
                 fprintf('%s exists. Skipping ...\n',pngName)
             else
                 fprintf('%s ...',cubeBaseName)
-%                 try
+                try
                     cube2timex_tides(cubeName,pngName)
                     fprintf('Done.\n')
-%                 catch
-%                     fid = fopen(['FAILED_on_file_',pngBaseName,'.txt'], 'wt' );
-%                     fclose(fid)
-%                 end
-
+                catch
+                    fid = fopen(['FAILED_on_file_',pngBaseName,'.txt'], 'wt' );
+                    fclose(fid)
+                end
                     
             end
             
             imgId = imgId + 1;
           end
-        
+       
 end
       
