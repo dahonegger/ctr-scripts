@@ -6,7 +6,7 @@ addpath(genpath('C:\Data\CTR\ctr-scripts')) %github repository
 
 % add path to mat files and choose directory for png's   
 baseDir = 'E:\DAQ-data\processed\';
-saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo4\';
+saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo5\';
 
 % rewrite existing files in save directory? true=yes
 doOverwrite = false;

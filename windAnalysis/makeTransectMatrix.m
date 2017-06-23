@@ -8,7 +8,7 @@ baseDir = 'E:\DAQ-data\processed\';
 saveDir = 'C:\Data\CTR\postprocessed\windAnalysis\';
 
 
-output_fname = 'ITransects2.mat';
+output_fname = 'ITransects4.mat';
 
 %% Prep files
 % make save directory
@@ -44,8 +44,8 @@ THdeg = wrapTo360(AZI+results.heading);
 [X,Y] = pol2cart(TH,RG);
 
 % choose degrees to average over
-desiredStartAngle = 185;
-desiredAngles = 1; %degrees 
+desiredStartAngle = 175;    
+desiredAngles = 2; %degrees 
 
 % grab these angles from intensity
 [idx idx] = min(abs(THdeg(1,:) - desiredStartAngle));
@@ -64,6 +64,8 @@ txDn(iRun) = mean(epoch2Matlab(timeInt(:)));
 
 txIMat_full = horzcat(txIMat_full,txIMat);
 txDn_full = horzcat(txDn_full,txDn);
+
+disp([num2str(iRun),' of ', num2str(length(dayFolder(iDay).polRun)),' run. ',num2str(iDay),' of ',num2str(length(dayFolder)),' day.'])
 
 end
 
