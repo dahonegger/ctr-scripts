@@ -59,7 +59,7 @@ xutm = x + results.XOrigin;
 yutm = y + results.YOrigin;
 [radLat,radLon] = UTMtoll(yutm,xutm,18);
 plotAspectRatio = (max(radLon(:))-min(radLon(:)))/(max(radLat(:))-min(radLat(:)));
-radarFig = figure;
+radarFig = figure('visible','off');
     hp = pcolor(radLon,radLat,timex);
         shading interp
         colormap(hot)
@@ -70,6 +70,7 @@ daspect([plotAspectRatio,1,1])
 
 %% Plot all fronts per image
 frontFig = copyobj(radarFig,0);
+frontFig.Visible = 'on';
 radAx = gca;
 hp = radAx.Children(end);
  
@@ -120,28 +121,40 @@ end
 
 
 
-% %% Animation
-% animFig = copyobj(radarFig,0);
-%     hold on
-%     plot(whoi.Lonbox,whoi.Latbox,'-c')
-%     plot(apl.Lonbox,apl.Latbox,'-c')
-%     plot(ut.Lonbox,ut.Latbox,'-c')
-%     for i = 1:length(tideHourGrid) 
-%         idx = find(abs(tideHourAll-tideHourGrid(i))<0.125);
-% %         idx = intersect(idx,find(dateNumAll<datenum([2017 06 12 0 0 0])));
-% %         idx = idx(end-2:end);
-%         ax = gca;
-%         ax.ColorOrder = parula(length(idx));
-%         clear hf labels
-%         for j = 1:length(idx)
-%             hf(j) = plot(lonAll{idx(j)},latAll{idx(j)},'-','linewidth',1.25);
-%             labels{j} = sprintf('%.f tides before lead',diff(tideNumAll([idx(j) idx(end)])));
-%         end
-%         title(sprintf('%1.2f Hours since max ebb',tideHourGrid(i)))
-%         
-%         legend(hf,labels)
-%     
-%         drawnow
-%         pause
-%         delete(hf)
-%     end
+%% Animation
+lastTideHour = max(tideNumAll-1);
+
+animFig = copyobj(radarFig,0);
+animFig.Visible = 'on';
+    hold on
+    plot(whoi.Lonbox,whoi.Latbox,'-c')
+    plot(apl.Lonbox,apl.Latbox,'-c')
+    plot(ut.Lonbox,ut.Latbox,'-c')
+    for i = 1:length(tideHourGrid) 
+        idxTideHour = find(abs(tideHourAll-tideHourGrid(i))<0.1);
+        relVec = -50:2:0; % Relative tide number to lastTideHour
+        idxDay = find(ismember(tideNumAll,lastTideHour+relVec));
+        
+%         idx = intersect(idx,find(dateNumAll<datenum([2017 06 12 0 0 0])));
+        
+        idx = intersect(idxTideHour,idxDay);
+        
+        if ~isempty(idx)
+        
+            ax = gca;
+            ax.ColorOrder = flipud(1-hot(length(idx)));
+            clear hf labels
+            for j = 1:length(idx)
+                hf(j) = plot(lonAll{idx(j)},latAll{idx(j)},'-','linewidth',2);
+                labels{j} = sprintf('%.f days before lead',diff(tideNumAll([idx(j) idx(end)])/2));
+            end
+            title(sprintf('%1.2f Hours since max ebb',tideHourGrid(i)))
+
+            labels{end} = 'This ebb';
+            legend(hf,labels)
+            
+            drawnow
+            ginput(1);
+            delete(hf)
+        end
+    end
