@@ -52,9 +52,8 @@ if ~exist('timex','var') || isempty(timex)
 end
 % Rectify to x-y
 
-Azi = wrapTo180(Azi);
-
 [AZI,RG] = meshgrid(mod(90-Azi-results.heading,360),Rg);
+
 [xrad,yrad] = pol2cart(AZI*pi/180,RG);
 xutm = xrad + results.XOrigin;
 yutm = yrad + results.YOrigin;
@@ -62,9 +61,13 @@ yutm = yrad + results.YOrigin;
 
 % Choose azimuthal swath
 % aziSwath = 190:.5:345;
-aziSwath = 0:0.5:359;
+aziSwath = horzcat([190:0.5:359.5],[0:0.5:180]);
 
 aziIdx = interp1(AZI(1,:),1:length(Azi),aziSwath,'nearest');
+
+for i = 1:numel(aziIdx)
+    foo(i) = Azi(aziIdx(i));
+end
 
 % Choose range decimation
 rgDecim = 5;
@@ -260,7 +263,7 @@ showFig = figure('position',[0 0 1280 720]);
 front = tx;
 %%
 for i = 1:length(front)
-    front(i).tideHr = tideHourMaxFlood(front(i).dn,dnTide,uTide,true);
+    front(i).tideHr = tideHourMaxEbb(front(i).dn,dnTide,uTide,true);
 end
 
 saveName = sprintf('%s_%s_to_%s',saveFilePrefix,datestr(tx(1).dn,'yyyymmddTHHMMSSZ'),datestr(tx(end).dn,'yyyymmddTHHMMSSZ'));
@@ -268,3 +271,5 @@ if ~exist(savePath,'dir');mkdir(savePath);end
 if exist(fullfile(savePath,saveName),'file');disp('File to save exists. Do so manually.\n');keyboard;end
 save(fullfile(savePath,saveName),'-v7.3','front')
 fprintf('Front time series saved to: %s\n',fullfile(savePath,saveName))
+
+
