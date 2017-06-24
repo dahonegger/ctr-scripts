@@ -87,6 +87,10 @@ lonCurrent.CP = 72.3733; %W
 
 % [tideHr,tideNum] = tideHourMaxEbb(txDn_full,dnCurrent.CP,yCurrent.CP,'false');
 TideDN = tideHrMaxEbb2dn(0,dnCurrent.CP,yCurrent.CP);
+for i = 1:numel(TideDN)
+[EbbIndicesRadar EbbIndicesRadar] = min(abs(txDn_full-TideDN(i)));
+[EbbIndicesNDBC EbbIndicesNDBC] = min(abs(NDBCdnWind-TideDN));
+end
 
 %% MAKE PLOTS
 % INITIALIZE PLOTS
@@ -178,7 +182,7 @@ RangeIndices = [idx-7:1:idx+7];
 
 Irange_subset = nanmean(txIMat_full(RangeIndices,:),1);
 Irange_subset_smooth = smooth(Irange_subset,smooth_size,'rloess');
-
+Irange_points = Irange_subset_smooth();
 
 fig2 = figure;
 figname2 = 'Zoom_Intensity_Transects_Wind_Comparison_mag';
@@ -258,8 +262,8 @@ ylabel('Mean Intensity','interpreter','latex','fontsize',12)
 box on
 
 %% print figures
-print(fig,'-dpng','-r100',fullfile(saveDir,figname))
-print(fig2,'-dpng','-r100',fullfile(saveDir,figname2))
+% print(fig,'-dpng','-r100',fullfile(saveDir,figname))
+% print(fig2,'-dpng','-r100',fullfile(saveDir,figname2))
 
 
 
