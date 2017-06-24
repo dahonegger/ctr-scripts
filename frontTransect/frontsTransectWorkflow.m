@@ -1,6 +1,7 @@
 %% LABEL
 transectPrefix = 'whoi';
-savePath = fullfile('C:','Data','CTR','transects');
+% savePath = fullfile('C:','Data','CTR','transects');
+savePath = fullfile('D:','Data','CTR','transects');
 
 %% PREP
 scrDir = fullfile('C:','Data','CTR','ctr-scripts');
@@ -11,9 +12,15 @@ doDebug = false;
 kmzName = fullfile(scrDir,'util','missionPlanningWhoi2.kmz');
 bufferLength = 3000;
 [whoiTransect, aplTransect, utTransect] = kmz2transects(kmzName,bufferLength);
-
+% 
 tx.lats = whoiTransect.Lattx;
 tx.lons = whoiTransect.Lontx;
+
+% tx.lats = aplTransect.Lattx;
+% tx.lons = aplTransect.Lontx;
+
+% tx.lats = utTransect.Lattx;
+% tx.lons = utTransect.Lontx;
 
 %% TIDE HOUR INFO
 [uTide,dnTide] = railroadBridgeCurrentLocal;
@@ -21,12 +28,18 @@ dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
     
 %% CHOOSE THE TIME SPAN
 % Somehow get the cubes needed to run the transect interpolation script:
-cubeDir = fullfile('E:','DAQ-data','processed');
+% cubeDir = fullfile('E:','DAQ-data','processed');
+
+% cubeDir = fullfile('D:','DAQ-data','processed'); % Lenovo path
+cubeDir = 'D:\Data\CTR\DAQ-data\processed\'; % Lenovo path
+
+
 % cubeDir = 'C:\Users\radaruser\Desktop\honegger-temp\tmpData-front\';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(45);
+%%% MOST RECENT PROCESSED: #74 June 22, 6:07 utc 
+thisEbbMax = dnMaxEbb(67);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 

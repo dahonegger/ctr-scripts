@@ -96,7 +96,8 @@ moorY = moorN - radN;
 [dnWind,magWind,dirWind] = loadWindNDBC('MetData_NDBC44039.txt', nowTime);
 
 % Load discharge data from USGS file
-[dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS(fullfile('E:\','SupportData','Discharge','CTdischarge_Site01193050.txt'));
+% [dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS(fullfile('E:\','SupportData','Discharge','CTdischarge_Site01193050.txt'));
+[dnDischarge,rawDischarge,trDischarge] = loadDischargeUSGS('CTdischarge_Site01193050.txt');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Plot! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % setup
