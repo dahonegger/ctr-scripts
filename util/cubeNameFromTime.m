@@ -31,6 +31,7 @@ if isempty(dnList) || isempty(fileList)
 
     if doLoopThruDays
         fileList = dir(fullfile(dataSource, '20*-*-*', '*.mat'));
+
     end
     if ~isfield(fileList,'folder')
         [fileList(:).folder] = deal(dataSource);
