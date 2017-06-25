@@ -1,3 +1,4 @@
+clear all
 %% LABEL
 transectPrefix = 'whoi';
 savePath = fullfile('C:','Data','CTR','transects');
@@ -26,7 +27,7 @@ cubeDir = fullfile('E:','DAQ-data','processed');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Earliest max ebb in June is #45
-thisEbbMax = dnMaxEbb(45);
+thisEbbMax = dnMaxEbb(77);
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 disp(datestr(thisEbbMax))
 

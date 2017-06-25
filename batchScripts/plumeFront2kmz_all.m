@@ -1,3 +1,5 @@
+doOverwrite = false;
+
 %% PLUME FRONT MATFILE PATH
 frontDir = fullfile('C:','Data','CTR','plumeFront');
 
@@ -14,7 +16,16 @@ for i = 1:length(files)
     [inFilePath,inFileName,inFileExt] = fileparts(inFile);
     kmzFile = fullfile(kmzDir,inFileName);
     
-    fprintf('%s to %s.kmz:',inFile,kmzFile)
-    plumeFront2kmz(inFile,kmzFile)
+    if exist([kmzFile,'.kmz'],'file')
+        if doOverwrite
+            fprintf('%s to %s.kmz:',inFile,kmzFile)
+            plumeFront2kmz(inFile,kmzFile)
+        else 
+            fprintf('Exists.Skipping.')
+        end
+    else
+        fprintf('%s to %s.kmz:',inFile,kmzFile)
+        plumeFront2kmz(inFile,kmzFile)
+    end
     fprintf('\n')
 end
