@@ -1,40 +1,29 @@
 %% Get Files
-files = getFiles('E:\DAQ-data\processed\');
-kmzStackBase = pwd;
-
-if ispc
-    attic = '\\attic.engr.oregonstate.edu\hallerm';
-else
-    attic = '/nfs/attic/hallerm';
-end
-
-% kmzConcatenate
-% addpath(fullfile('..','kmzConcatenate'));
-% addpath(fullfile('..','util'));
-% datestr_3dago = datestr(timezone_convert(now-3, [], 'UTC'), 'yyyy-mm-dd');
-% 
-% kmzBase = fullfile(attic,'RADAR_DATA','CTR','site_push','kmz');
-% kmzStackBase = fullfile(attic,'RADAR_DATA','CTR','site_push','kmzStack');
+files = getFiles('E:\DAQ-data\processed\','','kmz');
+kmzStackBase = fullfile('C:','Data','CTR','kmzStackByHour');
 if ~exist(kmzStackBase,'dir');mkdir(kmzStackBase);end
 
-dayDirs = dir(fullfile(kmzBase, '20*-*-*'));
 
-% Get existing kmzStack files
-exgKmzDayStacks = dir(fullfile(kmzStackBase, 'kmzStack_20*-*-*.kmz'));
+clear yyyy ddd HH
+for i = 1:numel(files)
+    yyyy(i) = str2double(files(i).name(9:12));
+    ddd(i) = str2double(files(i).name(13:15));
+    HH(i) = str2double(files(i).name(16:17));
+end
 
-for i = 1:numel(dayDirs)
-    fprintf('Stacking %s...', dayDirs(i).name);
-    dayDir = dayDirs(i).name;
-    dayKmzs = dir(fullfile(kmzBase, dayDir, '*.kmz'));
-    if isempty(dayKmzs)
-        fprintf('Day empty.\n');
-        continue
-    end
-    stackName = ['kmzStack_', dayDir, '.kmz'];
-    if ismember(stackName, {exgKmzDayStacks.name}) && strlte(dayDir, datestr_3dago)
-        fprintf('Exists.\n');
-        continue
-    end
-    kmzConcatenate(dayKmzs,fullfile(kmzStackBase,stackName))
-    fprintf('Done.\n')
+dn = datenum([yyyy(:) 0*ddd(:)+1 ddd(:) HH(:) 0*HH(:) 0*HH(:)]);
+dv = datevec(dn);
+
+[uniqueHrs] = unique(HH);
+
+for i = 1:numel(uniqueHrs)
+    idx = find(HH==uniqueHrs(i));
+    files2stacker = files(idx);
+    
+    
+    kmzStackName = sprintf('LyndePt_%s-Hour-%s',datestr(dn(idx(1)),'ddmmmm'),datestr(dn(idx(1)),'HH'));
+    
+    kmzStackFile = fullfile(kmzStackBase,[kmzStackName,'.kmz']);
+    
+    kmzConcatenate(files2stacker,kmzStackFile)
 end
