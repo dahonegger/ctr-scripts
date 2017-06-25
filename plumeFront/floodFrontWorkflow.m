@@ -2,11 +2,12 @@
 if exist('localvars.m', 'file')
     localvars;
 else
-    savePath = fullfile('C:','Data','CTR','floodFront');
+    savePath = 'D:\Data\CTR\frontTracking';
+%     savePath = fullfile('C:','Data','CTR','floodFront');
     scrDir = fullfile('C:','Data','CTR','ctr-scripts');
 %     cubeDir = fullfile('D:','DAQ-data','processed');
     cubeDir = fullfile('D:','Data','CTR','DAQ-data','processed');
-    ebbNum = 45; % 74: 2017-June-22 0600
+    ebbNum = 75; % 74: 2017-June-22 0600
 end
 
 %% LABEL
