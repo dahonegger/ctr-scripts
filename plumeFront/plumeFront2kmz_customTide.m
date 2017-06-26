@@ -7,7 +7,10 @@ frontDir = fullfile('C:','Data','CTR','plumeFront');
 [uTide,dnTide] = railroadBridgeCurrentLocal;
 dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
 
-inputTideDn = datenum('2017-06-25 16:00:00'):15/60/24:datenum('2017-06-26 03:00:00');
+
+inputTideDn = datenum('2017-06-26 17:00:00'):15/60/24:datenum('2017-06-27 04:00:00');
+
+
 [inputTideHr,inputTideNum] = tideHourMaxEbb(inputTideDn,dnTide,uTide,true);
 saveTideNum = inputTideNum;
 inputZeroHourDn = interp1(inputTideHr,inputTideDn,0);
