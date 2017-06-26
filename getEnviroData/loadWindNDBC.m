@@ -49,6 +49,10 @@ if nargin > 1
           dirWind = interp1(dnWind,dirWind(index),tquery);
           vWind = interp1(dnWind,vWind(index),tquery);
           dnWind = tquery;
+          if vWind == 0 || isnan(vWind)
+              vWind = 0.1;
+          else
+          end
         
         
 %         [idx idx] = min(tmp); %index of closest value
