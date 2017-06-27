@@ -1,28 +1,28 @@
 doOverwrite = false;
 
-%% PLUME FRONT MATFILE PATH
-frontDir = fullfile('C:','Data','CTR','plumeFront');
+%% FLOOD FRONT MATFILE PATH
+frontDir = fullfile('C:','Data','CTR','floodFront');
 
 %% DEFINE TIDE INFO FOR OUTPUT FILES
 [uTide,dnTide] = railroadBridgeCurrentLocal;
 dnMaxEbb = tideHrMaxEbb2dn(0,dnTide,uTide);
 
 
-inputTideDn = datenum('2017-06-27 18:00:00'):15/60/24:datenum('2017-06-28 05:00:00');
+inputTideDn = datenum('2017-06-27 06:00:00'):15/60/24:datenum('2017-06-27 20:00:00');
 
 
-[inputTideHr,inputTideNum] = tideHourMaxEbb(inputTideDn,dnTide,uTide,true);
+[inputTideHr,inputTideNum] = tideHourMaxEbb(inputTideDn,dnTide,uTide,false);
 saveTideNum = inputTideNum;
-inputZeroHourDn = interp1(inputTideHr,inputTideDn,0);
+inputZeroHourDn = interp1(inputTideHr,inputTideDn,0,'linear','extrap');
 
 %% KMZ PATH
-kmzDir = fullfile('C:','Data','CTR','plumeFrontKmz',sprintf('refTo_%s',datestr(inputZeroHourDn,'yyyymmddTHHMMSSZ')));
+kmzDir = fullfile('C:','Data','CTR','floodFrontKmz',sprintf('refTo_%s',datestr(inputZeroHourDn,'yyyymmddTHHMMSSZ')));
 if ~exist(kmzDir,'dir');mkdir(kmzDir);end
 
 
 %% Load 
 
-files = dir(fullfile(frontDir,'plumeFront*.mat'));
+files = dir(fullfile(frontDir,'floodFront*.mat'));
 clear ebb
 for i = 1:length(files)
     inFile = fullfile(files(i).folder,files(i).name);
@@ -31,7 +31,8 @@ for i = 1:length(files)
     load(inFile)
     clear newdn
     for i = 1:numel(front)
-        tmp = interp1(inputTideHr,inputTideDn,front(i).tideHr);
+        tideHr = tideHourMaxEbb(front(i).dn,dnTide,uTide,false);
+        tmp = interp1(inputTideHr,inputTideDn,tideHr);
         front(i).dn = tmp;
     end
 %     [~,tideNumIn] = 
@@ -51,13 +52,13 @@ for i = 1:length(files)
     if exist([kmzFile,'.kmz'],'file')
         if doOverwrite
             fprintf('%s to %s.kmz:',inFile,kmzFile)
-            plumeFront2kmz(inFile,kmzFile)
+            floodFront2kmz(inFile,kmzFile)
         else 
             fprintf('Exists.Skipping.')
         end
     else
         fprintf('%s to %s.kmz:',inFile,kmzFile)
-        plumeFront2kmz(inFile,kmzFile)
+        floodFront2kmz(inFile,kmzFile)
     end
     fprintf('\n')
 end

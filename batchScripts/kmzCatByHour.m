@@ -1,5 +1,6 @@
 %% Get Files
-files = getFiles('E:\DAQ-data\processed\','','kmz');
+scrDir = addpath(genpath(fullfile('C:','Data','CTR','ctr-scripts')));
+files = getFiles('D:\DAQ-data\processed\','','kmz');
 kmzStackBase = fullfile('C:','Data','CTR','kmzStackByHour');
 if ~exist(kmzStackBase,'dir');mkdir(kmzStackBase);end
 

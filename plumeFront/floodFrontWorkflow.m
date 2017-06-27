@@ -5,8 +5,9 @@ else
     savePath = fullfile('C:','Data','CTR','floodFront');
     scrDir = fullfile('C:','Data','CTR','ctr-scripts');
 %     cubeDir = fullfile('D:','DAQ-data','processed');
+    %AO cubeDir = fullfile('D:','Data','CTR','DAQ-data','processed');
     cubeDir = fullfile('D:','Data','CTR','DAQ-data','processed');
-    ebbNum = 45; % 74: 2017-June-22 0600
+    ebbNum = 82; % 74: 2017-June-22 0600
 end
 
 %% LABEL
@@ -101,6 +102,8 @@ end
 %% LOOP THRU FILES
 
 clear tx
+
+%%
 itx = 1;
 % waitfor(msgbox('WARNING: Reset to for i = 1:...'));
 for i = 1:length(cubeName)

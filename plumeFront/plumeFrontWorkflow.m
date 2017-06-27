@@ -4,8 +4,8 @@ if exist('localvars.m', 'file')
 else
     savePath = fullfile('C:','Data','CTR','plumeFront');
     scrDir = fullfile('C:','Data','CTR','ctr-scripts');
-    cubeDir = fullfile('E:','DAQ-data','processed');
-    ebbNum = 81; % 74: 2017-June-22 0600
+    cubeDir = fullfile('D:','DAQ-data','processed');
+    ebbNum = 84; % 74: 2017-June-22 0600
 end
 
 %% LABEL
