@@ -1,8 +1,16 @@
 %% Get Files
-scrDir = addpath(genpath(fullfile('C:','Data','CTR','ctr-scripts')));
-files = getFiles('D:\DAQ-data\processed\','','kmz');
-kmzStackBase = fullfile('C:','Data','CTR','kmzStackByHour');
-if ~exist(kmzStackBase,'dir');mkdir(kmzStackBase);end
+% scrDir = fullfile('C','Data','CTR','ctr-scripts');
+scrDir = fullfile(depotDir,'haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
+inputDir = fullfile(atticDir,'hallerm','RADAR_DATA','CTR','site_push','kmz',filesep);
+
+
+addpath(genpath(scrDir));
+files = getFiles(inputDir,'','kmz');
+
+
+% kmzStackBase = fullfile('C:','Data','CTR','kmzStackByHour');
+kmzStackBase = files(1).folder;
+% if ~exist(kmzStackBase,'dir');mkdir(kmzStackBase);end
 
 
 clear yyyy ddd HH
@@ -22,7 +30,7 @@ for i = 1:numel(uniqueHrs)
     files2stacker = files(idx);
     
     
-    kmzStackName = sprintf('LyndePt_%s-Hour-%s',datestr(dn(idx(1)),'ddmmmm'),datestr(dn(idx(1)),'HH'));
+    kmzStackName = sprintf('LyndePt_%s-Hr%s',datestr(dn(idx(1)),'yyyymmmdd'),datestr(dn(idx(1)),'HH'));
     
     kmzStackFile = fullfile(kmzStackBase,[kmzStackName,'.kmz']);
     
