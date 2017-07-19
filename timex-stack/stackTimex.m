@@ -1,6 +1,11 @@
-function tCube = stackTimex(cubeDir,dnStart,dnEnd)
+function tCube = stackTimex(cubeDir,dnStart,dnEnd,dnDecim)
+% tCube = stackTimex(cubeDir,dnStart,dnEnd,dnDecim)
 
-dnVec = dnStart:15/60/24:dnEnd;
+if ~exist('dnDecim','var') || isempty(dnDecim)
+    dnDecim = 15/60/24;
+end
+
+dnVec = dnStart:dnDecim:dnEnd;
 
 for i = 1:length(dnVec)
     cubeNamesAll{i} = cubeNameFromTime(dnVec(i),cubeDir);
