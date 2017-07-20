@@ -5,7 +5,9 @@ function [fileToGrab,timeDiff] = cubeNameFromTime(dnIn,sourceDir,grabRule,thresh
 
 % dataSource = fullfile('D:','Data','CTR','postprocessed','rectCubes',filesep);
 % dataSource = fullfile('E:','LyndePt');
+
 persistent dnList fileList;
+% dnList = [];fileList = [];
 
 dataSource = sourceDir;
 
