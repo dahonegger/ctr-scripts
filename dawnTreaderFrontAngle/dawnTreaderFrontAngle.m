@@ -7,7 +7,7 @@ addpath(genpath(scrDir))
 cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
 
 %% OUTPUT LOCATION
-pngDir = '/nfs/attic/hallerm/RADAR_DATA/CTR/supportData/vesselData/RADAROVERLAYS/2017-06-23/';
+pngDir = '/nfs/attic/hallerm/RADAR_DATA/CTR/supportData/vesselData/RADAROVERLAYS/2017-06-28/';
 if ~exist(pngDir,'dir');mkdir(pngDir);end
 
 %% LOAD GPS
@@ -23,7 +23,7 @@ gps.latSmooth = smooth(gps.lat,3);
 
 %% June 23rd
 
-ii = find(gps.dvutc(:,3)==23);% & gps.dvutc(:,4)<15);
+ii = find(gps.dvutc(:,3)==28);% & gps.dvutc(:,4)<15);
 
 Cube = stackTimex(cubeDir,gps.dnutc(ii(1)),gps.dnutc(ii(end)),2/60/24);
 Cube = cartCube(Cube);
@@ -76,24 +76,40 @@ end
 
 % 2017 06 27 08 32 03;
 dnCross = datenum([...
-2017 06 23 15 51 05;
-2017 06 23 16 14 37;
-2017 06 23 16 30 46;
-2017 06 23 16 35 21;
-2017 06 23 16 48 50;
-2017 06 23 16 52 55;
-2017 06 23 17 05 16;
-2017 06 23 17 49 22;
-2017 06 23 17 53 50;
-2017 06 23 17 58 08;
-2017 06 23 18 03 03;
-2017 06 23 18 09 12;
-2017 06 23 18 12 50;
-2017 06 23 18 24 39;
-2017 06 23 18 56 23;
-2017 06 23 19 05 43;
-2017 06 23 19 12 00;
-2017 06 23 19 26 15 ...
+2017 06 28 06 53 18;
+2017 06 28 06 57 17;
+2017 06 28 06 58 57;
+2017 06 28 07 02 26;
+2017 06 28 07 04 42;
+2017 06 28 07 07 54;
+2017 06 28 07 09 45;
+2017 06 28 07 11 11;
+2017 06 28 07 12 49;
+2017 06 28 07 14 59;
+2017 06 28 07 16 35;
+2017 06 28 07 18 41;
+2017 06 28 07 19 48;
+2017 06 28 07 22 04;
+2017 06 28 07 23 13;
+2017 06 28 07 24 30;
+2017 06 28 07 26 24;
+2017 06 28 07 27 39;
+2017 06 28 07 29 02;
+2017 06 28 07 30 29;
+2017 06 28 07 31 43;
+2017 06 28 07 32 59;
+2017 06 28 07 34 03;
+2017 06 28 07 35 27;
+2017 06 28 07 36 13;
+2017 06 28 07 40 11;
+2017 06 28 07 41 56;
+2017 06 28 07 52 19;
+2017 06 28 08 08 01;
+2017 06 28 08 13 57;
+2017 06 28 08 20 16;
+2017 06 28 08 28 03;
+2017 06 28 08 43 37;
+2017 06 28 08 54 03 ...
 ]);
 
 clear transect
@@ -119,96 +135,126 @@ for iCross = 1:length(dnCross)
     ax.XLim = gps.lonSmooth(ii(i))+.005*[-1 1];
     ax.YLim = gps.latSmooth(ii(i))+.005*[-1 1]*alpha;
     
-    % Click front line & get x-y
-    [fLon,fLat,~,hpf] = ginputLine;
-    [fNorth,fEast] = lltoUTM(fLat,fLon);
     
-    % Get gps coords on either side of front
-    if floor(dnCross(1))==datenum([2017 06 26 0 0 0])
-        if iCross >= 24 % LIS-ebb front
-            lisIdx = find(gps.lon(ii(gpsi))<mean(fLon));
-            ctrIdx = find(gps.lon(ii(gpsi))>mean(fLon));
-        else % LIS-flood front
-            lisIdx = find(gps.lat(ii(gpsi))<mean(fLat));
-            ctrIdx = find(gps.lat(ii(gpsi))>mean(fLat));
+    doClickLine = true;
+    while doClickLine
+        try
+            % Click front line & get x-y
+            [fLon,fLat,~,hpf] = ginputLine;
+            [fNorth,fEast] = lltoUTM(fLat,fLon);
+
+            % Get gps coords on either side of front
+            if floor(dnCross(1))==datenum([2017 06 26 0 0 0])
+                if iCross >= 24 % LIS-ebb front
+                    lisIdx = find(gps.lon(ii(gpsi))<mean(fLon));
+                    ctrIdx = find(gps.lon(ii(gpsi))>mean(fLon));
+                else % LIS-flood front
+                    lisIdx = find(gps.lat(ii(gpsi))<mean(fLat));
+                    ctrIdx = find(gps.lat(ii(gpsi))>mean(fLat));
+                end
+            else
+                lisIdx = find(gps.lon(ii(gpsi))<mean(fLon));
+                ctrIdx = find(gps.lon(ii(gpsi))>mean(fLon));
+            end
+
+
+            lisLon = gps.lon(ii(gpsi(lisIdx)));
+            lisLat = gps.lat(ii(gpsi(lisIdx)));
+            [lisNorth,lisEast] = lltoUTM(lisLat,lisLon);
+            ctrLon = gps.lon(ii(gpsi(ctrIdx)));
+            ctrLat = gps.lat(ii(gpsi(ctrIdx)));
+            [ctrNorth,ctrEast] = lltoUTM(ctrLat,ctrLon);
+% 
+            if mean(diff(lisLon))>0
+                txIdx = [lisIdx(end) ctrIdx(1)];
+            else
+                txIdx = [ctrIdx(end) lisIdx(1)];
+            end
+            txLon = gps.lon(ii(gpsi(txIdx)));
+            txLat = gps.lat(ii(gpsi(txIdx)));
+            [txNorth,txEast] = lltoUTM(txLat,txLon);
+
+            % Calculate global angles
+            fTheta   = atand((diff(fNorth)/diff(fEast)))+90;
+%             lisTheta = atand(diff(lisNorth)./diff(lisEast));
+%             ctrTheta = atand(diff(ctrNorth)./diff(ctrEast));
+%             txTheta  = atand(diff(txNorth)./diff(txEast));
+
+%             % Calculate cross-front angles
+%             txPhi  = txTheta  - fTheta;
+%             lisPhi = lisTheta - fTheta;
+%             ctrPhi = ctrTheta - fTheta;
+%             if txPhi>90
+%                 txPhi = txPhi-180;
+%             elseif txPhi<-90
+%                 txPhi = txPhi+180;
+%             end
+%             if lisPhi>90
+%                 lisPhi = lisPhi-180;
+%             elseif lisPhi<-90
+%                 lisPhi = lisPhi+180;
+%             end
+%             if ctrPhi>90
+%                 ctrPhi = ctrPhi-180;
+%             elseif ctrPhi<-90
+%                 ctrPhi = ctrPhi+180;
+%             end
+
+%             % Calculate cross-front distance
+            [txPosEast,txPosNorth] = lineIntersect(txEast,txNorth,fEast,fNorth);
+%             lisDX = lisEast(1:end-1)+diff(lisEast)/2;
+%             lisDY = lisNorth(1:end-1)+diff(lisNorth)/2;
+%             ctrDX = ctrEast(1:end-1)+diff(ctrEast)/2;
+%             ctrDY = ctrNorth(1:end-1)+diff(ctrNorth)/2;
+% 
+%             lisS = hypot(lisDX-txPosEast,lisDY-txPosNorth);
+%             ctrS = hypot(ctrDX-txPosEast,ctrDY-txPosNorth);
+
+            % Plot result
+            [fx,fy] = pol2cart(fTheta*pi/180,.001);
+            [txPosLat,txPosLon] = UTMtoll(txPosNorth,txPosEast,18);
+            hpr = quiver(txPosLon,txPosLat,fx,fy*alpha,0,'c','linewidth',2);
+
+            % Get user go-ahead
+            drawnow
+            xlabel('Happy? LMB=yes; RMB=no.')
+            [~,~,button] = ginput2(1,'circle');
+            switch button
+                case 1
+                    delete(hpf)
+                    delete(hpr)
+                    doClickLine = false;
+                otherwise
+                    delete(hpf)
+                    delete(hpr)
+                    doClickLine = true;
+            end
+        catch
+            delete(hpf)
+            delete(hpr)
+            doClickLine = true;
         end
-    else
-        lisIdx = find(gps.lon(ii(gpsi))<mean(fLon));
-        ctrIdx = find(gps.lon(ii(gpsi))>mean(fLon));
     end
-        
-    
-    lisLon = gps.lon(ii(gpsi(lisIdx)));
-    lisLat = gps.lat(ii(gpsi(lisIdx)));
-    [lisNorth,lisEast] = lltoUTM(lisLat,lisLon);
-    ctrLon = gps.lon(ii(gpsi(ctrIdx)));
-    ctrLat = gps.lat(ii(gpsi(ctrIdx)));
-    [ctrNorth,ctrEast] = lltoUTM(ctrLat,ctrLon);
-    
-    if mean(diff(lisLon))>0
-        txIdx = [lisIdx(end) ctrIdx(1)];
-    else
-        txIdx = [ctrIdx(end) lisIdx(1)];
-    end
-    txLon = gps.lon(ii(gpsi(txIdx)));
-    txLat = gps.lat(ii(gpsi(txIdx)));
-    [txNorth,txEast] = lltoUTM(txLat,txLon);
-    
-    % Calculate global angles
-    fTheta   = atand((diff(fNorth)/diff(fEast)))+90;
-    lisTheta = atand(diff(lisNorth)./diff(lisEast));
-    ctrTheta = atand(diff(ctrNorth)./diff(ctrEast));
-    txTheta  = atand(diff(txNorth)./diff(txEast));
-    
-    % Calculate cross-front angles
-    txPhi  = txTheta  - fTheta;
-    lisPhi = lisTheta - fTheta;
-    ctrPhi = ctrTheta - fTheta;
-    if txPhi>90
-        txPhi = txPhi-180;
-    elseif txPhi<-90
-        txPhi = txPhi+180;
-    end
-    if lisPhi>90
-        lisPhi = lisPhi-180;
-    elseif lisPhi<-90
-        lisPhi = lisPhi+180;
-    end
-    if ctrPhi>90
-        ctrPhi = ctrPhi-180;
-    elseif ctrPhi<-90
-        ctrPhi = ctrPhi+180;
-    end
-        
-    % Calculate cross-front distance
-    [txPosEast,txPosNorth] = lineIntersect(txEast,txNorth,fEast,fNorth);
-    lisDX = lisEast(1:end-1)+diff(lisEast)/2;
-    lisDY = lisNorth(1:end-1)+diff(lisNorth)/2;
-    ctrDX = ctrEast(1:end-1)+diff(ctrEast)/2;
-    ctrDY = ctrNorth(1:end-1)+diff(ctrNorth)/2;
-    
-    lisS = hypot(lisDX-txPosEast,lisDY-txPosNorth);
-    ctrS = hypot(ctrDX-txPosEast,ctrDY-txPosNorth);
     
     
     % Save to transect structure
     transect(iCross).surfboardDateNum = dnCross(iCross);
     transect(iCross).radarImageTimespan = Cube.dn(radari)+40/86400*[-1 1] - 4/24; % Hardcode to 80s
-    transect(iCross).localAngle = txPhi;
-    transect(iCross).lisAngles = lisPhi;
-    transect(iCross).ctrAngles = ctrPhi;
-    transect(iCross).lisApproxDistanceFromFront = lisS;
-    transect(iCross).ctrApproxDistanceFromFront = ctrS;
-    transect(iCross).units = 'Times: MATLAB datenum EDT; Angles: Degrees CCW from front-normal; Distance: Meters';
+    transect(iCross).frontHeading = fTheta;
+%     transect(iCross).localAngle = txPhi;
+%     transect(iCross).lisAngles = lisPhi;
+%     transect(iCross).ctrAngles = ctrPhi;
+%     transect(iCross).lisApproxDistanceFromFront = lisS;
+%     transect(iCross).ctrApproxDistanceFromFront = ctrS;
+%     transect(iCross).units = 'Times: MATLAB datenum EDT; Angles: Degrees CCW from front-normal; Distance: Meters';
+    transect(iCross).units = 'Times: MATLAB datenum EDT; Angles: Degrees CCW from East';
     
     
-    fprintf('Local angle: %f degrees\n',txPhi)
+%     fprintf('Local angle: %f degrees\n',txPhi)
     
     
-    drawnow;
-    delete(hpf)
 %     pngName = sprintf('gpsOnRadar-%sEDT.png',datestr(gps.dn(ii(i)),'yyyymmdd-HHMMSS'));
 %     print(fig,'-dpng','-r300',fullfile(pngDir,pngName))
 end
 
-% save(fullfile(pngDir,sprintf('transectInfo_%s',datestr(floor(dnCross(1)),'yyyy-mm-dd'))),'-v7.3','transect')
+save(fullfile(pngDir,sprintf('frontHeading_%s',datestr(floor(dnCross(1)),'yyyy-mm-dd'))),'-v7.3','transect')

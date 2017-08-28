@@ -2,10 +2,12 @@
 if exist('localvars.m', 'file')
     localvars;
 else
-    savePath = fullfile('C:','Data','CTR','plumeFront');
-    scrDir = fullfile('C:','Data','CTR','ctr-scripts');
-    cubeDir = fullfile('D:','DAQ-data','processed');
-    ebbNum = 84; % 74: 2017-June-22 0600
+%     savePath = fullfile('C:','Data','CTR','plumeFront');
+    savePath = fullfile('/media','CTR HUB 2','RADAR PROCESSED DATA','plumeFront');
+    scrDir = fullfile('/nfs','depot','cce_u1','haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
+    cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
+%     cubeDir = fullfile('D:','DAQ-data','processed');
+    ebbNum = 90; % 74: 2017-June-22 0600
 end
 
 %% LABEL
@@ -112,7 +114,7 @@ for i = 1:length(cubeName)
             testFig = figure('position',[0 0 500 800]);
                 imagesc(bfWrapper(double(thisFrame)));
                 title('Left click to continue. Right click to reject.')
-            [~,~,button] = ginput(1);
+            [~,~,button] = ginput2(1,'circle');
             delete(testFig)
             if button==1
                 
@@ -126,7 +128,7 @@ for i = 1:length(cubeName)
                         hold on
                         plot(thisCurve.x,thisCurve.y,'-r','linewidth',1.5)
                     title('Happy with this curve? LMB=yes; RMB=try again')
-                    [~,~,button] = ginput(1);
+                    [~,~,button] = ginput2(1,'circle');
                     close(checkFig)
                     if button==1
                         curveDone = true;
@@ -155,7 +157,7 @@ for i = 1:length(cubeName)
                         axis image
                     plot(txNow.lon,txNow.lat,'-r','linewidth',1.5)
                 title('Click to continue')
-                ginput(1);
+                ginput2(1,'circle');
                 close(showFig);
                 
                 %%%%%%%%%%%%%
@@ -169,7 +171,7 @@ for i = 1:length(cubeName)
         testFig = figure('position',[0 0 500 800]);
             imagesc(bfWrapper(double(thisFrame)));
             title('Left click to continue. Right click to reject.')
-        [~,~,button] = ginput(1);
+        [~,~,button] = ginput2(1,'circle');
         delete(testFig)
         if button==1
             thisTime = epoch2Matlab(mean(timeInt(:)));
@@ -182,7 +184,7 @@ for i = 1:length(cubeName)
                     hold on
                     plot(thisCurve.x,thisCurve.y,'-r','linewidth',1.5)
                 title('Happy with this curve? LMB=yes; RMB=try again')
-                [~,~,button] = ginput(1);
+                [~,~,button] = ginput2(1,'circle');
                 close(checkFig)
                 if button==1
                     curveDone = true;
@@ -211,7 +213,7 @@ for i = 1:length(cubeName)
                         axis image
                     plot(txNow.lon,txNow.lat,'-r','linewidth',1.5)
                 title('Click to continue')
-                ginput(1);
+                ginput2(1,'circle');
                 close(showFig);
                 
             %%%%%%%%%%%%%
@@ -236,7 +238,7 @@ showFig = figure('position',[0 0 1280 720]);
    hold on
    if ~exist('tx','var') || isempty(tx)
        title('No radar runs for this tide. Click to continue')
-       ginput(1);
+       ginput2(1,'circle');
        close(showFig)
        return
    else
@@ -244,7 +246,7 @@ showFig = figure('position',[0 0 1280 720]);
            plot(tx(i).lon,tx(i).lat,'-c','linewidth',1.5)
        end
        title('Click to continue')
-       ginput(1);
+       ginput2(1,'circle');
        close(showFig);
    end
 

@@ -1,8 +1,8 @@
-scrDir = fullfile('C:','Data','CTR','ctr-scripts');
+scrDir = fullfile('/nfs','depot','cce_u1','haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
 addpath(genpath(scrDir))
 
 %% FRONT PATH
-frontDir = fullfile('C:','Data','CTR','plumeFront');
+frontDir = fullfile('/media','CTR HUB 2','RADAR PROCESSED DATA','plumeFront');
 
 %% Load
 [uTide,dnTide] = railroadBridgeCurrentLocal;
@@ -48,7 +48,7 @@ ax = gca;
     title('Extracted front times')
     
 %% Load example image
-sourceDir = fullfile('E:','DAQ-data','processed');
+sourceDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
 sampleTime = datenum([2017 06 09 21 23 41]);
 cubeName = cubeNameFromTime(sampleTime,sourceDir);
 load(cubeName,'Azi','Rg','results','timeInt','timex');
@@ -88,9 +88,9 @@ ylabel(hc,'Hr since max ebb','color','w')
 hold(frontAx,'all')
 grid on
     hold on
-    plot(whoi.Lonbox,whoi.Latbox,'-c')
-    plot(apl.Lonbox,apl.Latbox,'-c')
-    plot(ut.Lonbox,ut.Latbox,'-c')
+%     plot(whoi.Lonbox,whoi.Latbox,'-c')
+%     plot(apl.Lonbox,apl.Latbox,'-c')
+%     plot(ut.Lonbox,ut.Latbox,'-c')
 
 
 numList = unique(tideNumAll);

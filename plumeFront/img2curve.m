@@ -157,13 +157,13 @@ figEndpoints = figure;
     while notDone
         title('Click LMB on/near front endpoints')
         iPoint = iPoint + 1;
-        [xp,yp,~] = ginput(1);
+        [xp,yp,~] = ginput2(1,'cross');
         hClick = plot(xp,yp,'xb');
         d = hypot(xMaximaSmooth-xp,yMaximaSmooth-yp);
         di = find(abs(d)==min(abs(d)));
         hNearest = plot(xMaximaSmooth(di),yMaximaSmooth(di),'ob');
         title('Happy? LMB=yes RMB=no')
-        [~,~,button] = ginput(1);
+        [~,~,button] = ginput2(1,'circle');
         if button~=1
             iPoint = iPoint - 1;
             delete(hClick)

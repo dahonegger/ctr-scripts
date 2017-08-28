@@ -33,7 +33,7 @@ else
 end
 
 % now load doc.kml 
-kmlContents = kml2struct([tmpReadFolder,'\',kmlReadFile]);
+kmlContents = kml2struct(fullfile(tmpReadFolder,kmlReadFile));
 
 %WHOI 
 % access lats and lons for box corners 
