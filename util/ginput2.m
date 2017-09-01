@@ -33,8 +33,8 @@ function [out1,out2,out3] = ginput2(arg1,strpointertype)
 
 out1 = []; out2 = []; out3 = []; y = [];
 
-if nargin<1     % modified MYGINPUT
-    strpointertype='fullcrosshair'; % default GINPUT pointer
+if nargin<2     % modified MYGINPUT
+    strpointertype='crosshair'; % default GINPUT pointer
 end
 
 c = computer;
