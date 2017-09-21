@@ -15,26 +15,26 @@ function [FFTdnWind, FFTmagWind, FFTdirWind] = loadFTTechWind_allfiles( baseDir 
 
 % Alex Simpson %6/23/17
 
-dayFolder = dir([baseDir,'2017*']);
+dayFolder = dir(fullfile(baseDir,'2017*'));
 
 FFTdnWind = [];
 FFTmagWind = [];
 FFTdirWind = [];
 
 for iDay = 1:length(dayFolder)
-    directory_name = fullfile('E:\','DAQ-data','wind','raw',dayFolder(iDay).name);
+    directory_name = fullfile(baseDir,dayFolder(iDay).name);
     files = dir(directory_name);
     fileIndex = find(~[files.isdir]);
     for iRun = 1:length(fileIndex)
         
         fileName = files(fileIndex(iRun)).name;
-        
-        wind = loadFTTechLog(fullfile(directory_name,fileName));
-        
-        FFTdnWind = horzcat(FFTdnWind,wind.dateNum);
-        FFTmagWind = horzcat(FFTmagWind,wind.speed);
-        FFTdirWind = horzcat(FFTdirWind,wind.direction);
-        
+        try
+            wind = loadFTTechLog(fullfile(directory_name,fileName));
+
+            FFTdnWind = horzcat(FFTdnWind,wind.dateNum);
+            FFTmagWind = horzcat(FFTmagWind,wind.speed);
+            FFTdirWind = horzcat(FFTdirWind,wind.direction);
+        end
     end  
 end
 

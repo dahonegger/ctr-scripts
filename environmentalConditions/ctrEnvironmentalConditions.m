@@ -19,7 +19,12 @@ addpath(genpath(scrDir))
 [rrCurr.u,rrCurr.dn] = railroadBridgeCurrent;
 disp('rrCurr: [dn], [u] Railroad Bridge XTide Current')
 
-%% 
+%% FTTech Wind Sensor
+fttech = loadFTTechWind_ctr2017;
+disp('fttech: [dn], [wspd10], [wdir] Lynde Pt wind sensor')
+
+%% LIS NDBC 
+
 
 
 %% Cleanup
