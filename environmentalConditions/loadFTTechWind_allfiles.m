@@ -1,4 +1,4 @@
-function [FFTdnWind, FFTmagWind, FFTdirWind] = loadFFTechWind_allfiles( baseDir )
+function [FFTdnWind, FFTmagWind, FFTdirWind] = loadFTTechWind_allfiles( baseDir )
 %LOADFFTECHWIND_ALLFILES uses 'loadFTTechLog.m' which loads one .csv wind
     %   file to load all wind files from a directory 'baseDir'
 
