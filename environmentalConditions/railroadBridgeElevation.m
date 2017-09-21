@@ -1,4 +1,4 @@
-function [yTide,dnTide] = railroadBridgeCurrent
+function [yTide,dnTide] = railroadBridgeElevation
 
 fname = 'xtide_saybrookPoints_elevation.txt';
 
