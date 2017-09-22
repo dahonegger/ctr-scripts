@@ -24,7 +24,7 @@ addpath(genpath(scrDir))
 %% Load and populate wind structure
 [wind.dn,wind.wspd,wind.wdirM] = loadFTTechWind_allfiles(baseDir);
 
-wind.z = 5;
+wind.z = 4;
 wind.u10 = wind.wspd .* (10/wind.z).^(1/7);
 
 ctrDeclination = -13 + 50/60; % magnetic declination
