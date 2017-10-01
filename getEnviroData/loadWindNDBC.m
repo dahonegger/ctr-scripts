@@ -53,6 +53,11 @@ if nargin > 1
               vWind = 0.1;
           else
           end
+          
+           if dirWind == 0 || isnan(dirWind)
+              dirWind = 180;
+          else
+          end
         
         
 %         [idx idx] = min(tmp); %index of closest value

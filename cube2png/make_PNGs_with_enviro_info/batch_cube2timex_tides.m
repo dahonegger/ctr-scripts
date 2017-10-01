@@ -3,15 +3,20 @@
 % add paths to CTR HUB Support Data and GitHub Repository
 
 % SUPPORT DATA PATH
-supportDataPath = 'D:\Data\CTR\SupportData'; % LENOVO HARD DRIVE
+% supportDataPath = 'D:\Data\CTR\SupportData'; % LENOVO HARD DRIVE
 % supportDataPath = 'E:\SupportData'; %CTR HUB 
+supportDataPath = 'E:\supportData';
 
 % GITHUB DATA PATH
 addpath(genpath('C:\Data\CTR\ctr-scripts')) %GITHUB REPOSITORY
 
+
 % MAT FILES LOCATION
 % baseDir = 'E:\DAQ-data\processed\'; %CTR HUB
-baseDir = 'D:\Data\CTR\DAQ-data\processed\'; % LENOVO HARD DRIVE
+% baseDir = 'D:\Data\CTR\DAQ-data\processed\'; % LENOVO HARD DRIVE
+% baseDir = 'E:\RadarData\'; %CTR Disk 1 (slim)
+baseDir = 'E:\DAQ-data\processed\'; 
+
 
 % PNG LOCATION
 % saveDir = 'E:\PNGs\timex_enviroInfo5\'; % CTR HUB
@@ -21,8 +26,8 @@ saveDir = 'C:\Data\CTR\postprocessed\timex_enviroInfo5\'; % LENOVO HARD DRIVE
 doOverwrite = false;
 
 % Download new support data files?
-downloadWind = true;
-downloadDischarge = true;
+downloadWind = false;
+downloadDischarge = false;
 
 %% Prep files
 % make save directory
