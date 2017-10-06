@@ -1,13 +1,14 @@
 movieDir = fullfile('C:','Data','CTR','UAS-DATA','script_test');
 movieName = '20171791102.MOV';
 
-%%
+% Vector (in seconds) of averaging window
+% For example, [1/8:1/8:5] is a window 5 seconds wide, sampled from the video at 8 Hz
+windowVec = [.125:.125:5];
+
+% Initialize
 vid = VideoReader(fullfile(movieDir,movieName));
-
-windowVec = [.125:.125:5]; % in frames
-windowLength = windowVec(end);
-
 vid.CurrentTime = windowVec(1);
+windowLength = windowVec(end);
 fr = vid.FrameRate;
 
 frameSum = single((readFrame(vid)));

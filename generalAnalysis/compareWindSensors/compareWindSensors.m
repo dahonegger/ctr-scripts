@@ -28,3 +28,13 @@ grd.ndbc.wdir = interp1(ndbc.dn,ndbc.wsdir,grd.dn);
 distBad = find(min(abs(ndbc.dn-grd.dn),[],1) > 2*dt);
 grd.ndbc.wspd(distBad) = nan;
 grd.ndbc.wdir(distBad) = nan;
+
+% FTTECH
+fttech.dt = median(diff(fttech.dn),'omitnan');
+fttech.ws = smooth(fttech.wspd10,ceil(dt/fttech.dt),'rlowess');
+fttech.wsdir = smooth(fttech.wdir,ceil(dt/fttech.dt),'rlowess');
+grd.fttech.wspd = interp1(fttech.dn,fttech.ws,grd.dn);
+grd.fttech.wdir = interp1(fttech.dn,fttech.wsdir,grd.dn);
+distBad = find(min(abs(fttech.dn-grd.dn),[],1) > 2*dt);
+grd.fttech.wspd(distBad) = nan;
+grd.fttech.wdir(distBad) = nan;
