@@ -2,11 +2,15 @@
 if exist('localvars.m', 'file')
     localvars;
 else
-%     savePath = fullfile('C:','Data','CTR','plumeFront');
-    savePath = fullfile('/media','CTR HUB 2','RADAR PROCESSED DATA','plumeFront');
-    scrDir = fullfile('/nfs','depot','cce_u1','haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
-    cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
-%     cubeDir = fullfile('D:','DAQ-data','processed');
+    savePath = fullfile('C:','Data','CTR','ctr-wind-analysis','plumeFront3');
+    scrDir = fullfile('C:','Data','CTR','ctr-scripts');
+    cubeDir = fullfile('E:','DAQ-data','processed');
+%     savePath = fullfile('/media','CTR HUB 2','RADAR PROCESSED DATA','plumeFront');
+%     scrDir = fullfile('/nfs','depot','cce_u1','haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
+%     cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
+    
+    
+    
     ebbNum = 90; % 74: 2017-June-22 0600
 end
 
