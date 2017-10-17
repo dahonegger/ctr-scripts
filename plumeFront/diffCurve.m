@@ -4,8 +4,8 @@ function [xMid,yMid,ds,theta] = diffCurve(xy1,xy2)
 
 dbug = 0;
 angleThreshold = pi/6; % 30 deg
-distanceThreshold = 1000;
-distanceIncreaseFactorThreshold = 4;
+distanceThreshold = 2000;
+distanceIncreaseFactorThreshold = 10;
 
 
 if dbug
