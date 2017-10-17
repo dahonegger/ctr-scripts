@@ -1,11 +1,14 @@
-function [frontDiffGrd,fig] = frontDiffToGrid(frontDiff)
+function [frontDiffGrd,fig] = frontDiffToGrid(frontDiff,xg,yg)
+
 
 dbug = 1;
-dx = 30; % Grid size in meters
 
 %%% Regular Grid
-xg = min([frontDiff(:).east]):dx:max([frontDiff(:).east]);
-yg = min([frontDiff(:).north]):dx:max([frontDiff(:).north]);
+if nargin<2
+    dx = 30; % Grid size in meters
+    xg = min([frontDiff(:).east]):dx:max([frontDiff(:).east]);
+    yg = min([frontDiff(:).north]):dx:max([frontDiff(:).north]);
+end
 [Xg,Yg] = meshgrid(xg,yg);
 [Latg,Long] = UTMtoll(Yg,Xg,18);
 
@@ -16,11 +19,11 @@ for i = 1:length(frontDiff)
 end
 
 %%% Interpolants
-fInt  = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).c]','linear');
-cxInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).cx]','linear');
-cyInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).cy]','linear');
-dnInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).DN]','linear');
-thInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).TideHour]','linear');
+fInt  = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).c]','natural');
+cxInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).cx]','natural');
+cyInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).cy]','natural');
+dnInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).DN]','natural');
+thInt = scatteredInterpolant([frontDiff(:).east]',[frontDiff(:).north]',[frontDiff(:).TideHour]','natural');
 Cg    = fInt(Xg,Yg);
 Cxg   = cxInt(Xg,Yg);
 Cyg   = cyInt(Xg,Yg);
@@ -42,6 +45,13 @@ yv = [fliplr(frontDiff(1).north(:)') ymin(2:end-1) (frontDiff(end).north(:)') fl
 inp = inpolygon(Xg,Yg,xv,yv);
 maskg = double(inp);
 maskg(~maskg) = nan;
+
+%%% QC
+[dCdx,dCdy] = gradient(Cg,median(diff(xg)),median(diff(yg)));
+DC = hypot(dCdx,dCdy);
+Dthresh = 0.01; % Don't expect more than 1(cm/s)/m acceleration
+ptsBad = DC>Dthresh;
+maskg(ptsBad) = nan;
 
 %%% Generate output structure
 frontDiffGrd.X = Xg;
@@ -73,7 +83,7 @@ if dbug
     [~,idx] = nanmin(abs(tideHrs));
     title(sprintf('Max Ebb: %s EDT',datestr(frontDiff(idx).dn-4/24)))
     hc = colorbar;caxis([-3.5 3.5]);ylabel(hc,'Hr since max ebb','interpreter','latex','fontsize',12)
-    colormap(flipud(brewermap([],'RdBu')))
+    colormap(colorcet('D1'))
     set(ax,'dataaspectratio',[1 mapFac 1])
     
     hRef = quiver(min(Long(:)),min(Latg(:)),qFac*.5*(-1/sqrt(2)),qFac*.5*(-1/sqrt(2)),0,'r');

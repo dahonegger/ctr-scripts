@@ -84,6 +84,17 @@ for i = 1:nseg1
                 keyboard
             end
         end
+        
+        % Quality control 1: Enforce maximum distance threshold
+        if hypot(xi-xm,yi-ym) > distanceThreshold
+            xi = nan;
+            yi = nan;
+            if dbug>1
+                disp('QCflag: Threshold distance exceeded.')
+                keyboard
+            end
+        end
+        
         % Quality control: only allow a distance increase/decrease of a
         % threshold factor
         if i>1 && ~isnan(ds(i-1))

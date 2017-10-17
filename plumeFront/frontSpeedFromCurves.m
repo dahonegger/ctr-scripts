@@ -12,7 +12,8 @@ smoothingFactor = .1;
 
 for i = 1:length(front)
     [front(i).north,front(i).east] = lltoUTM(front(i).lat,front(i).lon);
-    front(i).s = getDistance(front(i).east,front(i).north);
+%     front(i).s = getDistance(front(i).east,front(i).north);
+    front(i).s = cat(1,0,cumsum(hypot(diff(front(i).east),diff(front(i).north))));
     
     front(i).east = smooth(front(i).s,front(i).east,smoothingFactor,'lowess');
     front(i).north = smooth(front(i).s,front(i).north,smoothingFactor,'lowess');
