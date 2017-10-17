@@ -3,11 +3,17 @@ if exist('localvars.m', 'file')
     localvars;
 else
 %     savePath = fullfile('C:','Data','CTR','plumeFront');
-    savePath = fullfile('/media','CTR HUB 2','RADAR PROCESSED DATA','plumeFront');
-    scrDir = fullfile('/nfs','depot','cce_u1','haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
-    cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
+%     savePath = fullfile('/media','CTR HUB 2','RADAR PROCESSED DATA','plumeFront');
+    depotBase = fullfile('\\depot\cce_u1\haller');
+    atticBase = fullfile('\\attic');
+%     savePath = fullfile('/nfs','depot','cce_u1','shared','RADAR_DATA','usrs','ctr','postprocessed','plumeFront2');
+    savePath = fullfile(depotBase,'shared','RADAR_DATA','usrs','ctr','postprocessed','plumeFront2');
+    scrDir = fullfile(depotBase,'shared','RADAR_DATA','usrs','ctr','ctr-scripts');
+%     scrDir = fullfile('/nfs','depot','cce_u1','haller','shared','honegger','radar','usrs','connecticut','ctr-scripts');
+    cubeDir = fullfile(atticBase,'hallerm2','usrs','ctr','processed',filesep);
+%     cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
 %     cubeDir = fullfile('D:','DAQ-data','processed');
-    ebbNum = 90; % 74: 2017-June-22 0600
+    ebbNum = 7; %89; % 74: 2017-June-22 0600
 end
 
 %% LABEL
@@ -30,7 +36,7 @@ thisEbbMax = dnMaxEbb(ebbNum);
 disp(datestr(thisEbbMax))
 
 deltaDn = 15/60/24;
-dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 3.5/24);
+dnVec = (thisEbbMax - 3.5/24)  :  deltaDn  : (thisEbbMax + 4.5/24);
 
 clear cubeNamesAll
 tic
@@ -93,6 +99,7 @@ end
 %% LOOP THRU FILES
 
 clear tx
+%%
 itx = 1;
 % waitfor(msgbox('WARNING: Reset to for i = 1:...'));
 for i = 1:length(cubeName)

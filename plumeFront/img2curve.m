@@ -124,11 +124,21 @@ yMaximaAll = yMaximaAll(idxUnique);
 % yMaximaAll(idxSame) = yMaximaAll(idxSame)+1e-3;
 
 %% SMOOTH ALONG TRANSECT
-[~,idxFar] = max(yMaximaAll);
+diffMat = hypot(xMaximaAll(:)-xMaximaAll(:)',yMaximaAll(:)-yMaximaAll(:)');
+[~,ijDiff] = max(diffMat(:));
+[iyDiff,ixDiff] = ind2sub(size(diffMat),ijDiff);
+idxFar = max(ixDiff,iyDiff);
+
+% [~,idxFar] = max(yMaximaAll);
 sMaximaAll = hypot(xMaximaAll-xMaximaAll(idxFar),yMaximaAll-yMaximaAll(idxFar));
 [sMaximaSorted,idxSort] = sort(sMaximaAll);
 xMaximaSorted = xMaximaAll(idxSort);
 yMaximaSorted = yMaximaAll(idxSort);
+
+% sMaximaAll2 = hypot(xMaximaSorted-xMaximaSorted(end),yMaximaSorted-yMaximaSorted(end));
+% [sMaximaSorted2,idxSort2] = sort(sMaximaAll2);
+% xMaximaSorted2 = xMaximaSorted(idxSort2);
+% yMaximaSorted2 = yMaximaSorted(idxSort2);
 
 xMaximaSmooth = smooth(sMaximaSorted,xMaximaSorted,9,'rloess');
 yMaximaSmooth = smooth(sMaximaSorted,yMaximaSorted,9,'rloess');

@@ -8,7 +8,7 @@ for i = 1:length(files)
     ebb{i} = load(fullfile(files(i).folder,files(i).name));
 end
 
-dem = load(fullfile('bathy','Montauk_ctrZoom.mat'));
+dem = load('/nfs/attic/hallerm/RADAR_DATA/ctr/supportData/bathy/Montauk_DEM_1111/Montauk_ctrZoom.mat');
 [dem.N,dem.E] = lltoUTM(dem.lat,dem.lon);
 n0 = 4571410;
 e0 = 722590;
