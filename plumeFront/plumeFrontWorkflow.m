@@ -13,7 +13,7 @@ else
     cubeDir = fullfile(atticBase,'hallerm2','usrs','ctr','processed',filesep);
 %     cubeDir = fullfile('/media','CTR HUB 2','DAQ-data','processed');
 %     cubeDir = fullfile('D:','DAQ-data','processed');
-    ebbNum = 7; %89; % 74: 2017-June-22 0600
+    ebbNum = 82; %89; % 74: 2017-June-22 0600
 
 end
 
@@ -21,7 +21,7 @@ end
 saveFilePrefix = 'plumeFront';
 
 %% PREP
-addpath(genpath(scrDir))
+% addpath(genpath(scrDir))
 doDebug = false;
 
 %% TIDE HOUR INFO
@@ -100,12 +100,12 @@ end
 %% LOOP THRU FILES
 
 clear tx
-%%
 itx = 1;
+%%
 % waitfor(msgbox('WARNING: Reset to for i = 1:...'));
-for i = 1:length(cubeName)
+for i = 20:length(cubeName)
     fprintf('%d of %d.',i,length(cubeName))
-    load(cubeName{i},'timeInt','timex','header')
+    load(cubeName{i},'timeInt','header','Azi')
     if header.rotations > 64
         fprintf('Long run. Rot:')
         % Deal with long run
@@ -118,7 +118,18 @@ for i = 1:length(cubeName)
         for j = rotIdx
             fprintf('%d. ', j)
             fprintf('%s ', datestr(dnVec(dnIdx)));
-            thisFrame = fdata(rgIdx,aziIdx);
+            
+            thisAziIdx = aziIdx;
+            thisAziIdx(aziIdx>length(Azi)) = [];
+            if isequal(thisAziIdx,aziIdx)
+                thisSubLon = subLon;
+                thisSubLat = subLat;
+            else
+                thisSubLon = lon(rgIdx,thisAziIdx);
+                thisSubLat = lat(rgIdx,thisAziIdx);
+            end
+            
+            thisFrame = fdata(rgIdx,thisAziIdx);
             testFig = figure('position',[0 0 500 800]);
                 imagesc(bfWrapper(double(thisFrame)));
                 title('Left click to continue. Right click to reject.')
@@ -144,8 +155,8 @@ for i = 1:length(cubeName)
                 end
                        
                 for ip = 1:length(thisCurve.x)
-                    thisCurve.lon(ip) = subLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
-                    thisCurve.lat(ip) = subLat(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
+                    thisCurve.lon(ip) = thisSubLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
+                    thisCurve.lat(ip) = thisSubLat(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
                 end
                 %%%%%%%%%%%%%
 
@@ -155,12 +166,12 @@ for i = 1:length(cubeName)
 
                 showFig = figure('position',[0 0 1280 720]);
                     subplot(211)
-                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                    pcolor(thisSubLon,thisSubLat,bfWrapper(double(thisFrame)))
                         shading flat
                         axis image
                     subplot(212)
                     hold on
-                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                    pcolor(thisSubLon,thisSubLat,bfWrapper(double(thisFrame)))
                         shading flat
                         axis image
                     plot(txNow.lon,txNow.lat,'-r','linewidth',1.5)
@@ -175,7 +186,24 @@ for i = 1:length(cubeName)
             end
         end
     else
-        thisFrame = timex(rgIdx,aziIdx);
+        clear timex
+        load(cubeName{i},'timex')
+        if ~exist('timex','var') || isempty(timex)
+            load(cubeName{i},'data')
+            timex = mean(data,3);
+        end
+        
+        thisAziIdx = aziIdx;
+        thisAziIdx(aziIdx>length(Azi)) = [];   
+        if isequal(thisAziIdx,aziIdx)
+            thisSubLon = subLon;
+            thisSubLat = subLat;
+        else
+            thisSubLon = lon(rgIdx,thisAziIdx);
+            thisSubLat = lat(rgIdx,thisAziIdx);
+        end     
+        
+        thisFrame = timex(rgIdx,thisAziIdx);
         testFig = figure('position',[0 0 500 800]);
             imagesc(bfWrapper(double(thisFrame)));
             title('Left click to continue. Right click to reject.')
@@ -200,8 +228,8 @@ for i = 1:length(cubeName)
             end
                   
             for ip = 1:length(thisCurve.x)
-                thisCurve.lon(ip) = subLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
-                thisCurve.lat(ip) = subLat(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
+                thisCurve.lon(ip) = thisSubLon(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
+                thisCurve.lat(ip) = thisSubLat(round(thisCurve.y(ip)),round(thisCurve.x(ip)));
             end
             %%%%%%%%%%%%%
             
@@ -211,12 +239,12 @@ for i = 1:length(cubeName)
             
             showFig = figure('position',[0 0 1280 720]);
                     subplot(211)
-                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                    pcolor(thisSubLon,thisSubLat,bfWrapper(double(thisFrame)))
                         shading flat
                         axis image
                     subplot(212)
                     hold on
-                    pcolor(subLon,subLat,bfWrapper(double(thisFrame)))
+                    pcolor(thisSubLon,thisSubLat,bfWrapper(double(thisFrame)))
                         shading flat
                         axis image
                     plot(txNow.lon,txNow.lat,'-r','linewidth',1.5)
