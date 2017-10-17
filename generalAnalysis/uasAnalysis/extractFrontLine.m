@@ -3,7 +3,7 @@ movieName = '20171791102.MOV';
 
 % Vector (in seconds) of averaging window
 % For example, [1/8:1/8:5] is a window 5 seconds wide, sampled from the video at 8 Hz
-windowVec = [.125:.125:5];
+windowVec = [1/29.97:1/29.97:5];
 
 % Initialize
 vid = VideoReader(fullfile(movieDir,movieName));
@@ -15,7 +15,8 @@ frameSum = single((readFrame(vid)));
 frameStill = frameSum;
 ct = 1;
 mct = 1;
-while hasFrame(vid) 
+clear mov
+while vid.CurrentTime<5%hasFrame(vid) 
 %     disp(ct)
         thisFrame = readFrame(vid);
         if min(abs(vid.CurrentTime-windowVec))<(1/fr/2)
@@ -63,20 +64,28 @@ meanmovWhite = single(meanmov>160);
 ctrBox = [1200  400; 1200 1000; 2100 1000; 2100  400];
 lisBox = [1400 2100; 1400 1500; 2500 1500; 2500 2100];
 
-ctrIY =  400:1000;
-ctrIX = 1200:2100;
+ctrIY =  400:800;
+ctrIX = 1600:2100;
 lisIY = 1500:2100;
 lisIX = 1400:2500;
 
+frameMean = mov(:,:,:,1);
+
 figure
+plot3(...
+    toVect(frameMean(:,:,1),50),...
+    toVect(frameMean(:,:,2),50),...
+    toVect(frameMean(:,:,3),50),'.k','markersize',1);
+hold on
 plot3(...
     toVect(frameMean(lisIY,lisIX,1),5),...
     toVect(frameMean(lisIY,lisIX,2),5),...
     toVect(frameMean(lisIY,lisIX,3),5),'.r',...
     toVect(frameMean(ctrIY,ctrIX,1),5),...
     toVect(frameMean(ctrIY,ctrIX,2),5),...
-    toVect(frameMean(ctrIY,ctrIX,3),5),'.k');
+    toVect(frameMean(ctrIY,ctrIX,3),5),'.b','markersize',3);
     grid on;box on
+    xlabel('r');ylabel('g');zlabel('b')
 figure
 plot3(...
     var(toVect(frameMean(lisIY,lisIX,1),5)),...
