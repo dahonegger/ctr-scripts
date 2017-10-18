@@ -294,7 +294,7 @@ for i = 1:length(front)
     front(i).tideHr = tideHourMaxEbb(front(i).dn,dnTide,uTide,true);
 end
 
-saveName = sprintf('%s_%s_to_%s',saveFilePrefix,datestr(tx(1).dn,'yyyymmddTHHMMSSZ'),datestr(tx(end).dn,'yyyymmddTHHMMSSZ'));
+saveName = sprintf('%s_%s_to_%s',saveFilePrefix,datestr(front(1).dn,'yyyymmddTHHMMSSZ'),datestr(front(end).dn,'yyyymmddTHHMMSSZ'));
 if ~exist(savePath,'dir');mkdir(savePath);end
 if exist(fullfile(savePath,saveName),'file');disp('File to save exists. Do so manually.\n');keyboard;end
 save(fullfile(savePath,saveName),'-v7.3','front')

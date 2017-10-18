@@ -2,8 +2,11 @@
 %%% SPEEDS BY FORWARD DIFFERENCING AND (B) INTERPOLATES THEM TO A REGULAR
 %%% GRID
 
-% plumeDir = fullfile(atticDir,'hallerm','RADAR_DATA','CTR','postprocessed','plumeFrontCommonGrid');
-plumeDir = fullfile('C:','Data','CTR','ctr-wind-analysis','plumeFrontCommonGrid');
+depotBase = '\\depot\cce_u1\haller';
+plumeDir = fullfile(depotBase,'shared','RADAR_DATA','usrs','ctr','postprocessed','plumeFront2');
+
+% plumeDir = fullfile(atticDir,'hallerm','RADAR_DATA','CTR','postprocessed','plumeFront2');
+% plumeDir = fullfile('C:','Data','CTR','ctr-wind-analysis','plumeFront2');
 files = dir(fullfile(plumeDir,'*.mat'));
 
 % Define regular grid
@@ -14,7 +17,7 @@ xg = (-6000:dxy:6000) + x0;
 yg = (-6000:dxy:6000) + y0;
 
 
-for i = 33:length(files)
+for i = 1:length(files)
     fprintf('%d of %d\n',i,length(files))
     load(fullfile(files(i).folder,files(i).name));
     frontDiff = frontSpeedFromCurves(front);
