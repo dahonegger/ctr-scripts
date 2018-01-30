@@ -41,6 +41,14 @@ arm.met.z = 18;
 arm.met.wspd10 = arm.met.wspd_true .* (10/arm.met.z).^(1/7);
 disp('arm: [time], [met.wspd10], [met.wdir_true], etc. R/V Armstrong all data')
 
+%% AWAC East
+awace = loadEastAwac;
+disp('awace: [dateNum], [ur], [vr], [east], [north], [depth], etc. East AWAC')
+
+%% AWAC West
+awacw = loadWestAwac;
+disp('awacw: [dateNum], [ur], [vr], [east], [north], [depth], etc. West AWAC')
+
 
 %% Cleanup
 rmpath(genpath(scrDir))
