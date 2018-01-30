@@ -18,6 +18,7 @@ if ispc
 elseif isunix
     scrDir = fullfile(filesep,scrDir);
 end
+origPath = path;
 addpath(genpath(scrDir))
 
 %% Predicted CTR tide current
@@ -51,4 +52,4 @@ disp('awacw: [dateNum], [ur], [vr], [east], [north], [depth], etc. West AWAC')
 
 
 %% Cleanup
-rmpath(genpath(scrDir))
+path(origPath)
