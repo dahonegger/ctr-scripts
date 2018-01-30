@@ -1,0 +1,8 @@
+%% USRS Connecticut River May-June 2017 environmental conditions
+% David Honegger 2017-09-20
+
+if isunix
+baseDir = fullfile('/nfs','attic','hallerm','
+
+
+%% Predicted tide level

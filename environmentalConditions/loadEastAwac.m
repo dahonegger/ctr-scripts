@@ -6,10 +6,10 @@ function awac = loadEastAwac(fname)
 % 				../../supportData/moorings/awac_east.mat
 
 if nargin==0
-	fname 		= fullfile('../..','supportData','moorings','awac_west.mat');
+	fname 		= fullfile('../..','supportData','moorings','awac_east.mat');
 end
 
-load awac_east
+load(fname)
 
 awac.dateNum 	= dn + 4/24; % EDT to UTC
 
@@ -24,4 +24,13 @@ awac.vr 		= vr;
 
 awac.amp 		= amp;
 awac.depth 		= depth;
-awac.readme 	= readme;
+
+% Remove deployment time series
+idx = awac.dateNum > datenum([2017 05 21 0 0 0]);
+awac.dateNum    = awac.dateNum(idx);
+awac.east       = awac.east(idx);
+awac.north      = awac.north(idx);
+awac.ur         = awac.ur(idx);
+awac.vr     	= awac.vr(idx);
+awac.amp        = awac.amp(idx);
+awac.depth      = awac.depth(idx);
