@@ -12,6 +12,7 @@ end
 load(fname)
 
 awac.dateNum 	= dn + 4/24; % EDT to UTC
+awac.z          = z;
 
 % Rotate to East/North
 theta 			= -14; % See geyer/jurisa/honegger correspondence
@@ -23,14 +24,16 @@ awac.ur 		= ur;
 awac.vr 		= vr;
 
 awac.amp 		= amp;
+awac.mask       = mask;
 awac.depth 		= depth;
 
 % Remove deployment time series
-idx = awac.dateNum > datenum([2017 05 21 0 0 0]);
-awac.dateNum    = awac.dateNum(idx);
-awac.east       = awac.east(idx);
-awac.north      = awac.north(idx);
-awac.ur         = awac.ur(idx);
-awac.vr     	= awac.vr(idx);
-awac.amp        = awac.amp(idx);
-awac.depth      = awac.depth(idx);
+idx = awac.dateNum < datenum([2017 05 21 0 0 0]);
+awac.dateNum(idx)   = [];
+awac.east(idx,:)    = [];
+awac.north(idx,:)   = [];
+awac.ur(idx,:)      = [];
+awac.vr(idx,:)      = [];
+awac.amp(idx,:)     = [];
+awac.mask(idx,:)    = [];
+awac.depth(idx)     = [];

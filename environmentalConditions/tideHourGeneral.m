@@ -41,8 +41,8 @@ switch lower(ref)
 end
 
 % 
-if min(dnIn)<min(refTime) || max(dnIn)>max(refTime)
-    warning('tideHour.m: Input time is outside reference record.')
+if any(min(dnIn(:)))<min(refTime) || any(max(dnIn(:)))>max(refTime)
+    warning('tideHour.m: At least one input time is outside reference record.')
 end
 
 % Assign tide numbers to refTime
